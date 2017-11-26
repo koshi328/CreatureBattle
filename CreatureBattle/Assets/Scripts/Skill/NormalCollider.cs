@@ -21,10 +21,17 @@ public class NormalCollider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OntriggerEnter");
         if (_owner.transform == other.transform) return;
-        Debug.Log(other.name);
         Actor hitActor = other.GetComponent<Actor>();
         if (!hitActor) return;
         hitActor.CallTakeDamage(10);
+        // なぜか何度もヒットするので強制終了（直せたら直す）
+        Destroy(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("当たり判定を破棄");
     }
 }

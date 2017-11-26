@@ -83,6 +83,7 @@ public class Actor : MonoBehaviour {
     {
         _currentHP = Mathf.Max(_currentHP - damage, 0);
         AnimationSetTrigger("Damage");
+        Debug.Log("TakeDamage=>currentHP:" + _currentHP);
     }
     public void CallTakeDamage(int damage)
     {

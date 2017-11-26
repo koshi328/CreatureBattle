@@ -34,6 +34,7 @@ public class TestSkill : SkillBase {
     //    GameObject.Destroy(bullet, 3.0f);
     //    return this;
     //}
+    GameObject collider;
     public override void Initialize()
     {
         _castTime = 0.4f;
@@ -44,15 +45,15 @@ public class TestSkill : SkillBase {
         if(_castTime >= 0.4f)
         {
             owner.AnimationSetTrigger("NormalAttack");
-            GameObject collider = GameObject.Instantiate(Resources.Load("Prefabs/Collision")) as GameObject;
+            collider = GameObject.Instantiate(Resources.Load("Prefabs/Collision")) as GameObject;
             collider.AddComponent<NormalCollider>().Initialize(owner, owner.transform.position, new Vector3(2, 2, 2));
-            GameObject.Destroy(collider, 0.4f);
         }
         _castTime -= Time.deltaTime;
         if (_castTime <= 0)
         {
-            return new TestSkill2();
-            owner.AnimationSetTrigger("Idel");
+            owner.CancelAction();
+            owner.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_2);
+            GameObject.Destroy(collider);
             return null;
         }
         return this;
@@ -67,20 +68,22 @@ public class TestSkill2 : SkillBase
 {
     public override void Initialize()
     {
-        _castTime = 0.6f;
+        _castTime = 0.4f;
         _recastTime = 0.0f;
+        Debug.Log("Skill2:Initialize");
     }
     public override SkillBase Execute(Actor owner)
     {
-        if (_castTime >= 0.6f)
+        if (_castTime >= 0.4f)
         {
+            Debug.Log("Skill2:Execute");
             owner.AnimationSetTrigger("NormalAttack");
         }
         _castTime -= Time.deltaTime;
         if (_castTime <= 0)
         {
-            return new TestSkill3();
-            owner.AnimationSetTrigger("Idel");
+            owner.CancelAction();
+            owner.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_3);
             return null;
         }
         return this;
@@ -97,12 +100,14 @@ public class TestSkill3 : SkillBase
     {
         _castTime = 1.5f;
         _recastTime = 0.0f;
+        Debug.Log("Skill3:Initialize");
     }
     public override SkillBase Execute(Actor owner)
     {
         if (_castTime >= 1.5f)
         {
             owner.AnimationSetTrigger("NormalAttack");
+            Debug.Log("Skill3:Execute");
         }
         _castTime -= Time.deltaTime;
         if (_castTime <= 0)
@@ -116,5 +121,37 @@ public class TestSkill3 : SkillBase
     public override void Dispose()
     {
 
+    }
+}
+
+
+public class Shield : SkillBase
+{
+    GameObject ShieldObj;
+    public override void Initialize()
+    {
+        _castTime = 1.5f;
+        _recastTime = 0.0f;
+    }
+    public override SkillBase Execute(Actor owner)
+    {
+        if(_castTime >= 1.5f)
+        {
+            ShieldObj = GameObject.Instantiate(Resources.Load("Prefabs/Shield")) as GameObject;
+        }
+        ShieldObj.transform.position = owner.transform.position;
+        _castTime -= Time.deltaTime;
+        if (_castTime <= 0)
+        {
+            GameObject.Destroy(ShieldObj);
+            return null;
+        }
+        return this;
+    }
+
+    public override void Dispose()
+    {
+        if (ShieldObj == null) return;
+        GameObject.Destroy(ShieldObj);
     }
 }
