@@ -6,26 +6,50 @@ public class GameController : MonoBehaviour {
     GameObject _player;
     [SerializeField]
     TrackCamera _cameraScript;
+    [SerializeField]
+    YesNoWindow _decideWindow;
 
     void Start () {
         SkillController.Initialize();
         PhotonNetwork.isMessageQueueRunning = true;
+        CreatePlayer("Yuko", Vector3.zero, Quaternion.identity);
+    }
+	
+	void Update () {
+        
+    }
+
+    public void LeaveRoom()
+    {
+        if (_decideWindow.gameObject.GetActive() == true) return;
+        _decideWindow.gameObject.SetActive(true);
+        _decideWindow.YesButtonAddEvent(() => {
+            PhotonNetwork.LeaveRoom();
+            SceneController.Instance.LoadScene("Lobby", 3.0f, true);
+            _decideWindow.transform.parent.gameObject.SetActive(false);
+        }, true);
+        _decideWindow.NoButtonAddEvent(() => { _decideWindow.gameObject.SetActive(false); }, true);
+        _decideWindow.SetMessage("ログアウトします。\nよろしいですか？");
+    }
+
+    public void CreatePlayer(string path, Vector3 pos, Quaternion rot)
+    {
         //Photonにつながっていない時のデバッグ用
         if (!PhotonNetwork.connected)
         {
-            _player = Instantiate(Resources.Load("TestModel"), Vector3.zero, Quaternion.identity) as GameObject;
+            _player = Instantiate(Resources.Load(path), pos, rot) as GameObject;
             _player.AddComponent<ActorController>();
             _cameraScript.SetTarget(_player.transform);
         }
         else
         {
-            _player = PhotonNetwork.Instantiate("TestModel", Vector3.zero, Quaternion.identity, 0);
+            _player = PhotonNetwork.Instantiate(path, pos, rot, 0);
             _player.AddComponent<ActorController>();
             _cameraScript.SetTarget(_player.transform);
         }
     }
-	
-	void Update () {
-        
+    public GameObject GetPlayer()
+    {
+        return _player;
     }
 }
