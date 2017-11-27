@@ -3309,10 +3309,10 @@ MonoBehaviour:
     Name: NormalAttack
   - Type: 9
     SynchronizeType: 0
-    Name: Idel
+    Name: Damage
   - Type: 9
     SynchronizeType: 0
-    Name: Damage
+    Name: Idle
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

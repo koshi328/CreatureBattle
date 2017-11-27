@@ -37,22 +37,22 @@ public class ColliderManager : MonoBehaviour
         }
 	}
 	
-    public void ActiveSphereCollider(float limitTime, Vector3 center, float radius)
+    public void ActiveSphereCollider(Actor owner, float limitTime, Vector3 center, float radius)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            _colliders[i].ActiveSphereCollider(limitTime, center, radius);
+            _colliders[i].ActiveSphereCollider(owner, limitTime, center, radius);
             break;
         }
     }
 
-    public void ActiveCapsuleCollider(float limitTime, Vector3 center, int direction, float height, float radius)
+    public void ActiveCapsuleCollider(Actor owner, float limitTime, Vector3 center, int direction, float height, float radius)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            _colliders[i].ActiveCapsuleCollider(limitTime, center, direction, height, radius);
+            _colliders[i].ActiveCapsuleCollider(owner, limitTime, center, direction, height, radius);
             break;
         }
     }

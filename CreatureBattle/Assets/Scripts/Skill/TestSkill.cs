@@ -11,7 +11,7 @@ public class TestSkill : SkillBase {
     public override void Initialize(Actor owner)
     {
         base.Initialize(owner);
-        REQUIREMENT_CAST_TIME = 2.0f;
+        REQUIREMENT_CAST_TIME = 0.0f;
         REQUIREMENT_RECAST_TIME = 5.0f;
         _castTime = REQUIREMENT_CAST_TIME;
         _recastTime = REQUIREMENT_RECAST_TIME;
@@ -31,7 +31,7 @@ public class TestSkill : SkillBase {
             owner.AnimationSetTrigger("NormalAttack");
 
             ColliderManager cm = ColliderManager.GetInstance();
-            cm.ActiveSphereCollider(5.0f, owner.transform.position, 2.0f);
+            cm.ActiveSphereCollider(owner, 5.0f, owner.transform.position, 2.0f);
             
             owner.CancelAction();
 
