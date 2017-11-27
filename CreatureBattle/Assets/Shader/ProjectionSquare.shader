@@ -59,7 +59,7 @@
 				float light = dot(i.lightDir, i.normal) * 0.5 + 0.5;
 				light *= (atten + 1) * 0.5;
 				float4 c = float4(0.2, 0.2, 0.2, 1);
-				c *= light + crossLine;
+				c *= light;// +crossLine;
 				return c;
 			}
 			ENDCG
