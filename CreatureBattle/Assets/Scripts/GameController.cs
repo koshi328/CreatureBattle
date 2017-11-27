@@ -12,19 +12,7 @@ public class GameController : MonoBehaviour {
     void Start () {
         SkillController.Initialize();
         PhotonNetwork.isMessageQueueRunning = true;
-        //Photonにつながっていない時のデバッグ用
-        if (!PhotonNetwork.connected)
-        {
-            _player = Instantiate(Resources.Load("TestModel"), Vector3.zero, Quaternion.identity) as GameObject;
-            _player.AddComponent<ActorController>();
-            _cameraScript.SetTarget(_player.transform);
-        }
-        else
-        {
-            _player = PhotonNetwork.Instantiate("TestModel", Vector3.zero, Quaternion.identity, 0);
-            _player.AddComponent<ActorController>();
-            _cameraScript.SetTarget(_player.transform);
-        }
+        CreatePlayer("Yuko", Vector3.zero, Quaternion.identity);
     }
 	
 	void Update () {
@@ -42,5 +30,26 @@ public class GameController : MonoBehaviour {
         }, true);
         _decideWindow.NoButtonAddEvent(() => { _decideWindow.gameObject.SetActive(false); }, true);
         _decideWindow.SetMessage("ログアウトします。\nよろしいですか？");
+    }
+
+    public void CreatePlayer(string path, Vector3 pos, Quaternion rot)
+    {
+        //Photonにつながっていない時のデバッグ用
+        if (!PhotonNetwork.connected)
+        {
+            _player = Instantiate(Resources.Load(path), pos, rot) as GameObject;
+            _player.AddComponent<ActorController>();
+            _cameraScript.SetTarget(_player.transform);
+        }
+        else
+        {
+            _player = PhotonNetwork.Instantiate(path, pos, rot, 0);
+            _player.AddComponent<ActorController>();
+            _cameraScript.SetTarget(_player.transform);
+        }
+    }
+    public GameObject GetPlayer()
+    {
+        return _player;
     }
 }
