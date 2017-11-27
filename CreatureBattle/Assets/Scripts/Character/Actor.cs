@@ -38,7 +38,7 @@ public class Actor : MonoBehaviour {
         if (_currentSkill != null && !_currentSkill.CanDiscard()) return;
         _currentSkill = SkillController.GetSkill((SKILL_ID)skillID); // IDでスキルを取得（生成？）する関数を入れる
         if (_currentSkill == null) return;
-        _currentSkill.Initialize();
+        _currentSkill.Initialize(this);
     }
     // 外部からの呼び出し関数
     public void CallExecuteSkill(int skillID)
@@ -52,18 +52,18 @@ public class Actor : MonoBehaviour {
     }
     // ----------------------------------------------------------------------
 
-    public virtual SkillBase Action()
-    {
-        if (_currentSkill == null) return null;
-        SkillBase nextSkill = _currentSkill.Execute(this);
-        if(_currentSkill != nextSkill)
-        {
-            _currentSkill = nextSkill;
-            if(_currentSkill != null)
-                _currentSkill.Initialize();
-        }
-        return _currentSkill;
-    }
+    //public virtual SkillBase Action()
+    //{
+    //    if (_currentSkill == null) return null;
+    //    SkillBase nextSkill = _currentSkill.Execute(this);
+    //    if(_currentSkill != nextSkill)
+    //    {
+    //        _currentSkill = nextSkill;
+    //        if(_currentSkill != null)
+    //            _currentSkill.Initialize();
+    //    }
+    //    return _currentSkill;
+    //}
 
     public void CancelAction()
     {
@@ -72,12 +72,12 @@ public class Actor : MonoBehaviour {
         _currentSkill = null;
     }
 
-    public void ExecuteSkill(SkillBase skill)
-    {
-        if (_currentSkill != null && !_currentSkill.CanDiscard()) return;
-        _currentSkill = skill;
-        _currentSkill.Initialize();
-    }
+    //public void ExecuteSkill(SkillBase skill)
+    //{
+    //    if (_currentSkill != null && !_currentSkill.CanDiscard()) return;
+    //    _currentSkill = skill;
+    //    _currentSkill.Initialize();
+    //}
     [PunRPC]
     public void TakeDamage(int damage)
     {

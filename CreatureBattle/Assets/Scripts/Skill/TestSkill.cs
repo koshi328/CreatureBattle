@@ -2,58 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class TestSkill : SkillBase {
 
-    //public override void Initialize()
-    //{
-    //    _castTime = 0.1f;
-    //    _recastTime = 0.0f;
-    //}
-    // 前方に素早く動く
-    //public override SkillBase Execute(Actor owner)
-    //{
-    //    _castTime -= Time.deltaTime;
-    //    if (_castTime <= 0) return null;
-    //    owner.transform.Translate(Vector3.forward * 20 * Time.deltaTime);
-    //    return this;
-    //}
 
-    //public override void Initialize()
-    //{
-    //    _castTime = 2.0f;
-    //    _recastTime = 0.0f;
-    //}
-    //public override SkillBase Execute(Actor owner)
-    //{
-    //    _castTime -= Time.deltaTime;
-    //    if (_castTime <= 0) return null;
-    //    owner.transform.Translate(Vector3.forward * 20 * Time.deltaTime);
-    //    GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Cube);
-    //    bullet.transform.position = owner.transform.position + owner.transform.forward * 2;
-    //    bullet.transform.rotation = owner.transform.rotation;
-    //    GameObject.Destroy(bullet, 3.0f);
-    //    return this;
-    //}
-    GameObject collider;
-    public override void Initialize()
+    public override void Initialize(Actor owner)
     {
-        _castTime = 0.4f;
-        _recastTime = 0.0f;
+        base.Initialize(owner);
+        REQUIREMENT_CAST_TIME = 2.0f;
+        REQUIREMENT_RECAST_TIME = 5.0f;
+        _castTime = REQUIREMENT_CAST_TIME;
+        _recastTime = REQUIREMENT_RECAST_TIME;
     }
     public override SkillBase Execute(Actor owner)
     {
-        if(_castTime >= 0.4f)
+
+        if (_castTime >= REQUIREMENT_CAST_TIME)
         {
-            owner.AnimationSetTrigger("NormalAttack");
-            collider = GameObject.Instantiate(Resources.Load("Prefabs/Collision")) as GameObject;
-            collider.AddComponent<NormalCollider>().Initialize(owner, owner.transform.position, new Vector3(2, 2, 2));
+            
         }
-        _castTime -= Time.deltaTime;
+
+        base.Execute(owner);
+
         if (_castTime <= 0)
         {
+            owner.AnimationSetTrigger("NormalAttack");
+
+            ColliderManager cm = ColliderManager.GetInstance();
+            cm.ActiveSphereCollider(5.0f, owner.transform.position, 2.0f);
+            
             owner.CancelAction();
-            owner.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_2);
-            GameObject.Destroy(collider);
+
+            OnFinished();
+
             return null;
         }
         return this;
@@ -63,73 +46,20 @@ public class TestSkill : SkillBase {
     {
 
     }
-}
-public class TestSkill2 : SkillBase
-{
-    public override void Initialize()
-    {
-        _castTime = 0.4f;
-        _recastTime = 0.0f;
-        Debug.Log("Skill2:Initialize");
-    }
-    public override SkillBase Execute(Actor owner)
-    {
-        if (_castTime >= 0.4f)
-        {
-            Debug.Log("Skill2:Execute");
-            owner.AnimationSetTrigger("NormalAttack");
-        }
-        _castTime -= Time.deltaTime;
-        if (_castTime <= 0)
-        {
-            owner.CancelAction();
-            owner.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_3);
-            return null;
-        }
-        return this;
-    }
 
-    public override void Dispose()
+    private void OnFinished()
     {
+        _owner.AnimationSetTrigger("Idle");
 
     }
 }
-public class TestSkill3 : SkillBase
-{
-    public override void Initialize()
-    {
-        _castTime = 1.5f;
-        _recastTime = 0.0f;
-        Debug.Log("Skill3:Initialize");
-    }
-    public override SkillBase Execute(Actor owner)
-    {
-        if (_castTime >= 1.5f)
-        {
-            owner.AnimationSetTrigger("NormalAttack");
-            Debug.Log("Skill3:Execute");
-        }
-        _castTime -= Time.deltaTime;
-        if (_castTime <= 0)
-        {
-            owner.AnimationSetTrigger("Idel");
-            return null;
-        }
-        return this;
-    }
-
-    public override void Dispose()
-    {
-
-    }
-}
-
 
 public class Shield : SkillBase
 {
     GameObject ShieldObj;
-    public override void Initialize()
+    public override void Initialize(Actor owner)
     {
+        base.Initialize(owner);
         _castTime = 1.5f;
         _recastTime = 0.0f;
     }

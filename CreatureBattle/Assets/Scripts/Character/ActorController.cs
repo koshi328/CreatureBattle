@@ -24,9 +24,9 @@ public class ActorController : MonoBehaviour
         if (PhotonNetwork.connected && !_myActor.GetPhotonView().isMine) return;
         _statusCanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
         _commandController = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
-        _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_1); });
-        _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_1); });
-        _commandController.SetCommand(2, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL_1); });
+        _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
+        _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
+        _commandController.SetCommand(2, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
         _commandController.SetCommand(3, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SHIELD); });
     }
 
