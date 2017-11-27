@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour {
     GameObject _player;
     [SerializeField]
     TrackCamera _cameraScript;
+    [SerializeField]
+    YesNoWindow _decideWindow;
 
     void Start () {
         SkillController.Initialize();
@@ -27,5 +29,18 @@ public class GameController : MonoBehaviour {
 	
 	void Update () {
         
+    }
+
+    public void LeaveRoom()
+    {
+        if (_decideWindow.gameObject.GetActive() == true) return;
+        _decideWindow.gameObject.SetActive(true);
+        _decideWindow.YesButtonAddEvent(() => {
+            PhotonNetwork.LeaveRoom();
+            SceneController.Instance.LoadScene("Lobby", 3.0f, true);
+            _decideWindow.transform.parent.gameObject.SetActive(false);
+        }, true);
+        _decideWindow.NoButtonAddEvent(() => { _decideWindow.gameObject.SetActive(false); }, true);
+        _decideWindow.SetMessage("ログアウトします。\nよろしいですか？");
     }
 }
