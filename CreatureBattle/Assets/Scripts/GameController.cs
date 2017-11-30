@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour {
     YesNoWindow _decideWindow;
 
     void Start () {
-        SkillController.Initialize();
         PhotonNetwork.isMessageQueueRunning = true;
         CreatePlayer("Yuko", Vector3.zero, Quaternion.identity);
     }

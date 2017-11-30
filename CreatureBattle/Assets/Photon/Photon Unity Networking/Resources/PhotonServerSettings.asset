@@ -39,4 +39,5 @@ MonoBehaviour:
   - CreateEffect
   - ExecuteSkillPhoton
   - TakeDamage
+  - SetSkills
   DisableAutoOpenWizard: 1

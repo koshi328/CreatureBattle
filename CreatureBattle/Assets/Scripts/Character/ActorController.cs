@@ -20,14 +20,23 @@ public class ActorController : MonoBehaviour
         _mainCamera = Camera.main;
         _maxSpeed = 5.0f;
         _speed = 0.0f;
+
         // 仮処理
         if (PhotonNetwork.connected && !_myActor.GetPhotonView().isMine) return;
         _statusCanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
         _commandController = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
-        _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
-        _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
-        _commandController.SetCommand(2, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SWORD_ATTACK_NORMAL); });
-        _commandController.SetCommand(3, () => { _myActor.CallExecuteSkill((int)SKILL_ID.SHIELD); });
+
+        // 使うスキルを予め伝える
+        _myActor.CallSetSkills(new int[] {
+            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
+            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
+            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
+            (int)SKILL_ID.SHIELD });
+
+        _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
+        _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });
+        _commandController.SetCommand(2, () => { _myActor.CallExecuteSkill(2); });
+        _commandController.SetCommand(3, () => { _myActor.CallExecuteSkill(3); });
     }
 
     // Update is called once per frame
@@ -56,5 +65,36 @@ public class ActorController : MonoBehaviour
         }
 
         _myActor.AnimationSetFloat("Run", _speed);
+
+        // リキャストタイムをUIに反映する
+        for (int i = 0; i < 4; i++)
+        {
+            if (_myActor.GetSkillState(i) == SKILL_STATE.RECASTING)
+            {
+                _commandController.SetFillAmount(i, _myActor.GetRecastPer(i));
+            }
+            else
+            {
+                _commandController.SetFillAmount(i, 1.0f);
+            }
+        }
+
+        bool flag = false;
+        // 使用中のスキルがあればボタンを押せないようにする
+        for (int i = 0; i < 4; i++)
+        {
+            if (_myActor.GetSkillState(i) == SKILL_STATE.CASTING)
+            {
+                flag = true;
+            }
+            else if (_myActor.GetSkillState(i) == SKILL_STATE.ACTIVATING)
+            {
+                flag = true;
+            }
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            _commandController.SetInteractable(i, !flag);
+        }
     }
 }

@@ -6,18 +6,22 @@ using UnityEngine.AI;
 public class Actor : MonoBehaviour {
 
     protected NavMeshAgent _navMesh;
-    protected SkillBase _currentSkill;
+    protected int _currentSkill;
     protected Animator _myAnimator;
     protected PhotonView _myPhotonView;
+    // 自分の使うスキルを全て持っておく
+    protected SkillBase[] _skillList;
 
     // 仮
     public int _maxHP { get; set; }
     public int _currentHP { get; set; }
     
+
+
     protected void Initialize()
     {
         _maxHP = 100;_currentHP = _maxHP;
-        _currentSkill = null;
+        _currentSkill = -1;
         _navMesh = GetComponent<NavMeshAgent>();
         _myAnimator = GetComponent<Animator>();
         _myPhotonView = GetComponent<PhotonView>();
@@ -33,22 +37,37 @@ public class Actor : MonoBehaviour {
 
     // Photonでスキルを連動する実験関数--------------------------------------
     [PunRPC]
-    public void ExecuteSkillPhoton(int skillID)
+    public void ExecuteSkillPhoton(int commandNum)
     {
-        if (_currentSkill != null && !_currentSkill.CanDiscard()) return;
-        _currentSkill = SkillController.GetSkill((SKILL_ID)skillID); // IDでスキルを取得（生成？）する関数を入れる
-        if (_currentSkill == null) return;
-        _currentSkill.Initialize(this);
+        _currentSkill = commandNum;
+        _skillList[commandNum].Initialize(this);
+        _skillList[commandNum].Execute();
     }
+
     // 外部からの呼び出し関数
-    public void CallExecuteSkill(int skillID)
+    public void CallExecuteSkill(int commandNum)
     {
-        _myPhotonView.RPC("ExecuteSkillPhoton", PhotonTargets.AllViaServer, skillID);
+        Debug.Log(commandNum);
+
+        // 使用中のスキルがあれば処理しない
+        for(int i = 0; i < 4; i++)
+        {
+            if (_skillList[i].GetState() == SKILL_STATE.ACTIVATING) return;
+            if (_skillList[i].GetState() == SKILL_STATE.CASTING) return;
+        }
+        // 使用しようとしているスキルが使用可能でなければ処理しない
+        if (_skillList[commandNum].GetState() != SKILL_STATE.USABLE) return;
+
+        _myPhotonView.RPC("ExecuteSkillPhoton", PhotonTargets.AllViaServer, commandNum);
     }
-    public virtual SkillBase ActionTest()
+
+    public virtual void MyUpdate()
     {
-        if (_currentSkill == null) return null;
-        return _currentSkill = _currentSkill.Execute(this);
+        if (_skillList == null) return;
+        for (int i = 0; i < 4; i++)
+        {
+            _skillList[i].MyUpdate();
+        }
     }
     // ----------------------------------------------------------------------
 
@@ -67,9 +86,8 @@ public class Actor : MonoBehaviour {
 
     public void CancelAction()
     {
-        if (_currentSkill == null) return;
-        _currentSkill.Dispose();
-        _currentSkill = null;
+        if (_currentSkill < 0) return;
+        _skillList[_currentSkill].Dispose();
     }
 
     //public void ExecuteSkill(SkillBase skill)
@@ -92,8 +110,8 @@ public class Actor : MonoBehaviour {
 
     public bool CanDiscardSkill()
     {
-        if (_currentSkill == null) return true;
-        return _currentSkill.CanDiscard();
+        if (_currentSkill < 0) return true;
+        return _skillList[_currentSkill].CanDiscard();
     }
 
     public PhotonView GetPhotonView()
@@ -116,5 +134,34 @@ public class Actor : MonoBehaviour {
     {
         if (_myAnimator == null) return;
         _myAnimator.SetBool(name, flag);
+    }
+
+    public void CallSetSkills(int[] idList)
+    {
+        _myPhotonView.RPC("SetSkills", PhotonTargets.AllBufferedViaServer, idList);
+    }
+
+    [PunRPC]
+    public void SetSkills(int[] idList)
+    {
+        _skillList = new SkillBase[idList.Length];
+
+        for (int i = 0; i < idList.Length; i++)
+        {
+            _skillList[i] = SkillController.GetSkill((SKILL_ID)idList[i]);
+            _skillList[i].Initialize(this);
+        }
+    }
+
+    public SKILL_STATE GetSkillState(int n)
+    {
+        if (_skillList == null) return SKILL_STATE.USABLE;
+        return _skillList[n].GetState();
+    }
+
+    public float GetRecastPer(int n)
+    {
+        if (_skillList == null) return 1.0f;
+        return _skillList[n].GetRecastPer();
     }
 }
