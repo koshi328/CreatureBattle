@@ -22,7 +22,7 @@ public class SelectController : MonoBehaviour
     {
         PhotonNetwork.isMessageQueueRunning = true;
         actorData = new string[3];
-        actorData[0] = "Yuki";
+        actorData[0] = "Yuko";
         actorData[1] = "Misaki";
         actorData[2] = "UnityChan";
 

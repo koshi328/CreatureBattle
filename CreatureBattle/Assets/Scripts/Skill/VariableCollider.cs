@@ -18,6 +18,8 @@ public class VariableCollider : MonoBehaviour
 
     float _limitTime;
 
+    int _damage;
+
     Actor _owner;
 
 
@@ -26,9 +28,10 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.gameObject.SetActive(false);
         _capsuleCollider.gameObject.SetActive(false);
         _limitTime = 0.0f;
+        _damage = 0;
     }
 
-    public void ActiveSphereCollider(Actor owner, float limitTime, Vector3 center, float radius)
+    public void ActiveSphereCollider(Actor owner, float limitTime, int damage, Vector3 center, float radius)
     {
         _owner = owner;
         this.gameObject.SetActive(true);
@@ -38,7 +41,7 @@ public class VariableCollider : MonoBehaviour
         Invoke("AutoDelete", limitTime);
     }
 
-    public void ActiveCapsuleCollider(Actor owner, float limitTime, Vector3 center, int direction, float height, float radius)
+    public void ActiveCapsuleCollider(Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
     {
         _owner = owner;
         this.gameObject.SetActive(true);
@@ -56,11 +59,13 @@ public class VariableCollider : MonoBehaviour
         if (_owner.transform == other.transform) return;
         Actor hitActor = other.GetComponent<Actor>();
         if (!hitActor) return;
-        hitActor.CallTakeDamage(10);
+        hitActor.CallTakeDamage(_damage);
 
         this.gameObject.SetActive(false);
         _sphereCollider.gameObject.SetActive(false);
         _capsuleCollider.gameObject.SetActive(false);
+
+        Debug.Log(other.name);
     }
 
     private void AutoDelete()

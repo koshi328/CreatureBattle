@@ -29,7 +29,7 @@ public class ActorController : MonoBehaviour
         // 使うスキルを予め伝える
         _myActor.CallSetSkills(new int[] {
             (int)SKILL_ID.SWORD_ATTACK_NORMAL,
-            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
+            (int)SKILL_ID.FIREBOLT,
             (int)SKILL_ID.SWORD_ATTACK_NORMAL,
             (int)SKILL_ID.SHIELD });
 
