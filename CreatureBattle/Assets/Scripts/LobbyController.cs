@@ -21,7 +21,6 @@ public class LobbyController : MonoBehaviour {
         _decideWindow.gameObject.SetActive(false);
         _roomMenuWindow.gameObject.SetActive(false);
         _roomElement = Resources.Load("Prefabs/RoomElement") as GameObject;
-
     }
 
     void OnReceivedRoomListUpdate()

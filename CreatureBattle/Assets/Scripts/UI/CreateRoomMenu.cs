@@ -46,7 +46,7 @@ public class CreateRoomMenu : MonoBehaviour {
         // シーンを読み込むまでルームのメッセージを受け取らない
         if (PhotonNetwork.CreateRoom(roomName, option, TypedLobby.Default)) 
         {
-            SceneController.Instance.LoadScene("Game", 2.0f, true);
+            SceneController.Instance.LoadScene("Select", 2.0f, true);
             Debug.Log("部屋を生成");
         }
     }

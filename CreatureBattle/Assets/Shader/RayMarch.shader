@@ -86,7 +86,7 @@
 				{
 					float3 lightDir = float3(0, 1, 0);
 					float light = dot(ToLocal(normalize(lightDir)), getNormal(ToLocal(ray))) * 0.5 + 0.5;
-					float4 color = float4(0.0, 0.5, 1.0, 1.0);
+					float4 color = float4(0.1, 0.0, 1.0, 1.0);
 					return color * light;
 				}
 				if (!InBox(ToLocal(ray), abs(_Scale)))

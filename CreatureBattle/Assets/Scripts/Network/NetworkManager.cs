@@ -32,7 +32,7 @@ public class NetworkManager : MonoBehaviour {
     {
         Debug.Log("Join成功");
         PhotonNetwork.isMessageQueueRunning = false;
-        SceneController.Instance.LoadScene("Game", 2.0f, true);
+        SceneController.Instance.LoadScene("Select", 2.0f, true);
     }
 
     void OnPhotonJoinRoomFailed(object[] codeAndMsg)
