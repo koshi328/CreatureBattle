@@ -33,7 +33,7 @@ public class ColliderManager : MonoBehaviour
             GameObject obj = Instantiate(_variableCollider, Vector3.zero, Quaternion.identity, this.transform);
             _colliders[i] = obj.GetComponent<VariableCollider>();
             _colliders[i].gameObject.SetActive(false);
-            Debug.Log(_colliders[i]);
+            //Debug.Log(_colliders[i]);
         }
 	}
 	

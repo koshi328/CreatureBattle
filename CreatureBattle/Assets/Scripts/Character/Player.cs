@@ -11,6 +11,6 @@ public class Player : Actor {
 
     private void Update()
     {
-        base.ActionTest();
+        base.MyUpdate();
     }
 }

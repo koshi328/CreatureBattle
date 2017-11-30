@@ -8,18 +8,16 @@ public enum SKILL_ID
     ALL_NUM
 }
 
-public class SkillController {
-
-    static SkillBase[] skill_clone = new SkillBase[(int)SKILL_ID.ALL_NUM];
-
-    static public void Initialize()
-    {
-        skill_clone[(int)SKILL_ID.SWORD_ATTACK_NORMAL] = new TestSkill();
-        skill_clone[(int)SKILL_ID.SHIELD] = new Shield();
-    }
-
+public class SkillController
+{
 	static public SkillBase GetSkill(SKILL_ID skillID)
     {
-        return skill_clone[(int)skillID].Clone();
+        switch (skillID)
+        {
+            case SKILL_ID.SWORD_ATTACK_NORMAL:  return new Skill.SkillSlash();
+            case SKILL_ID.SHIELD:               return new Skill.SkillShield();
+
+            default:                            return new Skill.SkillSlash();
+        }
     }
 }
