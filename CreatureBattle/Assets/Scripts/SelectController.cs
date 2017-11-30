@@ -26,7 +26,6 @@ public class SelectController : MonoBehaviour
     void Start()
     {
         PhotonNetwork.isMessageQueueRunning = true;
-        
         decideNum = 0;
         selectActorID = 0;
         selectSkillID[0] = 0;
