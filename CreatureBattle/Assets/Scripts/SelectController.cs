@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SelectController : MonoBehaviour
 {
     [SerializeField]
     Button _decideButton;
     [SerializeField]
+    Image[] _playerImage = new Image[4];
+    [SerializeField]
     GameObject _characterSelectList;
     [SerializeField]
     GameObject _characterButtonPrefab;
 
-    string[] actorData;
+    [SerializeField]
+    ScriptableActor actorData;
+    
 
-    string selectActorName;
+    int selectActorID;
     int[] selectSkillID = new int[4];
     int decideNum;
     // Use this for initialization
     void Start()
     {
         PhotonNetwork.isMessageQueueRunning = true;
-        actorData = new string[3];
-        actorData[0] = "Yuki";
-        actorData[1] = "Misaki";
-        actorData[2] = "UnityChan";
-
+        
         decideNum = 0;
-        selectActorName = "";
+        selectActorID = 0;
         selectSkillID[0] = 0;
         selectSkillID[1] = 0;
         selectSkillID[2] = 0;
@@ -35,7 +36,6 @@ public class SelectController : MonoBehaviour
         CreateCharacterList();
         _decideButton.onClick.AddListener(() =>
         {
-            SetPlayerData(selectActorName, selectSkillID);
             var table = new ExitGames.Client.Photon.Hashtable();
             table.Add(PhotonNetwork.player.ID.ToString(), 1);
             PhotonNetwork.room.SetCustomProperties(table);
@@ -44,10 +44,10 @@ public class SelectController : MonoBehaviour
         });
     }
 
-    void SetPlayerData(string actorName, int[] skillID)
+    void SetPlayerData(int actorID, int[] skillID)
     {
         var playerTable = new ExitGames.Client.Photon.Hashtable();
-        playerTable.Add("ActorName", actorName);
+        playerTable.Add("ActorID", actorID);
         playerTable.Add("skill1", skillID[0]);
         playerTable.Add("skill2", skillID[1]);
         playerTable.Add("skill3", skillID[2]);
@@ -59,19 +59,29 @@ public class SelectController : MonoBehaviour
 
     void CreateCharacterList()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < actorData.data.Length; i++)
         {
             GameObject button = Instantiate(_characterButtonPrefab, _characterSelectList.transform);
             button.transform.localPosition = new Vector3(30 + 150 * i, 0, 0);
             button.name = i.ToString();
-            button.GetComponent<Button>().onClick.AddListener(() => { selectActorName = actorData[int.Parse(button.gameObject.name)]; });
+            button.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                selectActorID = int.Parse(button.gameObject.name);
+                SetPlayerData(selectActorID, selectSkillID);
+            });
         }
     }
 
-    void OnPhotonPlayerPropertiesChenged(object[] data)
+    void OnPhotonPlayerPropertiesChanged(object[] data)
     {
+        Debug.Log("playerHash");
         PhotonPlayer player = data[0] as PhotonPlayer;
         ExitGames.Client.Photon.Hashtable table = data[1] as ExitGames.Client.Photon.Hashtable;
+        object value = null;
+        if (table.TryGetValue("ActorID", out value))
+        {
+            _playerImage[player.ID - 1].color = actorData.data[(int)value].color;
+        }
     }
 
     void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable table)

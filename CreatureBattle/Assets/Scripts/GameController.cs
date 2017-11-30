@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour {
     TrackCamera _cameraScript;
     [SerializeField]
     YesNoWindow _decideWindow;
+    [SerializeField]
+    ScriptableActor actorData;
 
     void Start () {
         PhotonNetwork.isMessageQueueRunning = true;
@@ -43,8 +45,11 @@ public class GameController : MonoBehaviour {
         else
         {
             object value;
-            PhotonNetwork.player.CustomProperties.TryGetValue("ActorName", out value);
-            _player = PhotonNetwork.Instantiate((string)value, pos, rot, 0);
+            Debug.Log(actorData);
+            PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
+            Debug.Log(actorData.data[0].path);
+            Debug.Log((int)value);
+            _player = PhotonNetwork.Instantiate(actorData.data[(int)value].path, pos, rot, 0);
             _player.AddComponent<ActorController>();
             _cameraScript.SetTarget(_player.transform);
         }
