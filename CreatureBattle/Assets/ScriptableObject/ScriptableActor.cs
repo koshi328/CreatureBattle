@@ -9,12 +9,7 @@ public class ScriptableActor : ScriptableObject {
     public struct ActorData
     {
         public string path;
-        public Color color;// あとで画像にする
-        public ActorData(string path, Color color)
-        {
-            this.path = path;
-            this.color = color;
-        }
+        public Sprite sprite;// あとで画像にする
     }
 
     public ActorData[] data;

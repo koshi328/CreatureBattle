@@ -47,8 +47,6 @@ public class GameController : MonoBehaviour {
             object value;
             Debug.Log(actorData);
             PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
-            Debug.Log(actorData.data[0].path);
-            Debug.Log((int)value);
             _player = PhotonNetwork.Instantiate(actorData.data[(int)value].path, pos, rot, 0);
             _player.AddComponent<ActorController>();
             _cameraScript.SetTarget(_player.transform);

@@ -11,16 +11,23 @@ public class LobbyController : MonoBehaviour {
     CreateRoomMenu _roomMenuWindow;
     [SerializeField]
     GameObject _roomListViewContent;
-    
+    [SerializeField]
+    Button _humanButton;
+    [SerializeField]
+    Button _monsterButton;
 
-    private GameObject _roomElement;
+    bool isWantToMonster;
     
+    private GameObject _roomElement;
 	// Use this for initialization
 	void Start () {
+        isWantToMonster = false;
         // ポップアップウィンドウを非アクティブにしておく
         _decideWindow.gameObject.SetActive(false);
         _roomMenuWindow.gameObject.SetActive(false);
         _roomElement = Resources.Load("Prefabs/RoomElement") as GameObject;
+        _humanButton.onClick.AddListener(()=> { isWantToMonster = false; OnReceivedRoomListUpdate(); });
+        _monsterButton.onClick.AddListener(() => { isWantToMonster = true; OnReceivedRoomListUpdate(); });
     }
 
     void OnReceivedRoomListUpdate()
@@ -34,6 +41,16 @@ public class LobbyController : MonoBehaviour {
 
         for (int i = 0; i < rooms.Length; i++)
         {
+            object existMonster = null;
+            rooms[i].CustomProperties.TryGetValue("monster", out existMonster);
+            if (isWantToMonster)
+            {
+                if ((int)existMonster != 0) continue;
+            }
+            else
+            {
+                if ((int)existMonster == 0 && rooms[i].PlayerCount >= rooms[i].MaxPlayers - 1) continue;
+            }
             GameObject element = Instantiate(_roomElement, _roomListViewContent.transform);
             string info = "";
             info += "RoomName:" + rooms[i].Name + "\n";
@@ -51,7 +68,13 @@ public class LobbyController : MonoBehaviour {
 
     public void JoinRoom(string roomName)
     {
-        Debug.Log("Joinしたいです");
-        PhotonNetwork.JoinRoom(roomName);        
+        var properties = new ExitGames.Client.Photon.Hashtable();
+        properties.Add("monster", (isWantToMonster) ? true : false);
+        PhotonNetwork.SetPlayerCustomProperties(properties);
+        PhotonNetwork.JoinRoom(roomName);
     }
+
+    void OnJoinedLobby()
+    { 
+}
 }

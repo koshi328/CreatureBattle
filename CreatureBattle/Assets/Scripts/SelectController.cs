@@ -36,11 +36,54 @@ public class SelectController : MonoBehaviour
         _decideButton.onClick.AddListener(() =>
         {
             var table = new ExitGames.Client.Photon.Hashtable();
-            table.Add(PhotonNetwork.player.ID.ToString(), 1);
+            table.Add(PhotonNetwork.player.NickName, 2);
             PhotonNetwork.room.SetCustomProperties(table);
             // 仮
             _decideButton.onClick.RemoveAllListeners();
         });
+
+        // モンスター側のplayerか人間側のplayerか判断して処理する
+        object isMonster = null;
+        object player = null;
+        PhotonNetwork.player.CustomProperties.TryGetValue("monster", out isMonster);
+        if ((bool)isMonster == true)
+        {
+            PhotonNetwork.playerName = "monster";
+        }
+        else
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                PhotonNetwork.room.CustomProperties.TryGetValue("player" + i.ToString(), out player);
+                if ((int)player == 0)
+                {
+                    PhotonNetwork.playerName = "player" + i.ToString();
+                    break;
+                }
+            }
+        }
+        PhotonNetwork.room.CustomProperties.TryGetValue(PhotonNetwork.playerName, out player);
+        if((int)player != 0)
+        {
+            PhotonNetwork.LeaveRoom();
+            return;
+        }
+        var roomProperties = new ExitGames.Client.Photon.Hashtable();
+        roomProperties.Add(PhotonNetwork.playerName, 1);
+        PhotonNetwork.room.SetCustomProperties(roomProperties);
+    }
+
+    void OnPhotonPlayerDisconnected()
+    {
+        Debug.Log("Disconnected");
+        var properties = new ExitGames.Client.Photon.Hashtable();
+        properties.Add(PhotonNetwork.playerName, 0);
+        PhotonNetwork.room.SetCustomProperties(properties);
+    }
+
+    private void OnApplicationQuit()
+    {
+        OnPhotonPlayerDisconnected();
     }
 
     void SetPlayerData(int actorID, int[] skillID)
@@ -51,7 +94,7 @@ public class SelectController : MonoBehaviour
         playerTable.Add("skill2", skillID[1]);
         playerTable.Add("skill3", skillID[2]);
         playerTable.Add("skill4", skillID[3]);
-        PhotonNetwork.player.SetCustomProperties(playerTable);
+        PhotonNetwork.SetPlayerCustomProperties(playerTable);
     }
 
 
@@ -73,13 +116,18 @@ public class SelectController : MonoBehaviour
 
     void OnPhotonPlayerPropertiesChanged(object[] data)
     {
-        Debug.Log("playerHash");
         PhotonPlayer player = data[0] as PhotonPlayer;
         ExitGames.Client.Photon.Hashtable table = data[1] as ExitGames.Client.Photon.Hashtable;
         object value = null;
         if (table.TryGetValue("ActorID", out value))
         {
-            _playerImage[player.ID - 1].color = actorData.data[(int)value].color;
+            int elem = 0;
+            string name = player.NickName;
+            if (name == "player1") elem = 0;
+            if (name == "player2") elem = 1;
+            if (name == "player3") elem = 2;
+            if (name == "monster") elem = 3;
+            _playerImage[elem].sprite = actorData.data[(int)value].sprite;
         }
     }
 
@@ -87,30 +135,30 @@ public class SelectController : MonoBehaviour
     {
         {
             object value = null;
-            if (table.TryGetValue("1", out value))
+            if (table.TryGetValue("player1", out value))
             {
-                if ((int)value == 1) decideNum++;
+                if ((int)value == 2) decideNum++;
             }
         }
         {
             object value = null;
-            if (table.TryGetValue("2", out value))
+            if (table.TryGetValue("player2", out value))
             {
-                if ((int)value == 1) decideNum++;
+                if ((int)value == 2) decideNum++;
             }
         }
         {
             object value = null;
-            if (table.TryGetValue("3", out value))
+            if (table.TryGetValue("player3", out value))
             {
-                if ((int)value == 1) decideNum++;
+                if ((int)value == 2) decideNum++;
             }
         }
         {
             object value = null;
-            if (table.TryGetValue("4", out value))
+            if (table.TryGetValue("monster", out value))
             {
-                if ((int)value == 1) decideNum++;
+                if ((int)value == 2) decideNum++;
             }
         }
         
