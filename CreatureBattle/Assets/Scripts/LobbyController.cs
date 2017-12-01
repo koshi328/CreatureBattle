@@ -22,12 +22,26 @@ public class LobbyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         isWantToMonster = false;
+        _humanButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+        _monsterButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         // ポップアップウィンドウを非アクティブにしておく
         _decideWindow.gameObject.SetActive(false);
         _roomMenuWindow.gameObject.SetActive(false);
         _roomElement = Resources.Load("Prefabs/RoomElement") as GameObject;
-        _humanButton.onClick.AddListener(()=> { isWantToMonster = false; OnReceivedRoomListUpdate(); });
-        _monsterButton.onClick.AddListener(() => { isWantToMonster = true; OnReceivedRoomListUpdate(); });
+        _humanButton.onClick.AddListener(()=> 
+        {
+            isWantToMonster = false;
+            OnReceivedRoomListUpdate();
+            _humanButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+            _monsterButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        });
+        _monsterButton.onClick.AddListener(() => 
+        {
+            isWantToMonster = true;
+            OnReceivedRoomListUpdate();
+            _humanButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            _monsterButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+        });
     }
 
     void OnReceivedRoomListUpdate()
