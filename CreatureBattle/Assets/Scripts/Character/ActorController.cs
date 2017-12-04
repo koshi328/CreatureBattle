@@ -29,9 +29,9 @@ public class ActorController : MonoBehaviour
         // 使うスキルを予め伝える
         _myActor.CallSetSkills(new int[] {
             (int)SKILL_ID.SWORD_ATTACK_NORMAL,
-            (int)SKILL_ID.FIREBOLT,
-            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
-            (int)SKILL_ID.SHIELD });
+            (int)SKILL_ID.CONTINUOUS_ATTACK,
+            (int)SKILL_ID.EMERGENCY_AVOID,
+            (int)SKILL_ID.SWORD_ATTACK_NORMAL });
 
         _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
         _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });
@@ -43,8 +43,15 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         if (PhotonNetwork.connected && !_myActor.GetPhotonView().isMine) return;
-        _statusCanvas.SetHPGauge(_myActor._currentHP, _myActor._maxHP);
+        _statusCanvas.SetHPGauge((float)_myActor._currentHP, (float)_myActor._maxHP);
         _statusCanvas.SetMPGauge(_speed, _maxSpeed);
+        UpdateRecastTime();
+
+        if(!_myActor.CanDiscardSkill())
+        {
+            return;
+        }
+
         // 方向指定
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -65,7 +72,13 @@ public class ActorController : MonoBehaviour
         }
 
         _myActor.AnimationSetFloat("Run", _speed);
+    }
 
+    /// <summary>
+    /// スキルのUIを更新
+    /// </summary>
+    void UpdateRecastTime()
+    {
         // リキャストタイムをUIに反映する
         for (int i = 0; i < 4; i++)
         {

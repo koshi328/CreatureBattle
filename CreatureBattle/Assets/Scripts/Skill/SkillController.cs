@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum SKILL_ID
 {
+    // 通常攻撃
     SWORD_ATTACK_NORMAL,
-    SHIELD,
-    FIREBOLT,
+
+    // ファイターのスキル
+    CONTINUOUS_ATTACK,  // 連撃
+    EMERGENCY_AVOID,    // 緊急回避
+
     ALL_NUM
 }
 
@@ -15,11 +19,11 @@ public class SkillController
     {
         switch (skillID)
         {
-            case SKILL_ID.SWORD_ATTACK_NORMAL:  return new Skill.SkillSlash();
-            case SKILL_ID.SHIELD:               return new Skill.SkillShield();
-            case SKILL_ID.FIREBOLT:             return new Skill.SkillFirebolt();
+            case SKILL_ID.SWORD_ATTACK_NORMAL:  return new Skill.NormalAttack();
+            case SKILL_ID.CONTINUOUS_ATTACK:    return new Skill.ContinuousAttack();
+            case SKILL_ID.EMERGENCY_AVOID:      return new Skill.EmergencyAvoid();
 
-            default:                            return new Skill.SkillSlash();
+            default:                            return new Skill.NormalAttack();
         }
     }
 }

@@ -8,4 +8,9 @@ public class Enemy : Actor {
     {
         base.Initialize();
     }
+
+    private void Update()
+    {
+        base.MyUpdate();
+    }
 }

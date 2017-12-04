@@ -3,25 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Actor : MonoBehaviour {
-
+public class Actor : MonoBehaviour
+{
     protected NavMeshAgent _navMesh;
     protected int _currentSkill;
     protected Animator _myAnimator;
     protected PhotonView _myPhotonView;
+
     // 自分の使うスキルを全て持っておく
     protected SkillBase[] _skillList;
 
-    // 仮
+    // 仮HP
     public int _maxHP { get; set; }
     public int _currentHP { get; set; }
-    
+    // 与ダメージ
+    protected int _attackDamage;
+    // 攻撃のインターバル
+    protected float _attackInterval;
+    // 人間かモンスターか？
+    protected ACTOR_TYPE _actorType;
+
+    // 状態異常のフラグ変数
+    protected int _flag = 0x00;
+    // スタン
+    public static readonly int STAN = 0x01;
+
+    [SerializeField]
+    protected ScriptableActor _actorData;
 
 
     protected void Initialize()
     {
-        _maxHP = 100;_currentHP = _maxHP;
+        // 自分のキャラの番号もらう
+        object value;
+        PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
+
+        // もらった番号で基本ステータスを拾う
+        _maxHP = _actorData.data[(int)value].hp;
+        _currentHP = _maxHP;
+        _attackDamage = _actorData.data[(int)value].attackDamage;
+        _attackInterval = _actorData.data[(int)value].attackInterval;
+        _actorType = _actorData.data[(int)value].actorType;
+
+        // 使用中スキル
         _currentSkill = -1;
+
+        // その他
         _navMesh = GetComponent<NavMeshAgent>();
         _myAnimator = GetComponent<Animator>();
         _myPhotonView = GetComponent<PhotonView>();
@@ -67,6 +94,14 @@ public class Actor : MonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             _skillList[i].MyUpdate();
+
+            if (0 <= _currentSkill)
+            {
+                if (_skillList[_currentSkill].GetState() == SKILL_STATE.RECASTING)
+                {
+                    _currentSkill = -1;
+                }
+            }
         }
     }
     // ----------------------------------------------------------------------
@@ -88,6 +123,7 @@ public class Actor : MonoBehaviour {
     {
         if (_currentSkill < 0) return;
         _skillList[_currentSkill].Dispose();
+        _currentSkill = -1;
     }
 
     //public void ExecuteSkill(SkillBase skill)
@@ -103,6 +139,7 @@ public class Actor : MonoBehaviour {
         AnimationSetTrigger("Damage");
         Debug.Log("TakeDamage=>currentHP:" + _currentHP);
     }
+
     public void CallTakeDamage(int damage)
     {
         _myPhotonView.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
@@ -163,5 +200,27 @@ public class Actor : MonoBehaviour {
     {
         if (_skillList == null) return 1.0f;
         return _skillList[n].GetRecastPer();
+    }
+
+    public int GetAttackDamage()
+    {
+        return _attackDamage;
+    }
+
+    public float GetAttackInterval()
+    {
+        return _attackInterval;
+    }
+
+    public bool IsPlayer()
+    {
+        if(_actorType == ACTOR_TYPE.PLAYER)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

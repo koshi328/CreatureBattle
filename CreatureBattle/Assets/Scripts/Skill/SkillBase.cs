@@ -78,6 +78,7 @@ public class SkillBase
                 {
                     _timer = REQUIREMENT_ACTIVATION_TIME;
                     _state = SKILL_STATE.ACTIVATING;
+                    _canDiscard = false;
                     Activate();
                 }
                 break;
@@ -90,7 +91,7 @@ public class SkillBase
                 {
                     _timer = REQUIREMENT_RECAST_TIME;
                     _state = SKILL_STATE.RECASTING;
-                    Dispose();
+                    //Dispose();
                 }
                 break;
 

@@ -33,27 +33,28 @@ public class ColliderManager : MonoBehaviour
             GameObject obj = Instantiate(_variableCollider, Vector3.zero, Quaternion.identity, this.transform);
             _colliders[i] = obj.GetComponent<VariableCollider>();
             _colliders[i].gameObject.SetActive(false);
-            //Debug.Log(_colliders[i]);
         }
 	}
 	
-    public void ActiveSphereCollider(Actor owner, float limitTime, int damage, Vector3 center, float radius)
+    public SphereCollider ActiveSphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            _colliders[i].ActiveSphereCollider(owner, limitTime, damage, center, radius);
-            break;
+            return _colliders[i].ActiveSphereCollider(layerName, owner, limitTime, damage, center, radius);
         }
+
+        return null;
     }
 
-    public void ActiveCapsuleCollider(Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
+    public CapsuleCollider ActiveCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            _colliders[i].ActiveCapsuleCollider(owner, limitTime, damage, center, direction, height, radius);
-            break;
+            return _colliders[i].ActiveCapsuleCollider(layerName, owner, limitTime, damage, center, direction, height, radius);
         }
+
+        return null;
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class VariableCollider : MonoBehaviour
 {
+    public static readonly int COLLISION_PLAYER_ATTACK = 9;
+    public static readonly int COLLISION_MONSTER_ATTACK = 10;
+    public static readonly int COLLISION_PLAYER_BODY = 11;
+    public static readonly int COLLISION_MONSTER_BODY = 12;
+
     public enum TYPE
     {
         SPHERE,
@@ -31,26 +36,34 @@ public class VariableCollider : MonoBehaviour
         _damage = 0;
     }
 
-    public void ActiveSphereCollider(Actor owner, float limitTime, int damage, Vector3 center, float radius)
+    public SphereCollider ActiveSphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius)
     {
         _owner = owner;
+        _damage = damage;
         this.gameObject.SetActive(true);
         transform.position = center;
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
+        _sphereCollider.gameObject.layer = layerName;
         Invoke("AutoDelete", limitTime);
+
+        return _sphereCollider;
     }
 
-    public void ActiveCapsuleCollider(Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
+    public CapsuleCollider ActiveCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
     {
         _owner = owner;
+        _damage = damage;
         this.gameObject.SetActive(true);
         transform.position = center;
         _capsuleCollider.direction = direction;
         _capsuleCollider.height = height;
         _capsuleCollider.radius = radius;
         _capsuleCollider.gameObject.SetActive(true);
+        _capsuleCollider.gameObject.layer = layerName;
         Invoke("AutoDelete", limitTime);
+
+        return _capsuleCollider;
     }
 
     private void OnTriggerEnter(Collider other)

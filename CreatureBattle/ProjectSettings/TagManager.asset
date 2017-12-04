@@ -15,10 +15,10 @@ TagManager:
   - 
   - 
   - FireLayer
-  - 
-  - 
-  - 
-  - 
+  - PlayerAttack
+  - MonsterAttack
+  - PlayerBody
+  - MonsterBody
   - 
   - 
   - 
