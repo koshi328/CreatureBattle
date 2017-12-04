@@ -166,6 +166,7 @@ public class SelectController : MonoBehaviour
         {
             PhotonNetwork.isMessageQueueRunning = false;
             SceneController.Instance.LoadScene("Game", 2.0f, true);
+            PhotonNetwork.room.IsVisible = false;
         }
     }
 }
