@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TankSkill
+namespace MonsterSkill
 {
     /// <summary>
     /// 連続攻撃
     /// </summary>
-    public class ContinuousAttack : SkillBase
+    public class CapacityRise : SkillBase
     {
         int _damage;
 
@@ -35,9 +35,8 @@ namespace TankSkill
         {
             _owner.AnimationSetTrigger("NormalAttack");
 
-            if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 10; i++)
             {
                 cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
             }

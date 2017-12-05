@@ -22,12 +22,7 @@ public class Actor : MonoBehaviour
     protected float _attackInterval;
     // 人間かモンスターか？
     protected ACTOR_TYPE _actorType;
-
-    // 状態異常のフラグ変数
-    protected int _flag = 0x00;
-    // スタン
-    public static readonly int STAN = 0x01;
-
+    
     [SerializeField]
     protected ScriptableActor _actorData;
 
@@ -46,7 +41,6 @@ public class Actor : MonoBehaviour
         _actorType = _actorData.data[(int)value].actorType;
 
         // 使用中スキル
-        _currentSkill = -1;
 
         // その他
         _navMesh = GetComponent<NavMeshAgent>();
@@ -90,6 +84,7 @@ public class Actor : MonoBehaviour
 
     public virtual void MyUpdate()
     {
+        // スキルの更新
         if (_skillList == null) return;
         for (int i = 0; i < 4; i++)
         {
@@ -106,19 +101,6 @@ public class Actor : MonoBehaviour
     }
     // ----------------------------------------------------------------------
 
-    //public virtual SkillBase Action()
-    //{
-    //    if (_currentSkill == null) return null;
-    //    SkillBase nextSkill = _currentSkill.Execute(this);
-    //    if(_currentSkill != nextSkill)
-    //    {
-    //        _currentSkill = nextSkill;
-    //        if(_currentSkill != null)
-    //            _currentSkill.Initialize();
-    //    }
-    //    return _currentSkill;
-    //}
-
     public void CancelAction()
     {
         if (_currentSkill < 0) return;
@@ -126,12 +108,6 @@ public class Actor : MonoBehaviour
         _currentSkill = -1;
     }
 
-    //public void ExecuteSkill(SkillBase skill)
-    //{
-    //    if (_currentSkill != null && !_currentSkill.CanDiscard()) return;
-    //    _currentSkill = skill;
-    //    _currentSkill.Initialize();
-    //}
     [PunRPC]
     public void TakeDamage(int damage)
     {

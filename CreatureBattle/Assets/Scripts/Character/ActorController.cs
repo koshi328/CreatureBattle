@@ -31,7 +31,7 @@ public class ActorController : MonoBehaviour
             (int)SKILL_ID.SWORD_ATTACK_NORMAL,
             (int)SKILL_ID.CONTINUOUS_ATTACK,
             (int)SKILL_ID.EMERGENCY_AVOID,
-            (int)SKILL_ID.SWORD_ATTACK_NORMAL });
+            (int)SKILL_ID.TRIP_STAN });
 
         _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
         _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });
@@ -43,15 +43,16 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         if (PhotonNetwork.connected && !_myActor.GetPhotonView().isMine) return;
+
+        // UIの更新
         _statusCanvas.SetHPGauge((float)_myActor._currentHP, (float)_myActor._maxHP);
         _statusCanvas.SetMPGauge(_speed, _maxSpeed);
         UpdateRecastTime();
+        
+        // 使用中のスキルがあり、そのスキルが中断不可能なら処理しない
+        if (!_myActor.CanDiscardSkill()) return;
 
-        if(!_myActor.CanDiscardSkill())
-        {
-            return;
-        }
-
+        // 移動
         // 方向指定
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -70,7 +71,6 @@ public class ActorController : MonoBehaviour
         {
             _speed = 0.0f;
         }
-
         _myActor.AnimationSetFloat("Run", _speed);
     }
 
@@ -92,22 +92,23 @@ public class ActorController : MonoBehaviour
             }
         }
 
-        bool flag = false;
-        // 使用中のスキルがあればボタンを押せないようにする
+        bool usable = true;
+        // ボタンを押せないようにする
         for (int i = 0; i < 4; i++)
         {
+            // 詠唱または発動中のスキルがある
             if (_myActor.GetSkillState(i) == SKILL_STATE.CASTING)
             {
-                flag = true;
+                usable = false;
             }
             else if (_myActor.GetSkillState(i) == SKILL_STATE.ACTIVATING)
             {
-                flag = true;
+                usable = false;
             }
         }
         for (int i = 0; i < 4; i++)
         {
-            _commandController.SetInteractable(i, !flag);
+            _commandController.SetInteractable(i, usable);
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Skill
         {
             _owner.AnimationSetTrigger("NormalAttack");
 
+            if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
             int collisionLayer = 0;
             if(_owner.IsPlayer())
@@ -45,8 +46,7 @@ namespace Skill
             {
                 collisionLayer = VariableCollider.COLLISION_MONSTER_ATTACK;
             }
-
-            cm.ActiveSphereCollider(collisionLayer, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
+            cm.EntrySphereCollider(collisionLayer, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
         }
 
         public override void Dispose()

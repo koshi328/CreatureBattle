@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Skill
+namespace FighterSkill
 {
     /// <summary>
     /// 連続攻撃
@@ -35,10 +35,11 @@ namespace Skill
         {
             _owner.AnimationSetTrigger("NormalAttack");
 
+            if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
             for (int i = 0; i < 10; i++)
             {
-                cm.ActiveSphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
+                cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
             }
         }
 
@@ -83,7 +84,6 @@ namespace Skill
         {
             // プレイヤーの向いてる方向の反対へのベクトルを取る
             _vec = _owner.transform.forward;
-            Debug.Log(_owner.transform.forward);
             _vec.y = 0.0f;
             _vec = -_vec;
             _vec *= 6.0f;
@@ -127,10 +127,11 @@ namespace Skill
         {
             _owner.AnimationSetTrigger("NormalAttack");
 
+            if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
             for (int i = 0; i < 10; i++)
             {
-                cm.ActiveSphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
+                cm.EntryFanCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, _owner.transform.eulerAngles, 30.0f);
             }
         }
 
