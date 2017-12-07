@@ -39,7 +39,7 @@ namespace TankSkill
             ColliderManager cm = ColliderManager.GetInstance();
             for (int i = 0; i < 3; i++)
             {
-                cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
+                cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, null);
             }
         }
 

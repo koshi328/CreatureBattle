@@ -17,7 +17,10 @@ public class GameController : MonoBehaviour {
     }
 	
 	void Update () {
-        
+        if(Input.GetKeyDown("space"))
+        {
+            _player = PhotonNetwork.Instantiate(actorData.data[0].path, Vector3.zero, Quaternion.identity, 0);
+        }
     }
 
     public void LeaveRoom()
@@ -45,7 +48,6 @@ public class GameController : MonoBehaviour {
         else
         {
             object value;
-            Debug.Log(actorData);
             PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
             _player = PhotonNetwork.Instantiate(actorData.data[(int)value].path, pos, rot, 0);
             _player.AddComponent<ActorController>();

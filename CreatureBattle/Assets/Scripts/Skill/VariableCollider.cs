@@ -33,6 +33,12 @@ public class VariableCollider : MonoBehaviour
     // 角度
     float _angleRange;
 
+    // この当たり判定と当たったオブジェクトのインスタンスIDのリスト
+    List<int> _instanceIDs;
+
+    // この当たり判定で付与する状態異常のリスト
+    List<StatusAilment.StatusAilmentBase> _statusAilments;
+
 
     void Awake ()
     {
@@ -43,8 +49,15 @@ public class VariableCollider : MonoBehaviour
         _damage = 0;
     }
 
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius)
+    private void Initialize()
     {
+        _instanceIDs = null;
+        _statusAilments = null;
+    }
+
+    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
+    {
+        Initialize();
         _type = COLLIDER_TYPE.SPHERE;
         _owner = owner;
         _damage = damage;
@@ -53,13 +66,16 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
+        _instanceIDs = new List<int>();
+        _statusAilments = statusAilments;
         Invoke("AutoDelete", limitTime);
 
         return _sphereCollider;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
+    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
     {
+        Initialize();
         _type = COLLIDER_TYPE.CAPSULE;
         _owner = owner;
         _damage = damage;
@@ -70,13 +86,16 @@ public class VariableCollider : MonoBehaviour
         _capsuleCollider.radius = radius;
         _capsuleCollider.gameObject.SetActive(true);
         _capsuleCollider.gameObject.layer = layerName;
+        _instanceIDs = new List<int>();
+        _statusAilments = statusAilments;
         Invoke("AutoDelete", limitTime);
 
         return _capsuleCollider;
     }
 
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange)
+    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, List<StatusAilment.StatusAilmentBase> statusAilments)
     {
+        Initialize();
         _type = COLLIDER_TYPE.FAN;
         _owner = owner;
         _damage = damage;
@@ -87,6 +106,8 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.gameObject.layer = layerName;
         transform.eulerAngles = currentAngle;
         _angleRange = angleRange;
+        _instanceIDs = new List<int>();
+        _statusAilments = statusAilments;
         Invoke("AutoDelete", limitTime);
 
         return _sphereCollider;
@@ -97,19 +118,38 @@ public class VariableCollider : MonoBehaviour
         if (_owner == null) return;
         if (_owner.transform == other.transform) return;
 
+        // 既に当たっていたら処理しない
+        for (int i = 0; i < _instanceIDs.Count; i++)
+        {
+            if (_instanceIDs[i] == other.GetInstanceID()) return;
+        }
+
+        // 既に当たったリストに追加
+        _instanceIDs.Add(other.GetInstanceID());
+
         // 扇形の判定の時
         if (_type == COLLIDER_TYPE.FAN)
         {
             if (!IsCollideFan(other.transform)) return;
         }
-        Debug.Log("hit");
+
+        // キャラかどうか
         Actor hitActor = other.GetComponent<Actor>();
         if (!hitActor) return;
+        
+        // 当たった時の処理
+        // ダメージ
         hitActor.CallTakeDamage(_damage);
-
-        this.gameObject.SetActive(false);
-        _sphereCollider.gameObject.SetActive(false);
-        _capsuleCollider.gameObject.SetActive(false);
+        // 状態異常を付与する
+        if (_statusAilments != null)
+        {
+            for (int i = 0; i < _statusAilments.Count; i++)
+            {
+                // 当たったやつが状態異常になる
+                _statusAilments[i].SetActor(hitActor);
+                _owner.AddStatusAilment(_statusAilments[i]);
+            }
+        }
     }
 
     private bool IsCollideFan(Transform other)

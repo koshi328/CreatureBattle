@@ -50,7 +50,7 @@ public class ActorController : MonoBehaviour
         UpdateRecastTime();
         
         // 使用中のスキルがあり、そのスキルが中断不可能なら処理しない
-        if (!_myActor.CanDiscardSkill()) return;
+        if (!_myActor.IsMovable()) return;
 
         // 移動
         // 方向指定
@@ -92,23 +92,9 @@ public class ActorController : MonoBehaviour
             }
         }
 
-        bool usable = true;
-        // ボタンを押せないようにする
         for (int i = 0; i < 4; i++)
         {
-            // 詠唱または発動中のスキルがある
-            if (_myActor.GetSkillState(i) == SKILL_STATE.CASTING)
-            {
-                usable = false;
-            }
-            else if (_myActor.GetSkillState(i) == SKILL_STATE.ACTIVATING)
-            {
-                usable = false;
-            }
-        }
-        for (int i = 0; i < 4; i++)
-        {
-            _commandController.SetInteractable(i, usable);
+            _commandController.SetInteractable(i, _myActor.IsUsableSkill());
         }
     }
 }

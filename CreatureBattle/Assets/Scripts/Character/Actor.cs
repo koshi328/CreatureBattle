@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using StatusAilment;
 
 public class Actor : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class Actor : MonoBehaviour
     [SerializeField]
     protected ScriptableActor _actorData;
 
+    // 状態異常
+    private List<StatusAilmentBase> _statusAilments = new List<StatusAilmentBase>();
+
 
     protected void Initialize()
     {
@@ -41,6 +45,7 @@ public class Actor : MonoBehaviour
         _actorType = _actorData.data[(int)value].actorType;
 
         // 使用中スキル
+        _currentSkill = -1;
 
         // その他
         _navMesh = GetComponent<NavMeshAgent>();
@@ -84,22 +89,84 @@ public class Actor : MonoBehaviour
 
     public virtual void MyUpdate()
     {
-        // スキルの更新
-        if (_skillList == null) return;
-        for (int i = 0; i < 4; i++)
+        if (_statusAilments != null)
         {
-            _skillList[i].MyUpdate();
-
-            if (0 <= _currentSkill)
+            // 状態異常の更新
+            for (int i = 0; i < _statusAilments.Count; i++)
             {
-                if (_skillList[_currentSkill].GetState() == SKILL_STATE.RECASTING)
+                _statusAilments[i].Update();
+
+                // 時間が終わっていたら
+                if (_statusAilments[i]._isFinished)
                 {
-                    _currentSkill = -1;
+                    _statusAilments.RemoveAt(i);
+                }
+            }
+        }
+
+        // スキルの更新
+        if (_skillList != null)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                _skillList[i].MyUpdate();
+
+                if (0 <= _currentSkill)
+                {
+                    if (_skillList[_currentSkill].GetState() == SKILL_STATE.RECASTING)
+                    {
+                        _currentSkill = -1;
+                    }
                 }
             }
         }
     }
     // ----------------------------------------------------------------------
+
+    /// <summary>
+    /// 移動可能か？
+    /// </summary>
+    /// <returns></returns>
+    public bool IsMovable()
+    {
+        if (_statusAilments != null)
+        {
+            for (int i = 0; i < _statusAilments.Count; i++)
+            {
+                if (_statusAilments[i]._kind == KIND.STAN) return false;
+            }
+        }
+
+        if (!CanDiscardSkill()) return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// スキルが使えるか？
+    /// </summary>
+    /// <returns></returns>
+    public bool IsUsableSkill()
+    {
+        if (_statusAilments != null)
+        {
+            for (int i = 0; i < _statusAilments.Count; i++)
+            {
+                if (_statusAilments[i]._kind == KIND.STAN) return false;
+                if (_statusAilments[i]._kind == KIND.SILENCE) return false;
+            }
+        }
+
+        // ボタンを押せないようにする
+        for (int i = 0; i < 4; i++)
+        {
+            // 詠唱または発動中のスキルがある
+            if (GetSkillState(i) == SKILL_STATE.CASTING) return false;
+            else if (GetSkillState(i) == SKILL_STATE.ACTIVATING) return false;
+        }
+
+        return true;
+    }
 
     public void CancelAction()
     {
@@ -168,7 +235,7 @@ public class Actor : MonoBehaviour
 
     public SKILL_STATE GetSkillState(int n)
     {
-        if (_skillList == null) return SKILL_STATE.USABLE;
+        if (_skillList == null) return SKILL_STATE.RECASTING;
         return _skillList[n].GetState();
     }
 
@@ -186,6 +253,12 @@ public class Actor : MonoBehaviour
     public float GetAttackInterval()
     {
         return _attackInterval;
+    }
+
+    public void AddStatusAilment(StatusAilmentBase statusAilment)
+    {
+        _statusAilments.Add(statusAilment);
+        Debug.Log("状態異常になった");
     }
 
     public bool IsPlayer()

@@ -36,34 +36,34 @@ public class ColliderManager : MonoBehaviour
         }
 	}
 	
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius)
+    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntrySphereCollider(layerName, owner, limitTime, damage, center, radius);
+            return _colliders[i].EntrySphereCollider(layerName, owner, limitTime, damage, center, radius, statusAilments);
         }
 
         return null;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius)
+    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntryCapsuleCollider(layerName, owner, limitTime, damage, center, direction, height, radius);
+            return _colliders[i].EntryCapsuleCollider(layerName, owner, limitTime, damage, center, direction, height, radius, statusAilments);
         }
 
         return null;
     }
 
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange)
+    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, List<StatusAilment.StatusAilmentBase> statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
             if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntryFanCollider(layerName, owner, limitTime, damage, center, radius, currentAngle, angleRange);
+            return _colliders[i].EntryFanCollider(layerName, owner, limitTime, damage, center, radius, currentAngle, angleRange, statusAilments);
         }
 
         return null;

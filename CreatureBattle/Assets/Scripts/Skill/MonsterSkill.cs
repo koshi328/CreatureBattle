@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MonsterSkill
 {
     /// <summary>
-    /// 連続攻撃
+    /// キャパシティら伊豆
     /// </summary>
     public class CapacityRise : SkillBase
     {
@@ -38,7 +38,7 @@ namespace MonsterSkill
             ColliderManager cm = ColliderManager.GetInstance();
             for (int i = 0; i < 10; i++)
             {
-                cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f);
+                cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, null);
             }
         }
 
