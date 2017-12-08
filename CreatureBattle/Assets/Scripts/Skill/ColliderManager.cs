@@ -36,7 +36,7 @@ public class ColliderManager : MonoBehaviour
         }
 	}
 	
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, StatusAilment.StatusAilmentBase[] statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
@@ -47,7 +47,7 @@ public class ColliderManager : MonoBehaviour
         return null;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, StatusAilment.StatusAilmentBase[] statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {
@@ -58,7 +58,7 @@ public class ColliderManager : MonoBehaviour
         return null;
     }
 
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilment.StatusAilmentBase[] statusAilments)
     {
         for (int i = 0; i < MAX_NUM; i++)
         {

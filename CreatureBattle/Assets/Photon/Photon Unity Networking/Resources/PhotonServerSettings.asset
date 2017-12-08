@@ -40,4 +40,7 @@ MonoBehaviour:
   - ExecuteSkillPhoton
   - TakeDamage
   - SetSkills
+  - AddStatusAilment
+  - AddStatusAilment2
+  - AddStatusAilment3
   DisableAutoOpenWizard: 1

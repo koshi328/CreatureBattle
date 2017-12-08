@@ -6,20 +6,71 @@ namespace StatusAilment
 {
     public enum KIND
     {
+        // 状態異常
         STAN,
         SILENCE,
+        BAN_REC,
+        COUNTER_STAN,
+
+        // スリップダメージ
         BURN,
+
+        // バフ
         ATK_UP,
         DEF_UP,
         MOV_UP,
         REC_UP,
+        ATK_SPD_UP,
+        //BAN_ 行動妨害スキルを無効化する効果
+
+        // デバフ
         ATK_DOWN,
         DEF_DOWN,
         MOV_DOWN,
         REC_DOWN,
     }
 
+    /// <summary>
+    /// シングルトンの状態異常クリエイター
+    /// </summary>
+    public class StatusAilmentCreator
+    {
+        static StatusAilmentCreator _instance;
 
+        public static StatusAilmentCreator GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new StatusAilmentCreator();
+            }
+            return _instance;
+        }
+
+        public StatusAilmentBase GetStatusAilment(Actor owner, int kind, float time)
+        {
+            switch (kind)
+            {
+                case (int)KIND.STAN: return new StatusStan(owner, (StatusAilment.KIND)kind, time);
+                case (int)KIND.SILENCE: return new StatusSilence(owner, (StatusAilment.KIND)kind, time);
+                default: return new StatusStan(owner, (StatusAilment.KIND)kind, time);
+            }
+        }
+
+        public StatusAilmentBase GetStatusAilment2(Actor owner, int kind, float time, int damage, float damageInterval)
+        {
+            switch (kind)
+            {
+                case (int)KIND.BURN: return new StatusBurn(owner, (StatusAilment.KIND)kind, time, damage, damageInterval);
+                default: return null;
+            }
+        }
+
+        public StatusAilmentBase GetStatusAilment3(Actor owner, int kind, float time, float rate)
+        {
+            return new StatusBuff(owner, (StatusAilment.KIND)kind, time, rate);
+        }
+    }
+    
     /// <summary>
     /// 基底クラス
     /// </summary>
@@ -27,7 +78,7 @@ namespace StatusAilment
     {
         public KIND _kind { get; set; }
         protected Actor _owner;
-        protected float _limitTime;
+        public float _limitTime { get; set; }
         protected float _limitTimer;
         public bool _isFinished { get; set; }
 
@@ -35,7 +86,7 @@ namespace StatusAilment
         /// 付与された時の初期化
         /// </summary>
         /// <param name="time"></param>
-        public virtual void Initialize(KIND kind, Actor owner, float time)
+        public StatusAilmentBase(Actor owner, KIND kind, float time)
         {
             // 種類
             _kind = kind;
@@ -72,15 +123,6 @@ namespace StatusAilment
         public virtual void TakeEffect()
         {
         }
-
-        /// <summary>
-        /// 付与対象を教えてもらう
-        /// </summary>
-        /// <param name="actor"></param>
-        public void SetActor(Actor actor)
-        {
-            _owner = actor;
-        }
     }
 
     /// <summary>
@@ -88,9 +130,9 @@ namespace StatusAilment
     /// </summary>
     public class StatusStan : StatusAilmentBase
     {
-        public override void Initialize(KIND kind, Actor owner, float time)
+        public StatusStan(Actor owner, KIND kind, float time)
+            :base(owner, kind, time)
         {
-            base.Initialize(kind, owner, time);
         }
     }
 
@@ -99,9 +141,20 @@ namespace StatusAilment
     /// </summary>
     public class StatusSilence : StatusAilmentBase
     {
-        public override void Initialize(KIND kind, Actor owner, float time)
+        public StatusSilence(Actor owner, KIND kind, float time)
+            :base(owner, kind, time)
         {
-            base.Initialize(kind, owner, time);
+        }
+    }
+
+    /// <summary>
+    /// カウンタースタン
+    /// </summary>
+    public class StatusCounterStan : StatusAilmentBase
+    {
+        public StatusCounterStan(Actor owner, KIND kind, float time)
+            : base(owner, kind, time)
+        {
         }
     }
 
@@ -111,14 +164,14 @@ namespace StatusAilment
     public class StatusBurn : StatusAilmentBase
     {
         // ダメージ
-        protected int _damage;
+        public int _damage { get; set; }
         // ダメージの間隔
-        protected float _damageInterval;
-        protected float _damageTimer;
+        public float _damageInterval { get; set; }
+        public float _damageTimer { get; set; }
 
-        public void Initialize(KIND kind, Actor owner, float time, int damage, float damageInterval)
+        public StatusBurn(Actor owner, KIND kind, float time, int damage, float damageInterval)
+            :base(owner, kind, time)
         {
-            base.Initialize(kind, owner, time);
             _damage = damage;
             _damageInterval = damageInterval;
             _damageTimer = damageInterval;
@@ -126,8 +179,10 @@ namespace StatusAilment
 
         public override void TakeEffect()
         {
+            _damageTimer -= Time.deltaTime;
+
             // 一定時間経過する度にダメージを与える
-            if(_damageTimer <= 0.0f)
+            if (_damageTimer <= 0.0f)
             {
                 _damageTimer = _damageInterval;
                 _owner.CallTakeDamage(_damage);
@@ -135,19 +190,38 @@ namespace StatusAilment
         }
     }
 
-    public class StatusAtkUp : StatusAilmentBase
+    public class StatusBuff : StatusAilmentBase
     {
         // 倍率
-        protected float _rate;
-        
-        public void Initialize(KIND kind, Actor owner, float time, float rate)
+        public float _rate { get; set; }
+
+        public StatusBuff(Actor owner, KIND kind, float time, float rate)
+            :base(owner, kind, time)
         {
-            base.Initialize(kind, _owner, time);
             _rate = rate;
         }
 
         public override void TakeEffect()
         {
+            // 種類によって処理を変える
+            switch(_kind)
+            {
+                case KIND.ATK_UP:
+
+                    break;
+                case KIND.DEF_UP:
+
+                    break;
+                case KIND.MOV_UP:
+
+                    break;
+                case KIND.REC_UP:
+
+                    break;
+                case KIND.ATK_SPD_UP:
+
+                    break;
+            }
         }
     }
 }

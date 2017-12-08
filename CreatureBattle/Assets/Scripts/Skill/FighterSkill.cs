@@ -131,11 +131,8 @@ namespace FighterSkill
             if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
 
-            StatusAilmentBase stan = new StatusStan();
-            stan.Initialize(KIND.STAN, null, 2.0f);
-            List<StatusAilment.StatusAilmentBase> statusAilments = new List<StatusAilment.StatusAilmentBase>();
-            statusAilments.Add(stan);
-            cm.EntryFanCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, _owner.transform.eulerAngles, 30.0f, statusAilments);
+            StatusAilmentBase stan = new StatusStan(null, KIND.STAN, 2.0f);
+            cm.EntryFanCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, _owner.transform.eulerAngles, 30.0f, new StatusAilmentBase[] { stan });
         }
 
         public override void Dispose()
