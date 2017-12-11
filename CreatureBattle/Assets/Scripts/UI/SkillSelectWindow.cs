@@ -28,6 +28,10 @@ public class SkillSelectWindow : MonoBehaviour {
 
     public void ChangeActor(ScriptableActor actorData, int actorID)
     {
+        currentSelectNum = 0;
+        selectCon.SetSkillData(0, -1);
+        selectCon.SetSkillData(1, -1);
+        selectCon.SetSkillData(2, -1);
         ScriptableSkill skills = actorData.data[actorID].skillData;
         for (int i = 0; i < skills.data.Length; i++)
         {
