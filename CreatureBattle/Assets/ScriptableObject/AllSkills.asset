@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: AllSkills
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableAllSkills
+  data:
+  - skillName: SWORD_ATTACK_NORMAL
+    id: 0
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+  - skillName: FIGHTER_CONTINUOUS_ATTACK
+    id: 1
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+  - skillName: FIGHTER_EMERGENCY_AVOID
+    id: 2
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+  - skillName: FIGHTER_TRIP_STAN
+    id: 3
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+  - skillName: TANK_CONTINUOUS_ATTACK
+    id: 4
+    sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+  - skillName: TANK_EMERGENCY_AVOID
+    id: 5
+    sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+  - skillName: TANK_SHIELD_BASH
+    id: 6
+    sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+  - skillName: MAGE_FROST_ENERGY
+    id: 7
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_MAGIC_IMPULSE
+    id: 8
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_GROUND_FROST
+    id: 9
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_METEOR_IMPACT
+    id: 10
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_ICE_BRUST
+    id: 11
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MONSTER_CAPACITY_RISE
+    id: 12
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MONSTER_DRAGON_STORM
+    id: 13
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MONSTER_ABNORMAL_COUNTER
+    id: 14
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MONSTER_STAN_BREATH
+    id: 15
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
