@@ -289,6 +289,7 @@ RectTransform:
   - {fileID: 1958217011}
   - {fileID: 1163338853}
   - {fileID: 217401767}
+  - {fileID: 985742298}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1394,6 +1395,89 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 982782656}
+--- !u!1 &985742297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 985742298}
+  - component: {fileID: 985742301}
+  - component: {fileID: 985742300}
+  - component: {fileID: 985742299}
+  m_Layer: 5
+  m_Name: SkillSelectWindow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &985742298
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985742297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 85204729}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -610, y: 60}
+  m_SizeDelta: {x: 700, y: 460}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &985742299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985742297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938fc4b66584d7948baa5ca9671694bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectCon: {fileID: 1763736428}
+  buttonPrefab: {fileID: 1587602621306522, guid: 5761c2b18b4678246a733f7d6c7df77e,
+    type: 2}
+--- !u!114 &985742300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985742297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.4852941, g: 0.5527385, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &985742301
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985742297}
 --- !u!1 &993456962
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,12 +2679,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62332e0cc5cd55c48805e316ea81bc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillWindow: {fileID: 985742299}
   _decideButton: {fileID: 530567965}
   _playerImage:
   - {fileID: 1578111412}
   - {fileID: 1836774857}
   - {fileID: 1958217012}
   - {fileID: 1163338854}
+  _skillImage:
+  - {fileID: 1590443646}
+  - {fileID: 1688353764}
+  - {fileID: 1781601240}
+  - {fileID: 1432058076}
+  - {fileID: 1635676244}
+  - {fileID: 548843729}
+  - {fileID: 1516465496}
+  - {fileID: 652941805}
+  - {fileID: 312937256}
+  - {fileID: 1803284579}
+  - {fileID: 1475940514}
+  - {fileID: 1746143715}
   _characterSelectList: {fileID: 217401766}
   _characterButtonPrefab: {fileID: 1587602621306522, guid: 5761c2b18b4678246a733f7d6c7df77e,
     type: 2}

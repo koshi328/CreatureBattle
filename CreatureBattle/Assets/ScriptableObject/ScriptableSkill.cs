@@ -10,6 +10,8 @@ public class ScriptableSkill : ScriptableObject {
     {
         public string skillName;
         public int skillID;
+        public Sprite sprite;
+        public int elem;
     }
 
     public SkillObject[] data;

@@ -7,9 +7,13 @@ using UnityEngine.UI;
 public class SelectController : MonoBehaviour
 {
     [SerializeField]
+    SkillSelectWindow skillWindow;
+    [SerializeField]
     Button _decideButton;
     [SerializeField]
     Image[] _playerImage = new Image[4];
+    [SerializeField]
+    Image[] _skillImage = new Image[12];
     [SerializeField]
     GameObject _characterSelectList;
     [SerializeField]
@@ -32,7 +36,6 @@ public class SelectController : MonoBehaviour
         selectSkillID[1] = 0;
         selectSkillID[2] = 0;
         selectSkillID[3] = 0;
-        CreateCharacterList();
         _decideButton.onClick.AddListener(() =>
         {
             var table = new ExitGames.Client.Photon.Hashtable();
@@ -71,6 +74,8 @@ public class SelectController : MonoBehaviour
         var roomProperties = new ExitGames.Client.Photon.Hashtable();
         roomProperties.Add(PhotonNetwork.playerName, 1);
         PhotonNetwork.room.SetCustomProperties(roomProperties);
+
+        CreateCharacterList();
     }
 
     void OnPhotonPlayerDisconnected()
@@ -86,14 +91,18 @@ public class SelectController : MonoBehaviour
         OnPhotonPlayerDisconnected();
     }
 
-    void SetPlayerData(int actorID, int[] skillID)
+    void SetPlayerData(int actorID)
     {
         var playerTable = new ExitGames.Client.Photon.Hashtable();
         playerTable.Add("ActorID", actorID);
-        playerTable.Add("skill1", skillID[0]);
-        playerTable.Add("skill2", skillID[1]);
-        playerTable.Add("skill3", skillID[2]);
-        playerTable.Add("skill4", skillID[3]);
+        PhotonNetwork.SetPlayerCustomProperties(playerTable);
+    }
+
+    public void SetSkillData(int skillElem,int skillID)
+    {
+        skillElem = Mathf.Clamp(skillElem, 0, 3);
+        var playerTable = new ExitGames.Client.Photon.Hashtable();
+        playerTable.Add("skill" + (skillElem + 1).ToString(), skillID);
         PhotonNetwork.SetPlayerCustomProperties(playerTable);
     }
 
@@ -109,25 +118,44 @@ public class SelectController : MonoBehaviour
             button.GetComponent<Button>().onClick.AddListener(() =>
             {
                 selectActorID = int.Parse(button.gameObject.name);
-                SetPlayerData(selectActorID, selectSkillID);
+                SetPlayerData(selectActorID);
+                skillWindow.ChangeActor(actorData, selectActorID);
             });
         }
     }
 
     void OnPhotonPlayerPropertiesChanged(object[] data)
     {
+        // RPCでやればよかった暇があったら直す
         PhotonPlayer player = data[0] as PhotonPlayer;
         ExitGames.Client.Photon.Hashtable table = data[1] as ExitGames.Client.Photon.Hashtable;
+        int elem = 0;
+        string name = player.NickName;
+        if (name == "player1") elem = 0;
+        if (name == "player2") elem = 1;
+        if (name == "player3") elem = 2;
+        if (name == "monster") elem = 3;
+
         object value = null;
-        if (table.TryGetValue("ActorID", out value))
+        if(table.TryGetValue("ActorID", out value))
         {
-            int elem = 0;
-            string name = player.NickName;
-            if (name == "player1") elem = 0;
-            if (name == "player2") elem = 1;
-            if (name == "player3") elem = 2;
-            if (name == "monster") elem = 3;
             _playerImage[elem].sprite = actorData.data[(int)value].sprite;
+        }
+
+        player.CustomProperties.TryGetValue("ActorID", out value);
+        int actorNum = (int)value;
+
+        if (table.TryGetValue("skill1",out value))
+        {
+            _skillImage[elem * 3].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
+        }
+        if (table.TryGetValue("skill2", out value))
+        {
+            _skillImage[elem * 3 + 1].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
+        }
+        if (table.TryGetValue("skill3", out value))
+        {
+            _skillImage[elem * 3 + 2].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
         }
     }
 
