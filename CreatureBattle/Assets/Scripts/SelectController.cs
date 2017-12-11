@@ -21,6 +21,8 @@ public class SelectController : MonoBehaviour
 
     [SerializeField]
     ScriptableActor actorData;
+    [SerializeField]
+    ScriptableAllSkills skillsData;
     
 
     int selectActorID;
@@ -159,18 +161,15 @@ public class SelectController : MonoBehaviour
 
         if (table.TryGetValue("skill1",out value))
         {
-            //_skillImage[elem * 3].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
-            _skillImage[elem * 3].sprite = ((int)value < 0) ? null : actorData.data[actorNum].skillData.data[(int)value].sprite;
+            _skillImage[elem * 3].sprite = ((int)value < 0) ? null : skillsData.data[(int)value].sprite;
         }
         if (table.TryGetValue("skill2", out value))
         {
-            //_skillImage[elem * 3 + 1].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
-            _skillImage[elem * 3 + 1].sprite = ((int)value < 0) ? null : actorData.data[actorNum].skillData.data[(int)value].sprite;
+            _skillImage[elem * 3 + 1].sprite = ((int)value < 0) ? null : skillsData.data[(int)value].sprite;
         }
         if (table.TryGetValue("skill3", out value))
         {
-            //_skillImage[elem * 3 + 2].sprite = actorData.data[actorNum].skillData.data[(int)value].sprite;
-            _skillImage[elem * 3 + 2].sprite = ((int)value < 0) ? null : actorData.data[actorNum].skillData.data[(int)value].sprite;
+            _skillImage[elem * 3 + 2].sprite = ((int)value < 0) ? null : skillsData.data[(int)value].sprite;
         }
     }
 

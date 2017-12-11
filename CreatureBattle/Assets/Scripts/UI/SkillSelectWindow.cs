@@ -7,6 +7,8 @@ public class SkillSelectWindow : MonoBehaviour {
     [SerializeField]
     SelectController selectCon;
     [SerializeField]
+    ScriptableAllSkills skillsData;
+    [SerializeField]
     GameObject buttonPrefab;
     ScriptableSkill currentSkills;
 
@@ -36,9 +38,9 @@ public class SkillSelectWindow : MonoBehaviour {
         for (int i = 0; i < skills.data.Length; i++)
         {
             Button button = buttonList[i];
-            button.image.sprite = skills.data[i].sprite;
+            button.image.sprite = skillsData.data[skills.data[i].skillID].sprite;
             button.onClick.RemoveAllListeners();
-            button.name = actorData.data[actorID].skillData.data[i].elem.ToString();
+            button.name = actorData.data[actorID].skillData.data[i].skillID.ToString();
             button.onClick.AddListener(()=> 
             {
                 selectCon.SetSkillData(currentSelectNum, int.Parse(button.gameObject.name));

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Name: MagicianSkills
   m_EditorClassIdentifier: 
   data:
-  - skillName: m
-    skillID: 6
-    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    elem: 0
-  - skillName: m1
-    skillID: 7
-    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    elem: 1
+  - skillID: 7
+  - skillID: 8
+  - skillID: 9
+  - skillID: 10
+  - skillID: 11
+  - skillID: 12
+  - skillID: 13
+  - skillID: 14
+  - skillID: 15

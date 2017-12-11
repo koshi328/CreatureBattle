@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: ShielderSkills
   m_EditorClassIdentifier: 
   data:
-  - skillName: bkick
-    skillID: 5
-    sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+  - skillID: 4
+  - skillID: 5
+  - skillID: 6
