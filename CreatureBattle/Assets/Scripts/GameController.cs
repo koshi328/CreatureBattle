@@ -13,14 +13,11 @@ public class GameController : MonoBehaviour {
 
     void Start () {
         PhotonNetwork.isMessageQueueRunning = true;
+        if (PhotonNetwork.playerName == "monster")
+            actorData = Resources.Load("MonsterData") as ScriptableActor;
+        else
+            actorData = Resources.Load("ActorData") as ScriptableActor;
         CreatePlayer("Yuko", Vector3.zero, Quaternion.identity);
-    }
-	
-	void Update () {
-        if(Input.GetKeyDown("space"))
-        {
-            _player = PhotonNetwork.Instantiate(actorData.data[0].path, Vector3.zero, Quaternion.identity, 0);
-        }
     }
 
     public void LeaveRoom()

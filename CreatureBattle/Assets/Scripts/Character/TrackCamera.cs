@@ -14,7 +14,7 @@ public class TrackCamera : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
         if (!_refTransform) return;
-        transform.position = _refTransform.position + _offset;
+        transform.position += ((_refTransform.position + _offset) - transform.position) * 0.7f;
 
         if (Input.GetMouseButtonDown(1))
         {

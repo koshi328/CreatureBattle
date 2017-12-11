@@ -207,6 +207,23 @@ public class Actor : MonoBehaviour
         _currentHP = Mathf.Max(_currentHP - damage, 0);
         AnimationSetTrigger("Damage");
         Debug.Log("TakeDamage=>currentHP:" + _currentHP);
+        // 死んだとき
+        if(_currentHP <= 0)
+        {
+            AnimationSetBool("Death", true);
+            if (!_myPhotonView.isMine) return;
+            StartCoroutine(DeathMotion());
+        }
+    }
+
+    IEnumerator DeathMotion()
+    {
+        yield return new WaitForSeconds(5.0f);
+        Camera.main.transform.parent.GetComponent<TrackCamera>().SetTarget(GameObject.Find("DeathView").transform);
+        ActorController con = gameObject.GetComponent<ActorController>();
+        // ActorControllerの終了処理を入れる
+
+        if (con) con.enabled = false;
     }
 
     public void CallTakeDamage(int damage)

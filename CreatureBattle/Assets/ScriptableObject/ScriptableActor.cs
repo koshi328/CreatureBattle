@@ -20,6 +20,7 @@ public class ScriptableActor : ScriptableObject {
         public int attackDamage;    // 通常攻撃のダメージ
         public float attackInterval;// 通常攻撃の間隔
         public ACTOR_TYPE actorType;// 人間かモンスターか
+        public ScriptableSkill skillData;
     }
 
     public ActorData[] data;

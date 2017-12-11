@@ -19,6 +19,7 @@ MonoBehaviour:
     attackDamage: 4
     attackInterval: 0.8
     actorType: 0
+    skillData: {fileID: 11400000, guid: 82ef8030a89408f4d814d01215ee28c9, type: 2}
   - path: Misaki
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
     hp: 1260
@@ -26,10 +27,12 @@ MonoBehaviour:
     attackDamage: 5
     attackInterval: 2.5
     actorType: 0
+    skillData: {fileID: 11400000, guid: 4e54b0a300d75c947b0477231c3a042f, type: 2}
   - path: UnityChan
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
     hp: 3150
     maxSpeed: 5
     attackDamage: 5
     attackInterval: 1.6
-    actorType: 1
+    actorType: 0
+    skillData: {fileID: 11400000, guid: 0235be1c8c16e28449ed2bc14b8e742c, type: 2}
