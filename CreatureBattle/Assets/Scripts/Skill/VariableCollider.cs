@@ -24,6 +24,12 @@ public class VariableCollider : MonoBehaviour
     SphereCollider _sphereCollider;
     [SerializeField]
     CapsuleCollider _capsuleCollider;
+    [SerializeField]
+    MeshFilter _meshFilter;
+    [SerializeField]
+    Mesh _sphereMesh;
+    [SerializeField]
+    Mesh _capsuleMesh;
 
     float _limitTime;
 
@@ -67,6 +73,8 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
+        _sphereCollider.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
+        _meshFilter.mesh = _sphereMesh;
         _instanceIDs = new List<int>();
         _statusAilments = statusAilments;
         Invoke("AutoDelete", limitTime);
@@ -87,6 +95,7 @@ public class VariableCollider : MonoBehaviour
         _capsuleCollider.radius = radius;
         _capsuleCollider.gameObject.SetActive(true);
         _capsuleCollider.gameObject.layer = layerName;
+        _meshFilter.mesh = _capsuleMesh;
         _instanceIDs = new List<int>();
         _statusAilments = statusAilments;
         Invoke("AutoDelete", limitTime);
@@ -105,6 +114,8 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
+        _sphereCollider.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
+        _meshFilter.mesh = _sphereMesh;
         transform.eulerAngles = currentAngle;
         _angleRange = angleRange;
         _instanceIDs = new List<int>();
@@ -180,6 +191,7 @@ public class VariableCollider : MonoBehaviour
                     case KIND.DEF_DOWN:
                     case KIND.MOV_DOWN:
                     case KIND.REC_DOWN:
+                    case KIND.MOV_DOWN_DUP:
                         var buff = (StatusBuff)_statusAilments[i];
                         hitActor.CallAddStatusAilment3((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime, buff._rate);
                         break;

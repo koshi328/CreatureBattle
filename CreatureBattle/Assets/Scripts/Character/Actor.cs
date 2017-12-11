@@ -14,13 +14,25 @@ public class Actor : MonoBehaviour
     // 自分の使うスキルを全て持っておく
     protected SkillBase[] _skillList;
 
+    // 自分の番号
+    public int _actorNumber { get; set; }
+
     // 仮HP
     public int _maxHP { get; set; }
     public int _currentHP { get; set; }
+    
     // 与ダメージ
-    protected int _attackDamage;
+    public int _attackDamage { get; set; }
+    public int _defaultDamage { get; set; }
+
     // 攻撃のインターバル
-    protected float _attackInterval;
+    public float _attackInterval { get; set; }
+    public float _defaultInterval { get; set; }
+
+    // 速度
+    public float _maxSpeed { get; set; }
+    public float _defaultSpeed { get; set; }
+
     // 人間かモンスターか？
     protected ACTOR_TYPE _actorType;
     
@@ -29,6 +41,7 @@ public class Actor : MonoBehaviour
 
     // 状態異常
     private List<StatusAilmentBase> _statusAilments = new List<StatusAilmentBase>();
+    
 
 
     protected void Initialize()
@@ -38,10 +51,19 @@ public class Actor : MonoBehaviour
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
 
         // もらった番号で基本ステータスを拾う
+        _actorNumber = (int)value;
+
         _maxHP = _actorData.data[(int)value].hp;
         _currentHP = _maxHP;
+
         _attackDamage = _actorData.data[(int)value].attackDamage;
+        _defaultDamage = _actorData.data[(int)value].attackDamage;
+
         _attackInterval = _actorData.data[(int)value].attackInterval;
+        _defaultInterval = _actorData.data[(int)value].attackInterval;
+
+        _maxSpeed = _actorData.data[(int)value].maxSpeed;
+        _defaultSpeed = _actorData.data[(int)value].maxSpeed;
         _actorType = _actorData.data[(int)value].actorType;
 
         // 使用中スキル
@@ -57,7 +79,7 @@ public class Actor : MonoBehaviour
     {
         Vector3 vel = new Vector3(x, 0, z).normalized;
         transform.rotation = Quaternion.LookRotation(Vector3.Lerp(vel, transform.forward, 0.4f));
-        _navMesh.Move(vel * speed * Time.deltaTime);
+        _navMesh.Move(vel * _maxSpeed * Time.deltaTime);
     }
 
 
@@ -89,6 +111,10 @@ public class Actor : MonoBehaviour
 
     public virtual void MyUpdate()
     {
+        _attackDamage = _actorData.data[_actorNumber].attackDamage;
+        _attackInterval = _actorData.data[_actorNumber].attackInterval;
+        _maxSpeed = _actorData.data[_actorNumber].maxSpeed;
+
         if (_statusAilments != null)
         {
             // 状態異常の更新
@@ -284,23 +310,7 @@ public class Actor : MonoBehaviour
         if (_skillList == null) return SKILL_STATE.RECASTING;
         return _skillList[n].GetState();
     }
-
-    public float GetRecastPer(int n)
-    {
-        if (_skillList == null) return 1.0f;
-        return _skillList[n].GetRecastPer();
-    }
-
-    public int GetAttackDamage()
-    {
-        return _attackDamage;
-    }
-
-    public float GetAttackInterval()
-    {
-        return _attackInterval;
-    }
-
+    
     public bool IsPlayer()
     {
         if(_actorType == ACTOR_TYPE.PLAYER)
@@ -321,5 +331,21 @@ public class Actor : MonoBehaviour
         }
 
         return false;
+    }
+
+    public float GetRecastPer(int n)
+    {
+        if (_skillList == null) return 1.0f;
+        return _skillList[n].GetRecastPer();
+    }
+
+    public int GetAttackDamage()
+    {
+        return _attackDamage;
+    }
+
+    public float GetAttackInterval()
+    {
+        return _attackInterval;
     }
 }

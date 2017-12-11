@@ -42,6 +42,7 @@ namespace FighterSkill
             {
                 cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, null);
             }
+
         }
 
         public override void Dispose()

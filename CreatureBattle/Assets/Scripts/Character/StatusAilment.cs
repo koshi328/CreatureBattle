@@ -28,6 +28,9 @@ namespace StatusAilment
         DEF_DOWN,
         MOV_DOWN,
         REC_DOWN,
+
+        // 累積デバフ
+        MOV_DOWN_DUP,
     }
 
     /// <summary>
@@ -184,8 +187,10 @@ namespace StatusAilment
             // 一定時間経過する度にダメージを与える
             if (_damageTimer <= 0.0f)
             {
+                Debug.Log(_damage);
                 _damageTimer = _damageInterval;
-                _owner.CallTakeDamage(_damage);
+                if(_owner.GetPhotonView().isMine)
+                    _owner.CallTakeDamage(_damage);
             }
         }
     }
@@ -220,6 +225,22 @@ namespace StatusAilment
                     break;
                 case KIND.ATK_SPD_UP:
 
+                    break;
+
+                case KIND.ATK_DOWN:
+
+                    break;
+                case KIND.DEF_DOWN:
+
+                    break;
+                case KIND.MOV_DOWN:
+                    _owner._maxSpeed = _owner._defaultSpeed * (1.0f - _rate);
+                    break;
+                case KIND.REC_DOWN:
+
+                    break;
+                case KIND.MOV_DOWN_DUP:
+                    _owner._maxSpeed = _owner._maxSpeed * (1.0f - _rate);
                     break;
             }
         }

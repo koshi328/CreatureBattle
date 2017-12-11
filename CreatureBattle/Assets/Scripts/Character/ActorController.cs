@@ -15,7 +15,6 @@ public class ActorController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
         _myActor = GetComponent<Actor>();
         _mainCamera = Camera.main;
         _maxSpeed = 5.0f;
@@ -31,7 +30,7 @@ public class ActorController : MonoBehaviour
             (int)SKILL_ID.FIGHTER_CONTINUOUS_ATTACK,
             (int)SKILL_ID.TANK_SHIELD_BASH,
             (int)SKILL_ID.MAGE_FROST_ENERGY,
-            (int)SKILL_ID.MONSTER_STAN_BREATH});
+            (int)SKILL_ID.MAGE_ICE_BRUST});
 
         _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
         _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });
