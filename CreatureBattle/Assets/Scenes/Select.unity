@@ -1443,7 +1443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectCon: {fileID: 1763736428}
-  skillsData: {fileID: 11400000, guid: e5cb6d3384aff3f47a76f98d54f7018a, type: 2}
+  skillsData: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea, type: 2}
   buttonPrefab: {fileID: 1587602621306522, guid: 5761c2b18b4678246a733f7d6c7df77e,
     type: 2}
 --- !u!114 &985742300
@@ -2704,7 +2704,7 @@ MonoBehaviour:
   _characterButtonPrefab: {fileID: 1587602621306522, guid: 5761c2b18b4678246a733f7d6c7df77e,
     type: 2}
   actorData: {fileID: 0}
-  skillsData: {fileID: 11400000, guid: e5cb6d3384aff3f47a76f98d54f7018a, type: 2}
+  skillsData: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea, type: 2}
 --- !u!4 &1763736429
 Transform:
   m_ObjectHideFlags: 0
