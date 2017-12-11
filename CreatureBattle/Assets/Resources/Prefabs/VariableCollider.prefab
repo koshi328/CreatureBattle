@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114210133265867138}
   - component: {fileID: 135556615404435130}
   - component: {fileID: 136975575436176288}
-  - component: {fileID: 114378286703096346}
   m_Layer: 0
   m_Name: VariableCollider
   m_TagString: Untagged
@@ -56,20 +55,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sphereCollider: {fileID: 135556615404435130}
   _capsuleCollider: {fileID: 136975575436176288}
-  _fanCollider: {fileID: 114378286703096346}
---- !u!114 &114378286703096346
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1211392698534184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed9478b6874a8cf40896bd6292bdb254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sphereCollider: {fileID: 135556615404435130}
-  _angle: 0
 --- !u!135 &135556615404435130
 SphereCollider:
   m_ObjectHideFlags: 1

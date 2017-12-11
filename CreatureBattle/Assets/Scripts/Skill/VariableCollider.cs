@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StatusAilment;
 
 public class VariableCollider : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class VariableCollider : MonoBehaviour
     List<int> _instanceIDs;
 
     // この当たり判定で付与する状態異常のリスト
-    List<StatusAilment.StatusAilmentBase> _statusAilments;
+    StatusAilmentBase[] _statusAilments;
 
 
     void Awake ()
@@ -55,7 +56,7 @@ public class VariableCollider : MonoBehaviour
         _statusAilments = null;
     }
 
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.SPHERE;
@@ -73,7 +74,7 @@ public class VariableCollider : MonoBehaviour
         return _sphereCollider;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.CAPSULE;
@@ -93,7 +94,7 @@ public class VariableCollider : MonoBehaviour
         return _capsuleCollider;
     }
 
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, List<StatusAilment.StatusAilmentBase> statusAilments)
+    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.FAN;
@@ -140,14 +141,49 @@ public class VariableCollider : MonoBehaviour
         // 当たった時の処理
         // ダメージ
         hitActor.CallTakeDamage(_damage);
+        
         // 状態異常を付与する
         if (_statusAilments != null)
         {
-            for (int i = 0; i < _statusAilments.Count; i++)
+            // カウンタースタン
+            if (hitActor.HaveStatusAilment(KIND.COUNTER_STAN))
             {
-                // 当たったやつが状態異常になる
-                _statusAilments[i].SetActor(hitActor);
-                _owner.AddStatusAilment(_statusAilments[i]);
+                // 状態異常攻撃をした者にスタンをかけて状態異常を受けない
+                _owner.CallAddStatusAilment((int)KIND.STAN, 5.0f);
+                return;
+            }
+
+            for (int i = 0; i < _statusAilments.Length; i++)
+            {
+                switch(_statusAilments[i]._kind)
+                {
+                        // 状態異常
+                    case KIND.STAN:
+                    case KIND.SILENCE:
+                    case KIND.BAN_REC:
+                        hitActor.CallAddStatusAilment((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime);
+                        break;
+                        
+                        // スリップダメージ
+                    case KIND.BURN:
+                        var burn = (StatusBurn)_statusAilments[i];
+                        hitActor.CallAddStatusAilment2((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime, burn._damage, burn._damageInterval);
+                        break;
+
+                        // ステータスバフデバフ
+                    case KIND.ATK_UP:
+                    case KIND.DEF_UP:
+                    case KIND.MOV_UP:
+                    case KIND.REC_UP:
+                    case KIND.ATK_SPD_UP:
+                    case KIND.ATK_DOWN:
+                    case KIND.DEF_DOWN:
+                    case KIND.MOV_DOWN:
+                    case KIND.REC_DOWN:
+                        var buff = (StatusBuff)_statusAilments[i];
+                        hitActor.CallAddStatusAilment3((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime, buff._rate);
+                        break;
+                }
             }
         }
     }
@@ -174,6 +210,9 @@ public class VariableCollider : MonoBehaviour
         this.gameObject.SetActive(false);
         _sphereCollider.gameObject.SetActive(false);
         _capsuleCollider.gameObject.SetActive(false);
+
+        _instanceIDs = null;
+        _statusAilments = null;
     }
 
     public Actor GetOwner()

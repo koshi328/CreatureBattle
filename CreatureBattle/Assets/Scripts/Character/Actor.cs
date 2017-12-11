@@ -188,6 +188,52 @@ public class Actor : MonoBehaviour
         _myPhotonView.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
     }
 
+
+    // 状態異常追加のクラス //////////////////////////////////////////////////////////////////////////////////
+    [PunRPC]
+    public void AddStatusAilment(int kind, float time)
+    {
+        var creator = StatusAilmentCreator.GetInstance();
+        var sa = creator.GetStatusAilment(this, kind, time);
+        if (sa == null) return;
+        _statusAilments.Add(sa);
+    }
+
+    public void CallAddStatusAilment(int kind, float time)
+    {
+        _myPhotonView.RPC("AddStatusAilment", PhotonTargets.AllViaServer, kind, time);
+    }
+
+    [PunRPC]
+    public void AddStatusAilment2(int kind, float time, int damage, float damageInterval)
+    {
+        var creator = StatusAilmentCreator.GetInstance();
+        var sa = creator.GetStatusAilment2(this, kind, time, damage, damageInterval);
+        if (sa == null) return;
+        _statusAilments.Add(sa);
+    }
+
+    public void CallAddStatusAilment2(int kind, float time, int damage, float damageInterval)
+    {
+        _myPhotonView.RPC("AddStatusAilment2", PhotonTargets.AllViaServer, kind, time, damage, damageInterval);
+    }
+
+    [PunRPC]
+    public void AddStatusAilment3(int kind, float time, float rate)
+    {
+        var creator = StatusAilmentCreator.GetInstance();
+        var sa = creator.GetStatusAilment3(this, kind, time, rate);
+        if (sa == null) return;
+        _statusAilments.Add(sa);
+    }
+
+    public void CallAddStatusAilment3(int kind, float time, float rate)
+    {
+        _myPhotonView.RPC("AddStatusAilment3", PhotonTargets.AllViaServer, kind, time, rate);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     public bool CanDiscardSkill()
     {
         if (_currentSkill < 0) return true;
@@ -255,12 +301,6 @@ public class Actor : MonoBehaviour
         return _attackInterval;
     }
 
-    public void AddStatusAilment(StatusAilmentBase statusAilment)
-    {
-        _statusAilments.Add(statusAilment);
-        Debug.Log("状態異常になった");
-    }
-
     public bool IsPlayer()
     {
         if(_actorType == ACTOR_TYPE.PLAYER)
@@ -271,5 +311,15 @@ public class Actor : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public bool HaveStatusAilment(StatusAilment.KIND kind)
+    {
+        for(int i = 0;i < _statusAilments.Count; i++)
+        {
+            if (_statusAilments[i]._kind == kind) return true;
+        }
+
+        return false;
     }
 }

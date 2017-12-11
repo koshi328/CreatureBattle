@@ -28,10 +28,10 @@ public class ActorController : MonoBehaviour
 
         // 使うスキルを予め伝える
         _myActor.CallSetSkills(new int[] {
-            (int)SKILL_ID.SWORD_ATTACK_NORMAL,
-            (int)SKILL_ID.CONTINUOUS_ATTACK,
-            (int)SKILL_ID.EMERGENCY_AVOID,
-            (int)SKILL_ID.TRIP_STAN });
+            (int)SKILL_ID.FIGHTER_CONTINUOUS_ATTACK,
+            (int)SKILL_ID.TANK_SHIELD_BASH,
+            (int)SKILL_ID.MAGE_FROST_ENERGY,
+            (int)SKILL_ID.MONSTER_STAN_BREATH});
 
         _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
         _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });
