@@ -75,6 +75,10 @@ public class SelectController : MonoBehaviour
         roomProperties.Add(PhotonNetwork.playerName, 1);
         PhotonNetwork.room.SetCustomProperties(roomProperties);
 
+        if(PhotonNetwork.playerName == "monster")
+            actorData = Resources.Load("MonsterData") as ScriptableActor;
+        else
+            actorData = Resources.Load("ActorData") as ScriptableActor;
         CreateCharacterList();
     }
 
@@ -136,6 +140,14 @@ public class SelectController : MonoBehaviour
         if (name == "player3") elem = 2;
         if (name == "monster") elem = 3;
 
+        if (PhotonNetwork.playerName == "monster" && name != "monster")
+        {
+            return;
+        }
+        if (PhotonNetwork.playerName != "monster" && name == "monster")
+        {
+            return;
+        }
         object value = null;
         if(table.TryGetValue("ActorID", out value))
         {

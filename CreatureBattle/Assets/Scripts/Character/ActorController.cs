@@ -27,11 +27,20 @@ public class ActorController : MonoBehaviour
         _commandController = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
 
         // 使うスキルを予め伝える
-        _myActor.CallSetSkills(new int[] {
-            (int)SKILL_ID.FIGHTER_CONTINUOUS_ATTACK,
-            (int)SKILL_ID.TANK_SHIELD_BASH,
-            (int)SKILL_ID.MAGE_FROST_ENERGY,
-            (int)SKILL_ID.MONSTER_STAN_BREATH});
+        //_myActor.CallSetSkills(new int[] {
+        //    (int)SKILL_ID.FIGHTER_CONTINUOUS_ATTACK,
+        //    (int)SKILL_ID.TANK_SHIELD_BASH,
+        //    (int)SKILL_ID.MAGE_FROST_ENERGY,
+        //    (int)SKILL_ID.MONSTER_STAN_BREATH});
+
+        object value = null;
+        int[] skills = new int[4];
+        for (int i = 0; i < 3; i++)
+        {
+            PhotonNetwork.player.CustomProperties.TryGetValue("skill" + (i + 1).ToString(), out value);
+            skills[i] = (int)value;
+        }
+        _myActor.CallSetSkills(skills);
 
         _commandController.SetCommand(0, () => { _myActor.CallExecuteSkill(0); });
         _commandController.SetCommand(1, () => { _myActor.CallExecuteSkill(1); });

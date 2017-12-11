@@ -31,9 +31,5 @@ MonoBehaviour:
     hp: 3150
     attackDamage: 5
     attackInterval: 1.6
-<<<<<<< HEAD:CreatureBattle/Assets/Resources/ActorData.asset
     actorType: 0
     skillData: {fileID: 11400000, guid: 0235be1c8c16e28449ed2bc14b8e742c, type: 2}
-=======
-    actorType: 1
->>>>>>> d5d76c48244f1d90b4436cf502532b280402e03f:CreatureBattle/Assets/ScriptableObject/ActorData.asset

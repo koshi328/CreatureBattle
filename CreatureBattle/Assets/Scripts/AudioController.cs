@@ -29,7 +29,6 @@ public class AudioController : MonoBehaviour {
         Instance = this;
         DontDestroyOnLoad(this);
         SoundLoad();
-
     }
 
     public void SetBGM()
