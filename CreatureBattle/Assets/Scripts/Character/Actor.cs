@@ -111,6 +111,10 @@ public class Actor : MonoBehaviour
 
     public virtual void MyUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            EffectManager.Instance.SlashEffect(transform.position + Vector3.up, Quaternion.identity);
+        }
         _attackDamage = _actorData.data[_actorNumber].attackDamage;
         _attackInterval = _actorData.data[_actorNumber].attackInterval;
         _maxSpeed = _actorData.data[_actorNumber].maxSpeed;
@@ -206,7 +210,9 @@ public class Actor : MonoBehaviour
     {
         _currentHP = Mathf.Max(_currentHP - damage, 0);
         AnimationSetTrigger("Damage");
+        EffectManager.Instance.HitEffect(transform.position + Vector3.up * 0.5f);
         Debug.Log("TakeDamage=>currentHP:" + _currentHP);
+
         // 死んだとき
         if(_currentHP <= 0)
         {

@@ -110,7 +110,7 @@ namespace FighterSkill
             base.Initialize(owner);
             REQUIREMENT_CAST_TIME = 0.0f;
             REQUIREMENT_ACTIVATION_TIME = 1.0f;
-            REQUIREMENT_RECAST_TIME = 15.0f;
+            REQUIREMENT_RECAST_TIME = 0.0f;
             _damage = 33;
         }
 
@@ -127,6 +127,12 @@ namespace FighterSkill
 
         public override void Activate()
         {
+            // effect -----------------------------------
+            float angle = Mathf.Acos(Vector3.Dot(new Vector3(-1, 0, 0), _owner.transform.forward)) * 180 / 3.14f;
+            if (_owner.transform.forward.z > 0) angle *= -1;
+            Quaternion rot = Quaternion.Euler(new Vector3(90, 0, angle));
+            GameObject obj = EffectManager.Instance.SlashEffect(_owner.transform.position + Vector3.up, rot);
+            //-------------------------------------------
             _owner.AnimationSetTrigger("NormalAttack");
 
             if (_owner.GetPhotonView().isMine == false) return;
