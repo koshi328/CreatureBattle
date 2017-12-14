@@ -607,6 +607,9 @@ MonoBehaviour:
   hitEffect: {fileID: 1343797279188904, guid: cf5b750f4684b6249bf2e21c1fe29e57, type: 2}
   slashEffect: {fileID: 1225502504428516, guid: 83b20737770a7734aac3b3434ac31b2c,
     type: 2}
+  iceTornadoEffect: {fileID: 0}
+  iceEnergyEffect: {fileID: 0}
+  lightningEffect: {fileID: 0}
 --- !u!4 &312011609
 Transform:
   m_ObjectHideFlags: 0

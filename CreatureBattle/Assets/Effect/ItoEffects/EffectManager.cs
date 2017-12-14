@@ -14,6 +14,12 @@ public class EffectManager : MonoBehaviour {
     GameObject hitEffect;
     [SerializeField]
     GameObject slashEffect;
+    [SerializeField]
+    GameObject iceTornadoEffect;
+    [SerializeField]
+    GameObject iceEnergyEffect;
+    [SerializeField]
+    GameObject lightningEffect;
 
     private void Start()
     {
@@ -25,23 +31,39 @@ public class EffectManager : MonoBehaviour {
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
-
+    // hit
     public GameObject HitEffect(Vector3 pos)
     {
         GameObject obj = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(obj, 0.5f);
         return obj;
     }
-    public GameObject SlashEffect(Vector3 pos, Vector3 rot)
-    {
-        Quaternion r = Quaternion.Euler(rot);
-        GameObject obj = Instantiate(slashEffect, pos, r);
-        Destroy(obj, 0.5f);
-        return obj;
-    }
+    // 斬撃
     public GameObject SlashEffect(Vector3 pos, Quaternion rot)
     {
         GameObject obj = Instantiate(slashEffect, pos, rot);
+        Destroy(obj, 0.5f);
+        return obj;
+    }
+    // 氷の竜巻
+    public GameObject IceTornadoEffect(Vector3 pos, float time)
+    {
+        GameObject obj = Instantiate(iceTornadoEffect, pos, Quaternion.identity);
+        Destroy(obj, time);
+        return obj;
+    }
+    // 冷気
+    public GameObject IceEnergyEffect(Vector3 pos, Quaternion rot, float time)
+    {
+        GameObject obj = Instantiate(iceEnergyEffect, pos, rot);
+        obj.GetComponent<ParticleSystem>().time = time;
+        Destroy(obj, time);
+        return obj;
+    }
+    // 雷
+    public GameObject LightningEffect(Vector3 pos)
+    {
+        GameObject obj = Instantiate(iceTornadoEffect, pos, Quaternion.identity);
         Destroy(obj, 0.5f);
         return obj;
     }
