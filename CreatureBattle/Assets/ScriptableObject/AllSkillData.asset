@@ -15,48 +15,63 @@ MonoBehaviour:
   - skillName: SWORD_ATTACK_NORMAL
     id: 0
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: SWORD_ATTACK_NORMAL
   - skillName: FIGHTER_CONTINUOUS_ATTACK
     id: 1
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_CONTINUOUS_ATTACK
   - skillName: FIGHTER_EMERGENCY_AVOID
     id: 2
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_EMERGENCY_AVOID
   - skillName: FIGHTER_TRIP_STAN
     id: 3
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_TRIP_STAN
   - skillName: TANK_CONTINUOUS_ATTACK
     id: 4
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+    info: TANK_CONTINUOUS_ATTACK
   - skillName: TANK_EMERGENCY_AVOID
     id: 5
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+    info: TANK_EMERGENCY_AVOID
   - skillName: TANK_SHIELD_BASH
     id: 6
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+    info: TANK_SHIELD_BASH
   - skillName: MAGE_FROST_ENERGY
     id: 7
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: MAGE_FROST_ENERGY
   - skillName: MAGE_MAGIC_IMPULSE
     id: 8
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: MAGE_MAGIC_IMPULSE
   - skillName: MAGE_GROUND_FROST
     id: 9
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: MAGE_GROUND_FROST
   - skillName: MAGE_METEOR_IMPACT
     id: 10
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: MAGE_METEOR_IMPACT
   - skillName: MAGE_ICE_BRUST
     id: 11
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: MAGE_ICE_BRUST
   - skillName: MONSTER_CAPACITY_RISE
     id: 12
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: MONSTER_CAPACITY_RISE
   - skillName: MONSTER_DRAGON_STORM
     id: 13
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: MONSTER_DRAGON_STORM
   - skillName: MONSTER_ABNORMAL_COUNTER
     id: 14
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: MONSTER_ABNORMAL_COUNTER
   - skillName: MONSTER_STAN_BREATH
     id: 15
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
@@ -90,3 +105,4 @@ MonoBehaviour:
   - skillName: MONSTER_LATIS_THUNDER
     id: 25
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: MONSTER_STAN_BREATH
