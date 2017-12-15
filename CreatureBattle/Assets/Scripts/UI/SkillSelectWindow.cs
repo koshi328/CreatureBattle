@@ -10,10 +10,12 @@ public class SkillSelectWindow : MonoBehaviour {
     ScriptableAllSkills skillsData;
     [SerializeField]
     GameObject buttonPrefab;
+    [SerializeField]
+    Text skillInfomationText;
     ScriptableSkill currentSkills;
 
     Button[] buttonList;
-    int skillNum = 10;
+    int skillNum = 12;
 
     int currentSelectNum;
 	// Use this for initialization
@@ -25,6 +27,7 @@ public class SkillSelectWindow : MonoBehaviour {
             buttonList[i] = Instantiate(buttonPrefab, transform).GetComponent<Button>();
             buttonList[i].transform.localPosition = new Vector3((i % 4) * 150, (i / 4) * -150, 0) + new Vector3(-270, 150);
             buttonList[i].name = i.ToString();
+            SkillSelectButton buttonScript = buttonList[i].gameObject.AddComponent<SkillSelectButton>();
         }
 	}
 
@@ -47,12 +50,14 @@ public class SkillSelectWindow : MonoBehaviour {
                 currentSelectNum++;
             currentSelectNum = Mathf.Min(currentSelectNum, 2);
             });
+            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, skillsData.data[skills.data[i].skillID].info);
         }
         for (int i = skills.data.Length; i < skillNum; i++)
         {
             Button button = buttonList[i];
             button.onClick.RemoveAllListeners();
             button.image.sprite = null;
+            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, "");
         }
     }
 }

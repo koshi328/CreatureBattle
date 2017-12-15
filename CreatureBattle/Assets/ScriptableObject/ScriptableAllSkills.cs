@@ -11,6 +11,7 @@ public class ScriptableAllSkills : ScriptableObject
         public string skillName;
         public int id;
         public Sprite sprite;
+        public string info;
     }
 
     public Skills[] data;
