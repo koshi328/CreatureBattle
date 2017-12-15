@@ -47,7 +47,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
   - skillName: MAGE_ICE_BRUST
     id: 11
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
   - skillName: MONSTER_CAPACITY_RISE
     id: 12
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
@@ -59,4 +59,34 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
   - skillName: MONSTER_STAN_BREATH
     id: 15
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MAGE_THUNDER_FALL
+    id: 16
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_FLAME_PILLAR
+    id: 17
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MAGE_CHASE_FLAME
+    id: 18
+    sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+  - skillName: MONSTER_EXPLOSION
+    id: 19
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_DOUBLE_EDGE_RATE
+    id: 20
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_CLEANSE_SYSTEM
+    id: 21
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_DARK_IMPACT
+    id: 22
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_LIMIT_BREAk
+    id: 23
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_STADY_PROTECT
+    id: 24
+    sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+  - skillName: MONSTER_LATIS_THUNDER
+    id: 25
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}

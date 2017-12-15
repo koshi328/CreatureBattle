@@ -11,21 +11,26 @@ namespace StatusAilment
         SILENCE,
         BAN_REC,
         COUNTER_STAN,
+        CLEANSE_SYSTEM,
+        STADY_PROTECT,
 
         // スリップダメージ
         BURN,
 
         // バフ
+        BUFF,
         ATK_UP,
-        DEF_UP,
+        DAMAGE_CUT,
         MOV_UP,
         REC_UP,
         ATK_SPD_UP,
-        //BAN_ 行動妨害スキルを無効化する効果
+        BAN_DIS,    // 行動妨害スキルを無効化する効果
+        BAN_DEBUFF, // デバフ全無効
 
         // デバフ
+        DEBUFF,
         ATK_DOWN,
-        DEF_DOWN,
+        DAMAGE_UP,
         MOV_DOWN,
         REC_DOWN,
 
@@ -51,12 +56,7 @@ namespace StatusAilment
 
         public StatusAilmentBase GetStatusAilment(Actor owner, int kind, float time)
         {
-            switch (kind)
-            {
-                case (int)KIND.STAN: return new StatusStan(owner, (StatusAilment.KIND)kind, time);
-                case (int)KIND.SILENCE: return new StatusSilence(owner, (StatusAilment.KIND)kind, time);
-                default: return new StatusStan(owner, (StatusAilment.KIND)kind, time);
-            }
+            return new StatusAilmentBase(owner, (StatusAilment.KIND)kind, time);
         }
 
         public StatusAilmentBase GetStatusAilment2(Actor owner, int kind, float time, int damage, float damageInterval)
@@ -126,38 +126,30 @@ namespace StatusAilment
         public virtual void TakeEffect()
         {
         }
-    }
 
-    /// <summary>
-    /// スタン
-    /// </summary>
-    public class StatusStan : StatusAilmentBase
-    {
-        public StatusStan(Actor owner, KIND kind, float time)
-            :base(owner, kind, time)
+        /// <summary>
+        /// バフか？
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsBuff(KIND kind)
         {
+            if (kind <= KIND.BUFF) return false;
+            if (KIND.DEBUFF <= kind) return false;
+
+            return true;
         }
-    }
 
-    /// <summary>
-    /// サイレス
-    /// </summary>
-    public class StatusSilence : StatusAilmentBase
-    {
-        public StatusSilence(Actor owner, KIND kind, float time)
-            :base(owner, kind, time)
+        /// <summary>
+        /// デバフか？
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsDebuff(KIND kind)
         {
-        }
-    }
+            if (KIND.BUFF <= kind &&
+                kind <= KIND.DEBUFF)
+                return false;
 
-    /// <summary>
-    /// カウンタースタン
-    /// </summary>
-    public class StatusCounterStan : StatusAilmentBase
-    {
-        public StatusCounterStan(Actor owner, KIND kind, float time)
-            : base(owner, kind, time)
-        {
+            return true;
         }
     }
 
@@ -214,11 +206,11 @@ namespace StatusAilment
                 case KIND.ATK_UP:
 
                     break;
-                case KIND.DEF_UP:
+                case KIND.DAMAGE_CUT:
 
                     break;
                 case KIND.MOV_UP:
-
+                    _owner._maxSpeed = _owner._defaultSpeed * (1.0f + _rate);
                     break;
                 case KIND.REC_UP:
 
@@ -230,7 +222,7 @@ namespace StatusAilment
                 case KIND.ATK_DOWN:
 
                     break;
-                case KIND.DEF_DOWN:
+                case KIND.DAMAGE_UP:
 
                     break;
                 case KIND.MOV_DOWN:

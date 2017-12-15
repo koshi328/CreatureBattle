@@ -131,7 +131,7 @@ namespace TankSkill
             if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
 
-            StatusAilmentBase stan = new StatusStan(null, KIND.STAN, 1.0f);
+            StatusAilmentBase stan = new StatusAilmentBase(null, KIND.STAN, 1.0f);
             cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, new StatusAilmentBase[] { stan });
         }
 

@@ -187,7 +187,6 @@ public class Actor : MonoBehaviour
             }
         }
 
-        // ボタンを押せないようにする
         for (int i = 0; i < 4; i++)
         {
             // 詠唱または発動中のスキルがある
@@ -208,6 +207,42 @@ public class Actor : MonoBehaviour
     [PunRPC]
     public void TakeDamage(int damage)
     {
+        // 被ダメージアップの合計割合
+        float upRateTotal = 0.0f;
+
+        // 被ダメージアップの状態異常になっていたら計算に加える
+        if (HaveStatusAilment(KIND.DAMAGE_UP))
+        {
+            // 被ダメージアップの状態異常
+            StatusBuff[] damageUp = (StatusBuff[])GetStatusAilment(KIND.DAMAGE_UP);
+
+            for(int i = 0; i < damageUp.Length; i++)
+            {
+                upRateTotal += damageUp[i]._rate;
+            }
+        }
+
+        // 被ダメージカットの合計割合
+        float cutRateTotal = 0.0f;
+
+        // 被ダメージカットの状態異常になっていたら計算に加える
+        if (HaveStatusAilment(KIND.DAMAGE_CUT))
+        {
+            // 被ダメージカットの状態異常
+            StatusBuff[] damageCut = (StatusBuff[])GetStatusAilment(KIND.DAMAGE_CUT);
+
+            for (int i = 0; i < damageCut.Length; i++)
+            {
+                cutRateTotal += damageCut[i]._rate;
+            }
+        }
+
+        upRateTotal = Mathf.Clamp(upRateTotal, 0.0f, 1.0f + upRateTotal);
+        cutRateTotal = Mathf.Clamp(cutRateTotal, 0.0f, 1.0f - cutRateTotal);
+
+        // ダメージを計算
+        damage = (int)((float)damage * upRateTotal * cutRateTotal);
+
         _currentHP = Mathf.Max(_currentHP - damage, 0);
         AnimationSetTrigger("Damage");
         EffectManager.Instance.HitEffect(transform.position + Vector3.up * 0.5f);
@@ -222,6 +257,30 @@ public class Actor : MonoBehaviour
         }
     }
 
+    public void CallTakeDamage(int damage)
+    {
+        _myPhotonView.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
+    }
+
+    [PunRPC]
+    public void TakeRecover(int rec)
+    {
+        // 回復無効の場合は0
+        if(HaveStatusAilment(KIND.BAN_REC))
+        {
+            rec = 0;
+        }
+
+        // HPを回復
+        _currentHP = Mathf.Clamp(_currentHP, _currentHP + rec, _maxHP);
+        Debug.Log("TakeRecover=>currentHP:" + _currentHP);
+    }
+
+    public void CallTakeRecover(int rec)
+    {
+        _myPhotonView.RPC("TakeRecover", PhotonTargets.AllViaServer, rec);
+    }
+
     IEnumerator DeathMotion()
     {
         yield return new WaitForSeconds(5.0f);
@@ -232,16 +291,26 @@ public class Actor : MonoBehaviour
         if (con) con.enabled = false;
     }
 
-    public void CallTakeDamage(int damage)
-    {
-        _myPhotonView.RPC("TakeDamage", PhotonTargets.AllViaServer, damage);
-    }
-
 
     // 状態異常追加のクラス //////////////////////////////////////////////////////////////////////////////////
     [PunRPC]
     public void AddStatusAilment(int kind, float time)
     {
+        // デバフの場合
+        if (StatusAilmentBase.IsDebuff((KIND)kind))
+        {
+            // 妨害スキルのみを無効化する時
+            if (HaveStatusAilment(KIND.BAN_DIS) &&
+                !HaveStatusAilment(KIND.BAN_DEBUFF))
+            {
+                if (!((KIND)kind == KIND.BURN))
+                    return;
+            }
+
+            // 全状態異常を無効化
+            if (HaveStatusAilment(KIND.BAN_DEBUFF)) return;
+        }
+
         var creator = StatusAilmentCreator.GetInstance();
         var sa = creator.GetStatusAilment(this, kind, time);
         if (sa == null) return;
@@ -256,6 +325,13 @@ public class Actor : MonoBehaviour
     [PunRPC]
     public void AddStatusAilment2(int kind, float time, int damage, float damageInterval)
     {
+        // デバフの場合
+        if (StatusAilmentBase.IsDebuff((KIND)kind))
+        {
+            // 全状態異常を無効化
+            if (HaveStatusAilment(KIND.BAN_DEBUFF)) return;
+        }
+
         var creator = StatusAilmentCreator.GetInstance();
         var sa = creator.GetStatusAilment2(this, kind, time, damage, damageInterval);
         if (sa == null) return;
@@ -270,6 +346,21 @@ public class Actor : MonoBehaviour
     [PunRPC]
     public void AddStatusAilment3(int kind, float time, float rate)
     {
+        // デバフの場合
+        if (StatusAilmentBase.IsDebuff((KIND)kind))
+        {
+            // 妨害スキルのみを無効化する時
+            if (HaveStatusAilment(KIND.BAN_DIS) &&
+                !HaveStatusAilment(KIND.BAN_DEBUFF))
+            {
+                if (!((KIND)kind == KIND.BURN))
+                    return;
+            }
+
+            // 全状態異常を無効化
+            if (HaveStatusAilment(KIND.BAN_DEBUFF)) return;
+        }
+
         var creator = StatusAilmentCreator.GetInstance();
         var sa = creator.GetStatusAilment3(this, kind, time, rate);
         if (sa == null) return;
@@ -281,6 +372,45 @@ public class Actor : MonoBehaviour
         _myPhotonView.RPC("AddStatusAilment3", PhotonTargets.AllViaServer, kind, time, rate);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    [PunRPC]
+    public void RefreshStatusAilment(int kind)
+    {
+        for (int i = 0; i < _statusAilments.Count; i++)
+        {
+            // バフ全消去
+            if (kind == (int)KIND.BUFF)
+            {
+                if (KIND.BUFF < _statusAilments[i]._kind &&
+                   _statusAilments[i]._kind < KIND.DEBUFF)
+                {
+                    _statusAilments.RemoveAt(i);
+                }
+            }
+
+            // デバフ全消去
+            else if (kind == (int)KIND.DEBUFF)
+            {
+                if (KIND.DEBUFF < _statusAilments[i]._kind)
+                {
+                    _statusAilments.RemoveAt(i);
+                }
+            }
+            // 各状態異常につき消去
+            else
+            {
+                if((int)_statusAilments[i]._kind == kind)
+                {
+                    _statusAilments.RemoveAt(i);
+                }
+            }
+        }
+    }
+
+    public void CallRefreshStatusAilment(int kind)
+    {
+        _myPhotonView.RPC("RefreshStatusAilment", PhotonTargets.AllViaServer, kind);
+    }
 
 
     public bool CanDiscardSkill()
@@ -325,6 +455,7 @@ public class Actor : MonoBehaviour
         {
             _skillList[i] = SkillController.GetSkill((SKILL_ID)idList[i]);
             _skillList[i].Initialize(this);
+            _skillList[i].SetCommandNum(i);
         }
     }
 
@@ -346,6 +477,11 @@ public class Actor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 指定された状態異常になっているか？
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
     public bool HaveStatusAilment(StatusAilment.KIND kind)
     {
         for(int i = 0;i < _statusAilments.Count; i++)
@@ -354,6 +490,39 @@ public class Actor : MonoBehaviour
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// 指定された種類の状態異常をまとめて返す
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
+    public StatusAilmentBase[] GetStatusAilment(StatusAilment.KIND kind)
+    {
+        int num = 0;
+        StatusAilmentBase[] returnData;
+
+        // 指定された状態異常がいくつあるか
+        for (int i = 0; i < _statusAilments.Count; i++)
+        {
+            if (_statusAilments[i]._kind == kind) num++;
+        }
+
+        if (num <= 0) return null;
+        returnData = new StatusAilmentBase[num];
+        num = 0;
+
+        // 同じ状態異常をまとめて送る
+        for (int i = 0; i < _statusAilments.Count; i++)
+        {
+            if (_statusAilments[i]._kind == kind)
+            {
+                returnData[num] = _statusAilments[i];
+                num++;
+            }
+        }
+
+        return returnData;
     }
 
     public float GetRecastPer(int n)

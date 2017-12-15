@@ -15,7 +15,8 @@ MonoBehaviour:
   - path: UnityChan
     sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     hp: 5000
+    maxSpeed: 0
     attackDamage: 10
     attackInterval: 1
     actorType: 1
-    skillData: {fileID: 11400000, guid: 82ef8030a89408f4d814d01215ee28c9, type: 2}
+    skillData: {fileID: 11400000, guid: 3c6f7d442e44759429d9d2c411e7a0e8, type: 2}

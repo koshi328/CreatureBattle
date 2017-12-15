@@ -155,4 +155,9 @@ public class SkillBase
         float per = 1.0f - _timer / REQUIREMENT_RECAST_TIME;
         return per;
     }
+
+    public virtual void SetCommandNum(int num)
+    {
+
+    }
 }

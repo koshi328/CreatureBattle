@@ -73,7 +73,7 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
-        _sphereCollider.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
+        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
         _meshFilter.mesh = _sphereMesh;
         _instanceIDs = new List<int>();
         _statusAilments = statusAilments;
@@ -95,6 +95,7 @@ public class VariableCollider : MonoBehaviour
         _capsuleCollider.radius = radius;
         _capsuleCollider.gameObject.SetActive(true);
         _capsuleCollider.gameObject.layer = layerName;
+        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, height, radius * 2.0f);
         _meshFilter.mesh = _capsuleMesh;
         _instanceIDs = new List<int>();
         _statusAilments = statusAilments;
@@ -114,7 +115,7 @@ public class VariableCollider : MonoBehaviour
         _sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
-        _sphereCollider.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
+        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
         _meshFilter.mesh = _sphereMesh;
         transform.eulerAngles = currentAngle;
         _angleRange = angleRange;
@@ -148,6 +149,13 @@ public class VariableCollider : MonoBehaviour
         // キャラかどうか
         Actor hitActor = other.GetComponent<Actor>();
         if (!hitActor) return;
+
+        // プロテクト状態なら
+        if(hitActor.HaveStatusAilment(KIND.STADY_PROTECT))
+        {
+            hitActor.CallRefreshStatusAilment((int)KIND.STADY_PROTECT);
+            return;
+        }
         
         // 当たった時の処理
         // ダメージ
@@ -159,14 +167,23 @@ public class VariableCollider : MonoBehaviour
             // カウンタースタン
             if (hitActor.HaveStatusAilment(KIND.COUNTER_STAN))
             {
-                // 状態異常攻撃をした者にスタンをかけて状態異常を受けない
+                // 状態異常攻撃をした者にスタンをかけて、された方は状態異常を受けない
                 _owner.CallAddStatusAilment((int)KIND.STAN, 5.0f);
                 return;
             }
 
             for (int i = 0; i < _statusAilments.Length; i++)
             {
-                switch(_statusAilments[i]._kind)
+                // クレンズシステム状態なら炎上以外の状態異常は受けない
+                if (hitActor.HaveStatusAilment(KIND.CLEANSE_SYSTEM))
+                {
+                    if (_statusAilments[i]._kind != KIND.BURN)
+                    {
+                        continue;
+                    }
+                }
+
+                switch (_statusAilments[i]._kind)
                 {
                         // 状態異常
                     case KIND.STAN:
@@ -183,12 +200,12 @@ public class VariableCollider : MonoBehaviour
 
                         // ステータスバフデバフ
                     case KIND.ATK_UP:
-                    case KIND.DEF_UP:
+                    case KIND.DAMAGE_CUT:
                     case KIND.MOV_UP:
                     case KIND.REC_UP:
                     case KIND.ATK_SPD_UP:
                     case KIND.ATK_DOWN:
-                    case KIND.DEF_DOWN:
+                    case KIND.DAMAGE_UP:
                     case KIND.MOV_DOWN:
                     case KIND.REC_DOWN:
                     case KIND.MOV_DOWN_DUP:

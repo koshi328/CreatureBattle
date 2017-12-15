@@ -340,4 +340,186 @@ namespace MageSkill
             cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _generatePos, 0, 10.0f, 2.0f, new StatusAilmentBase[] { movDown });
         }
     }
+
+    /// <summary>
+    /// サンダーフォール
+    /// </summary>
+    public class ThunderFall : SkillBase
+    {
+        int _damage;
+        Vector3 _targetPos;
+
+        public override void Initialize(Actor owner)
+        {
+            base.Initialize(owner);
+            REQUIREMENT_CAST_TIME = 1.0f;
+            REQUIREMENT_ACTIVATION_TIME = 1.0f;
+            REQUIREMENT_RECAST_TIME = 6.0f;
+            _damage = 42;
+        }
+
+        public override SkillBase MyUpdate()
+        {
+            base.MyUpdate();
+
+            return this;
+        }
+
+        public override void Cast()
+        {
+            _owner.AnimationSetTrigger("Idle");
+        }
+
+        public override void Activate()
+        {
+            _owner.AnimationSetTrigger("NormalAttack");
+
+            // プレイヤーの向いてる方向へのベクトルを取る
+            Vector3 vec = _owner.transform.forward;
+            vec *= 5.0f;
+            vec.y = 0.0f;
+
+            if (_owner.GetPhotonView().isMine == false) return;
+
+            Debug.Log("ThunderFall");
+
+            // 細長いカプセルコライダーを生成
+            ColliderManager cm = ColliderManager.GetInstance();
+            cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, 
+                _owner.transform.position + vec, 0, 5.0f, 0.2f, null);
+        }
+
+        public override void Dispose()
+        {
+            Initialize(_owner);
+            _owner.AnimationSetTrigger("Idle");
+        }
+    }
+
+    /// <summary>
+    /// フレイムピラー
+    /// </summary>
+    public class FlamePillar : SkillBase
+    {
+        int _damage;
+
+        public override void Initialize(Actor owner)
+        {
+            base.Initialize(owner);
+            REQUIREMENT_CAST_TIME = 1.0f;
+            REQUIREMENT_ACTIVATION_TIME = 1.0f;
+            REQUIREMENT_RECAST_TIME = 7.0f;
+            _damage = 34;
+        }
+
+        public override SkillBase MyUpdate()
+        {
+            base.MyUpdate();
+
+            return this;
+        }
+
+        public override void Cast()
+        {
+            _owner.AnimationSetTrigger("Idle");
+        }
+
+        public override void Activate()
+        {
+            _owner.AnimationSetTrigger("NormalAttack");
+            
+            
+
+            if (_owner.GetPhotonView().isMine == false) return;
+
+            // 細長いカプセルコライダーを生成
+            for(int i = 0; i < 8; i++)
+            {
+                // 角度
+                float deg = 360.0f / 8.0f * i;
+                float rad = deg * Mathf.Deg2Rad;
+
+                // 円状に炎上柱を発生する
+                Vector3 pos = _owner.transform.position;
+                pos += new Vector3(3.0f * Mathf.Sin(rad), 0.0f, 3.0f * Mathf.Cos(rad));
+                StatusAilmentBase burn = new StatusBurn(null, KIND.BURN, 3.0f, 5, 1.0f);
+                ColliderManager cm = ColliderManager.GetInstance();
+                cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage,
+                    pos, 0, 5.0f, 0.2f, new StatusAilmentBase[] { burn });
+            }
+        }
+
+        public override void Dispose()
+        {
+            Initialize(_owner);
+            _owner.AnimationSetTrigger("Idle");
+        }
+    }
+
+    /// <summary>
+    /// チェイスフレイム
+    /// </summary>
+    public class ChaseFlame : SkillBase
+    {
+        int _damage;
+        Vector3 _vec;
+        SphereCollider _sphereCollider;
+        static int _usedNum = 0;
+
+        public override void Initialize(Actor owner)
+        {
+            base.Initialize(owner);
+            REQUIREMENT_CAST_TIME = 0.0f;
+            REQUIREMENT_ACTIVATION_TIME = 1.0f;
+            REQUIREMENT_RECAST_TIME = 5.0f;
+            _damage = 5 + 1 * _usedNum;
+            _sphereCollider = null;
+        }
+
+        public override SkillBase MyUpdate()
+        {
+            base.MyUpdate();
+
+            if (_sphereCollider != null &&
+                _sphereCollider.gameObject.GetActive() != false)
+            {
+                _sphereCollider.transform.position = _sphereCollider.transform.position + _vec * Time.deltaTime;
+            }
+            else
+            {
+                _sphereCollider = null;
+            }
+
+            return this;
+        }
+
+        public override void Cast()
+        {
+            _owner.AnimationSetTrigger("Idle");
+        }
+
+        public override void Activate()
+        {
+            _owner.AnimationSetTrigger("NormalAttack");
+
+            _usedNum++;
+
+            // プレイヤーの向いてる方向へのベクトルを取る
+            _vec = _owner.transform.forward;
+            _vec.y = 0.0f;
+            _vec *= 6.0f;
+
+            if (_owner.GetPhotonView().isMine == false) return;
+
+            ColliderManager cm = ColliderManager.GetInstance();
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position, 1.0f, null);
+            _sphereCollider.transform.position = _owner.transform.position;
+        }
+
+        public override void Dispose()
+        {
+            Initialize(_owner);
+            _owner.AnimationSetTrigger("Idle");
+        }
+    }
 }
