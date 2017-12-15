@@ -192,9 +192,9 @@ namespace MonsterSkill
     {
         int _damage;
         // 格子の数
-        readonly int LINE_NUM = 10;
+        readonly int LINE_NUM = 5;
         // 格子の隙間の幅
-        readonly float LINE_INTERVAL = 2.0f;
+        readonly float LINE_INTERVAL = 10.0f;
 
         public override void Initialize(Actor owner)
         {
@@ -231,8 +231,8 @@ namespace MonsterSkill
                 StatusAilmentBase silence1 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                 // Z軸に沿った当たり判定
-                CapsuleCollider c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage,
-                    _owner.transform.position + new Vector3(-LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i, 1.0f, 0.0f),
+                CapsuleCollider c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage,
+                    new Vector3(-LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i, 0.0f, 0.0f),
                     0, 50.0f, 0.2f, new StatusAilmentBase[] { silence1 });
 
                 c1.transform.eulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
@@ -243,8 +243,8 @@ namespace MonsterSkill
                     StatusAilmentBase silence2 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                     // X軸に沿った当たり判定
-                    CapsuleCollider c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage,
-                        _owner.transform.position + new Vector3(0.0f, 1.0f, -LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i),
+                    CapsuleCollider c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage,
+                        new Vector3(0.0f, 0.0f, -LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i),
                         0, 50.0f, 0.2f, new StatusAilmentBase[] { silence2 });
 
                     c2.transform.eulerAngles = new Vector3(0.0f, 0.0f, 90.0f);
