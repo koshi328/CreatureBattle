@@ -24,16 +24,12 @@ public class VariableCollider : MonoBehaviour
     SphereCollider _sphereCollider;
     [SerializeField]
     CapsuleCollider _capsuleCollider;
-    [SerializeField]
-    MeshFilter _meshFilter;
-    [SerializeField]
-    Mesh _sphereMesh;
-    [SerializeField]
-    Mesh _capsuleMesh;
 
     float _limitTime;
 
     int _damage;
+
+    int _damageRange;
 
     Actor _owner;
 
@@ -45,7 +41,7 @@ public class VariableCollider : MonoBehaviour
 
     // この当たり判定で付与する状態異常のリスト
     StatusAilmentBase[] _statusAilments;
-
+    
     public delegate void SkillDelegate(Actor actor);
     SkillDelegate hitDelegate = null;
 
@@ -53,6 +49,14 @@ public class VariableCollider : MonoBehaviour
     {
         hitDelegate = argDelgate;
     }
+    // デバッグ用　あとで消すべし
+    [SerializeField]
+    MeshFilter _meshFilter;
+    [SerializeField]
+    Mesh _sphereMesh;
+    [SerializeField]
+    Mesh _capsuleMesh;
+    
 
     void Awake ()
     {
@@ -61,6 +65,7 @@ public class VariableCollider : MonoBehaviour
         _capsuleCollider.gameObject.SetActive(false);
         _limitTime = 0.0f;
         _damage = 0;
+        _damageRange = 0;
     }
 
     private void Initialize()
@@ -70,17 +75,19 @@ public class VariableCollider : MonoBehaviour
         hitDelegate = null;
     }
 
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, StatusAilmentBase[] statusAilments)
+    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.SPHERE;
         _owner = owner;
         _damage = damage;
+        _damageRange = damageRange;
         this.gameObject.SetActive(true);
         transform.position = center;
-        _sphereCollider.radius = radius;
+        //_sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
+        _sphereCollider.transform.rotation = Quaternion.identity;
         _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
         _meshFilter.mesh = _sphereMesh;
         _instanceIDs = new List<int>();
@@ -90,19 +97,21 @@ public class VariableCollider : MonoBehaviour
         return _sphereCollider;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, int direction, float height, float radius, StatusAilmentBase[] statusAilments)
+    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, int direction, float height, float radius, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.CAPSULE;
         _owner = owner;
         _damage = damage;
+        _damageRange = damageRange;
         this.gameObject.SetActive(true);
         transform.position = center;
         _capsuleCollider.direction = direction;
         _capsuleCollider.height = height;
-        _capsuleCollider.radius = radius;
+        //_capsuleCollider.radius = radius;
         _capsuleCollider.gameObject.SetActive(true);
         _capsuleCollider.gameObject.layer = layerName;
+        _capsuleCollider.transform.rotation = Quaternion.identity;
         _meshFilter.transform.localScale = new Vector3(radius * 2.0f, height, radius * 2.0f);
         _meshFilter.mesh = _capsuleMesh;
         _instanceIDs = new List<int>();
@@ -112,17 +121,19 @@ public class VariableCollider : MonoBehaviour
         return _capsuleCollider;
     }
 
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilmentBase[] statusAilments)
+    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilmentBase[] statusAilments)
     {
         Initialize();
         _type = COLLIDER_TYPE.FAN;
         _owner = owner;
         _damage = damage;
+        _damageRange = damageRange;
         this.gameObject.SetActive(true);
         transform.position = center;
-        _sphereCollider.radius = radius;
+        //_sphereCollider.radius = radius;
         _sphereCollider.gameObject.SetActive(true);
         _sphereCollider.gameObject.layer = layerName;
+        _sphereCollider.transform.rotation = Quaternion.identity;
         _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
         _meshFilter.mesh = _sphereMesh;
         transform.eulerAngles = currentAngle;
@@ -164,10 +175,11 @@ public class VariableCollider : MonoBehaviour
             hitActor.CallRefreshStatusAilment((int)KIND.STADY_PROTECT);
             return;
         }
-        
+
         // 当たった時の処理
         // ダメージ
-        hitActor.CallTakeDamage(_damage);
+        int damage = _damage + Random.Range(-_damageRange, _damageRange + 1);
+        hitActor.CallTakeDamage(damage);
         
         // 状態異常を付与する
         if (_statusAilments != null)

@@ -46,7 +46,7 @@ namespace Skill
             {
                 collisionLayer = VariableCollider.COLLISION_MONSTER_ATTACK;
             }
-            cm.EntrySphereCollider(collisionLayer, _owner, 1.0f, _damage, _owner.transform.position, 2.0f, null);
+            cm.EntrySphereCollider(collisionLayer, _owner, 1.0f, _damage, 0, _owner.transform.position, 2.0f, null);
         }
 
         public override void Dispose()

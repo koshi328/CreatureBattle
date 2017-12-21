@@ -12,19 +12,16 @@ MonoBehaviour:
   m_Name: FighterSkills
   m_EditorClassIdentifier: 
   data:
-  - skillName: sword_attack_normal
-    skillID: 0
-    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    elem: 0
-  - skillName: continuous_attack
-    skillID: 1
-    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    elem: 1
-  - skillName: emergency_avoid
-    skillID: 2
-    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    elem: 2
-  - skillName: trip_stan
-    skillID: 3
-    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    elem: 3
+  - skillID: 0
+  - skillID: 1
+  - skillID: 2
+  - skillID: 3
+  - skillID: 26
+  - skillID: 27
+  - skillID: 28
+  - skillID: 29
+  - skillID: 30
+  - skillID: 31
+  - skillID: 32
+  - skillID: 33
+  - skillID: 34

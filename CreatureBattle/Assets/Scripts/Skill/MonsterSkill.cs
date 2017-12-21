@@ -6,47 +6,6 @@ using StatusAilment;
 namespace MonsterSkill
 {
     /// <summary>
-    /// キャパシティら伊豆
-    /// </summary>
-    public class CapacityRise : SkillBase
-    {
-        public override void Initialize(Actor owner)
-        {
-            base.Initialize(owner);
-            REQUIREMENT_CAST_TIME = 0.0f;
-            REQUIREMENT_ACTIVATION_TIME = 1.0f;
-            REQUIREMENT_RECAST_TIME = 20.0f;
-        }
-
-        public override SkillBase MyUpdate()
-        {
-            base.MyUpdate();
-            return this;
-        }
-
-        public override void Cast()
-        {
-            _owner.AnimationSetTrigger("Idle");
-        }
-
-        public override void Activate()
-        {
-            _owner.AnimationSetTrigger("NormalAttack");
-
-            // 通常攻撃速度2倍
-            _owner.CallAddStatusAilment3((int)KIND.ATK_SPD_UP, 10.0f, 2.0f);
-            // 通常攻撃ダメージ3.1倍
-            _owner.CallAddStatusAilment3((int)KIND.ATK_UP, 10.0f, 3.1f);
-        }
-
-        public override void Dispose()
-        {
-            Initialize(_owner);
-            _owner.AnimationSetTrigger("Idle");
-        }
-    }
-
-    /// <summary>
     /// ドラゴンストーム
     /// </summary>
     public class DragonStorm : SkillBase
@@ -84,7 +43,48 @@ namespace MonsterSkill
 
             // 周囲にダメージ&当たった対象にサイレンスを付与
             ColliderManager cm = ColliderManager.GetInstance();
-            cm.EntrySphereCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage, _owner.transform.position, 3.0f, new StatusAilmentBase[]{ silence });
+            cm.EntrySphereCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage, 5,  _owner.transform.position, 5.0f, new StatusAilmentBase[]{ silence });
+        }
+
+        public override void Dispose()
+        {
+            Initialize(_owner);
+            _owner.AnimationSetTrigger("Idle");
+        }
+    }
+
+    /// <summary>
+    /// キャパシティら伊豆
+    /// </summary>
+    public class CapacityRise : SkillBase
+    {
+        public override void Initialize(Actor owner)
+        {
+            base.Initialize(owner);
+            REQUIREMENT_CAST_TIME = 0.0f;
+            REQUIREMENT_ACTIVATION_TIME = 1.0f;
+            REQUIREMENT_RECAST_TIME = 20.0f;
+        }
+
+        public override SkillBase MyUpdate()
+        {
+            base.MyUpdate();
+            return this;
+        }
+
+        public override void Cast()
+        {
+            _owner.AnimationSetTrigger("Idle");
+        }
+
+        public override void Activate()
+        {
+            _owner.AnimationSetTrigger("NormalAttack");
+
+            // 通常攻撃速度2倍
+            _owner.CallAddStatusAilment3((int)KIND.ATK_SPD_UP, 10.0f, 2.0f);
+            // 通常攻撃ダメージ3.1倍
+            _owner.CallAddStatusAilment3((int)KIND.ATK_UP, 10.0f, 3.1f);
         }
 
         public override void Dispose()
@@ -175,7 +175,50 @@ namespace MonsterSkill
 
             // 前方扇形の当たり判定
             ColliderManager cm = ColliderManager.GetInstance();
-            cm.EntryFanCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, 0, _owner.transform.position, 5.0f, _owner.transform.eulerAngles, 30.0f, new StatusAilmentBase[] { stan, burn });
+            cm.EntryFanCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, 0, 0, _owner.transform.position, 5.0f, _owner.transform.eulerAngles, 30.0f, new StatusAilmentBase[] { stan, burn });
+        }
+
+        public override void Dispose()
+        {
+            Initialize(_owner);
+            _owner.AnimationSetTrigger("Idle");
+        }
+    }
+
+    /// <summary>
+    /// イニシャライズウェーブ
+    /// </summary>
+    public class InitializeWave : SkillBase
+    {
+        public override void Initialize(Actor owner)
+        {
+            base.Initialize(owner);
+            REQUIREMENT_CAST_TIME = 0.0f;
+            REQUIREMENT_ACTIVATION_TIME = 1.0f;
+            REQUIREMENT_RECAST_TIME = 30.0f;
+        }
+
+        public override SkillBase MyUpdate()
+        {
+            base.MyUpdate();
+            return this;
+        }
+
+        public override void Cast()
+        {
+            _owner.AnimationSetTrigger("Idle");
+        }
+
+        public override void Activate()
+        {
+            _owner.AnimationSetTrigger("NormalAttack");
+
+
+            if (_owner.GetPhotonView().isMine == false) return;
+
+            // デバフ無効
+            _owner.CallAddStatusAilment((int)KIND.BAN_DEBUFF, 10.0f);
+            _owner.CallAddStatusAilment((int)KIND.DAMAGE_CUT, 0.65f);
         }
 
         public override void Dispose()
@@ -192,9 +235,9 @@ namespace MonsterSkill
     {
         int _damage;
         // 格子の数
-        readonly int LINE_NUM = 10;
+        readonly int LINE_NUM = 5;
         // 格子の隙間の幅
-        readonly float LINE_INTERVAL = 2.0f;
+        readonly float LINE_INTERVAL = 10.0f;
 
         public override void Initialize(Actor owner)
         {
@@ -231,8 +274,8 @@ namespace MonsterSkill
                 StatusAilmentBase silence1 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                 // Z軸に沿った当たり判定
-                CapsuleCollider c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage,
-                    _owner.transform.position + new Vector3(-LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i, 1.0f, 0.0f),
+                CapsuleCollider c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
+                    new Vector3(-LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i, 0.0f, 0.0f),
                     0, 50.0f, 0.2f, new StatusAilmentBase[] { silence1 });
 
                 c1.transform.eulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
@@ -243,8 +286,8 @@ namespace MonsterSkill
                     StatusAilmentBase silence2 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                     // X軸に沿った当たり判定
-                    CapsuleCollider c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 1.0f, _damage,
-                        _owner.transform.position + new Vector3(0.0f, 1.0f, -LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i),
+                    CapsuleCollider c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
+                        new Vector3(0.0f, 0.0f, -LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i),
                         0, 50.0f, 0.2f, new StatusAilmentBase[] { silence2 });
 
                     c2.transform.eulerAngles = new Vector3(0.0f, 0.0f, 90.0f);
@@ -319,7 +362,7 @@ namespace MonsterSkill
 
             // 玉
             ColliderManager cm = ColliderManager.GetInstance();
-            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 2.0f, _damage, _owner.transform.position, 2.5f, new StatusAilmentBase[] { burn, banRec });
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 2.0f, _damage, 5, _owner.transform.position, 2.5f, new StatusAilmentBase[] { burn, banRec });
         }
 
         public override void Dispose()
@@ -390,7 +433,7 @@ namespace MonsterSkill
             for (int i = 0; i < 2; i++)
             {
                 ColliderManager cm = ColliderManager.GetInstance();
-                _capsuleCollider[i] = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 3.0f, _damage,
+                _capsuleCollider[i] = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 3.0f, _damage, 5,
                     _owner.transform.position, 0, 3.0f, 0.2f, null);
                 Vector3 f = _owner.transform.forward.normalized;
                 Vector3 axis = f;
@@ -515,7 +558,7 @@ namespace MonsterSkill
                 pos += new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-0.5f, 0.5f), Random.Range(-1.0f, 1.0f));
 
                 ColliderManager cm = ColliderManager.GetInstance();
-                _capsuleCollider[i] = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 3.0f, _damage,
+                _capsuleCollider[i] = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 3.0f, _damage, 5,
                     pos, 0, 3.0f, 0.2f, null);
 
                 Vector3 worldForward = Vector3.forward;

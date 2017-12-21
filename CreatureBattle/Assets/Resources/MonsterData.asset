@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: MonsterData
   m_EditorClassIdentifier: 
   data:
-  - path: UnityChan
+  - path: Yuko2
     sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     hp: 5000
-    maxSpeed: 0
+    maxSpeed: 5
     attackDamage: 10
     attackInterval: 1
     actorType: 1

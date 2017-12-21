@@ -11,6 +11,9 @@ public class Actor : MonoBehaviour
     protected Animator _myAnimator;
     protected PhotonView _myPhotonView;
 
+    // プレイヤーごとに異なる
+    public int _playerID { get; set; }
+
     // 自分の使うスキルを全て持っておく
     protected SkillBase[] _skillList;
 
@@ -49,6 +52,9 @@ public class Actor : MonoBehaviour
         // 自分のキャラの番号もらう
         object value;
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
+
+        // プレイヤー毎に異なる
+        _playerID = PhotonNetwork.player.ID;
 
         // もらった番号で基本ステータスを拾う
         _actorNumber = (int)value;
@@ -207,8 +213,11 @@ public class Actor : MonoBehaviour
     [PunRPC]
     public void TakeDamage(int damage)
     {
+        // ダメージ無効状態なら処理しない
+        if (HaveStatusAilment(KIND.NO_DAMAGE)) return;
+
         // 被ダメージアップの合計割合
-        float upRateTotal = 0.0f;
+        float upRateTotal = 1.0f;
 
         // 被ダメージアップの状態異常になっていたら計算に加える
         if (HaveStatusAilment(KIND.DAMAGE_UP))
@@ -216,14 +225,14 @@ public class Actor : MonoBehaviour
             // 被ダメージアップの状態異常
             StatusBuff[] damageUp = (StatusBuff[])GetStatusAilment(KIND.DAMAGE_UP);
 
-            for(int i = 0; i < damageUp.Length; i++)
+            for (int i = 0; i < damageUp.Length; i++)
             {
                 upRateTotal += damageUp[i]._rate;
             }
         }
 
         // 被ダメージカットの合計割合
-        float cutRateTotal = 0.0f;
+        float cutRateTotal = 1.0f;
 
         // 被ダメージカットの状態異常になっていたら計算に加える
         if (HaveStatusAilment(KIND.DAMAGE_CUT))
@@ -233,23 +242,41 @@ public class Actor : MonoBehaviour
 
             for (int i = 0; i < damageCut.Length; i++)
             {
-                cutRateTotal += damageCut[i]._rate;
+                cutRateTotal -= damageCut[i]._rate;
             }
         }
 
-        upRateTotal = Mathf.Clamp(upRateTotal, 0.0f, 1.0f + upRateTotal);
-        cutRateTotal = Mathf.Clamp(cutRateTotal, 0.0f, 1.0f - cutRateTotal);
-
         // ダメージを計算
         damage = (int)((float)damage * upRateTotal * cutRateTotal);
+        damage = Mathf.Max(0, damage);
 
-        _currentHP = Mathf.Max(_currentHP - damage, 0);
-        AnimationSetTrigger("Damage");
+        // カバーされている状態の場合
+        if (HaveStatusAilment(KIND.COVERED))
+        {
+            // 一番最初に付与してきたキャラクターに肩代わりしてもらう
+            StatusAilmentBase[] skill = GetStatusAilment(KIND.COVERED);
+            StatusCovered covered = (StatusCovered)skill[0];
+            PhotonPlayer[] playerList = PhotonNetwork.playerList;
+            for (int i = 0; i < playerList.Length; i++)
+            {
+                if(playerList[i].ID == covered._playerID)
+                {
+                    //playerList[i].Get
+                }
+            }
+        }
+
+        if (0 <= damage)
+        {
+            _currentHP = Mathf.Max(_currentHP - damage, 0);
+            AnimationSetTrigger("Damage");
+            Debug.Log("TakeDamage=>currentHP:" + _currentHP);
+        }
+
         EffectManager.Instance.HitEffect(transform.position + Vector3.up * 0.5f);
-        Debug.Log("TakeDamage=>currentHP:" + _currentHP);
 
         // 死んだとき
-        if(_currentHP <= 0)
+        if (_currentHP <= 0)
         {
             AnimationSetBool("Death", true);
             if (!_myPhotonView.isMine) return;
@@ -271,8 +298,38 @@ public class Actor : MonoBehaviour
             rec = 0;
         }
 
+        // 被回復アップの合計割合
+        float upRateTotal = 1.0f;
+
+        if (HaveStatusAilment(KIND.REC_UP))
+        {
+            StatusBuff[] recUp = (StatusBuff[])GetStatusAilment(KIND.REC_UP);
+
+            for (int i = 0; i < recUp.Length; i++)
+            {
+                upRateTotal += recUp[i]._rate;
+            }
+        }
+
+        // 被回復減少の合計割合
+        float downRateTotal = 1.0f;
+
+        if (HaveStatusAilment(KIND.DAMAGE_CUT))
+        {
+            StatusBuff[] recDown = (StatusBuff[])GetStatusAilment(KIND.REC_DOWN);
+
+            for (int i = 0; i < recDown.Length; i++)
+            {
+                downRateTotal -= recDown[i]._rate;
+            }
+        }
+
+        // 回復量を計算
+        rec = (int)((float)rec * upRateTotal * downRateTotal);
+        rec = Mathf.Max(0, rec);
+
         // HPを回復
-        _currentHP = Mathf.Clamp(_currentHP, _currentHP + rec, _maxHP);
+        _currentHP = Mathf.Min(_currentHP + rec, _maxHP);
         Debug.Log("TakeRecover=>currentHP:" + _currentHP);
     }
 
@@ -293,6 +350,11 @@ public class Actor : MonoBehaviour
 
 
     // 状態異常追加のクラス //////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// スタン等の時間と種類だけで足りる状態異常に掛かる
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="time"></param>
     [PunRPC]
     public void AddStatusAilment(int kind, float time)
     {
@@ -316,12 +378,19 @@ public class Actor : MonoBehaviour
         if (sa == null) return;
         _statusAilments.Add(sa);
     }
-
     public void CallAddStatusAilment(int kind, float time)
     {
         _myPhotonView.RPC("AddStatusAilment", PhotonTargets.AllViaServer, kind, time);
     }
 
+
+    /// <summary>
+    /// スリップダメージの状態異常になる
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="time"></param>
+    /// <param name="damage"></param>
+    /// <param name="damageInterval"></param>
     [PunRPC]
     public void AddStatusAilment2(int kind, float time, int damage, float damageInterval)
     {
@@ -337,12 +406,18 @@ public class Actor : MonoBehaviour
         if (sa == null) return;
         _statusAilments.Add(sa);
     }
-
     public void CallAddStatusAilment2(int kind, float time, int damage, float damageInterval)
     {
         _myPhotonView.RPC("AddStatusAilment2", PhotonTargets.AllViaServer, kind, time, damage, damageInterval);
     }
 
+
+    /// <summary>
+    /// バフかデバフに掛かる
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="time"></param>
+    /// <param name="rate"></param>
     [PunRPC]
     public void AddStatusAilment3(int kind, float time, float rate)
     {
@@ -366,16 +441,48 @@ public class Actor : MonoBehaviour
         if (sa == null) return;
         _statusAilments.Add(sa);
     }
-
     public void CallAddStatusAilment3(int kind, float time, float rate)
     {
         _myPhotonView.RPC("AddStatusAilment3", PhotonTargets.AllViaServer, kind, time, rate);
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    /// <summary>
+    /// カバーされる状態にする
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <param name="time"></param>
+    /// <param name="instanceID"></param>
+    [PunRPC]
+    public void AddStatusAilment4(int kind, float time, int instanceID)
+    {
+        var creator = StatusAilmentCreator.GetInstance();
+        var sa = creator.GetStatusAilment4(this, kind, time, instanceID);
+        if (sa == null) return;
+        _statusAilments.Add(sa);
+    }
+
+    public void CallAddStatusAilment4(int kind, float time, int instanceID)
+    {
+        _myPhotonView.RPC("AddStatusAilment4", PhotonTargets.AllViaServer, kind, time, instanceID);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// 状態異常を解除
+    /// </summary>
+    /// <param name="kind"></param>
     [PunRPC]
     public void RefreshStatusAilment(int kind)
     {
+        if (kind == (int)KIND.ALL)
+        {
+            for (int i = 0; i < _statusAilments.Count; i++)
+            {
+                _statusAilments.RemoveAt(i);
+            }
+            return;
+        }
+
         for (int i = 0; i < _statusAilments.Count; i++)
         {
             // バフ全消去
@@ -406,10 +513,23 @@ public class Actor : MonoBehaviour
             }
         }
     }
-
     public void CallRefreshStatusAilment(int kind)
     {
         _myPhotonView.RPC("RefreshStatusAilment", PhotonTargets.AllViaServer, kind);
+    }
+
+
+    [PunRPC]
+    public void SkipSkillRecast(float time)
+    {
+        for (int i = 0; i < _skillList.Length; i++)
+        {
+            _skillList[i].SkipRecast(time);
+        }
+    }
+    public void CallSkipSkillRecast(float time)
+    {
+        _myPhotonView.RPC("SkipSkillRecast", PhotonTargets.AllViaServer, time);
     }
 
 

@@ -60,7 +60,7 @@ namespace MageSkill
 
             StatusAilmentBase movDown = new StatusBuff(null, KIND.MOV_DOWN, 3.0f, 0.2f);
             ColliderManager cm = ColliderManager.GetInstance();
-            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position, 1.0f, new StatusAilmentBase[] { movDown });
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, 5, _owner.transform.position, 1.0f, new StatusAilmentBase[] { movDown });
             _sphereCollider.transform.position = _owner.transform.position;
         }
 
@@ -124,7 +124,7 @@ namespace MageSkill
             if (_owner.GetPhotonView().isMine == false) return;
 
             ColliderManager cm = ColliderManager.GetInstance();
-            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position, 3.0f, null);
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, 5, _owner.transform.position, 3.0f, null);
             _sphereCollider.transform.position = _owner.transform.position;
         }
 
@@ -159,11 +159,7 @@ namespace MageSkill
             base.MyUpdate();
 
             if (_fanCollider != null &&
-                _fanCollider.gameObject.GetActive() != false)
-            {
-                _fanCollider.transform.position = _fanCollider.transform.position + _vec * Time.deltaTime;
-            }
-            else
+                _fanCollider.gameObject.GetActive() == false)
             {
                 _fanCollider = null;
             }
@@ -181,17 +177,11 @@ namespace MageSkill
             _owner.AnimationSetTrigger("NormalAttack");
             EffectManager.Instance.IceBlessEffect(_owner.transform.position + Vector3.up,_owner.transform.rotation,REQUIREMENT_CAST_TIME);
 
-            // プレイヤーの向いてる方向へのベクトルを取る
-            _vec = _owner.transform.forward;
-            _vec.y = 0.0f;
-            _vec *= 6.0f;
-
             if (_owner.GetPhotonView().isMine == false) return;
 
             StatusAilmentBase movDown = new StatusBuff(null, KIND.MOV_DOWN, 2.0f, 0.5f);
             ColliderManager cm = ColliderManager.GetInstance();
-            _fanCollider = cm.EntryFanCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position, 3.0f, _owner.transform.eulerAngles, 30.0f, new StatusAilmentBase[] { movDown });
-            _fanCollider.transform.position = _owner.transform.position;
+            _fanCollider = cm.EntryFanCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, 5,  _owner.transform.position, 3.0f, _owner.transform.eulerAngles, 30.0f, new StatusAilmentBase[] { movDown });
         }
 
         public override void Dispose()
@@ -256,7 +246,7 @@ namespace MageSkill
 
             StatusAilmentBase burn = new StatusBurn(null, KIND.BURN, 5.0f, 6, 1.0f);
             ColliderManager cm = ColliderManager.GetInstance();
-            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position + new Vector3(0, 10, 0), 3.0f, new StatusAilmentBase[] { burn });
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, 5, _owner.transform.position + new Vector3(0, 10, 0), 3.0f, new StatusAilmentBase[] { burn });
         }
 
         public override void Dispose()
@@ -338,7 +328,7 @@ namespace MageSkill
         {
             StatusAilmentBase movDown = new StatusBuff(null, KIND.MOV_DOWN_DUP, 8.0f, 0.1f);
             ColliderManager cm = ColliderManager.GetInstance();
-            cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, _generatePos, 0, 10.0f, 2.0f, new StatusAilmentBase[] { movDown });
+            cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, 0, _generatePos, 0, 10.0f, 2.0f, new StatusAilmentBase[] { movDown });
         }
     }
 
@@ -386,7 +376,7 @@ namespace MageSkill
 
             // 細長いカプセルコライダーを生成
             ColliderManager cm = ColliderManager.GetInstance();
-            cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, 
+            cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage,  5,
                 _owner.transform.position + vec, 0, 5.0f, 0.2f, null);
         }
 
@@ -445,7 +435,7 @@ namespace MageSkill
                 pos += new Vector3(3.0f * Mathf.Sin(rad), 0.0f, 3.0f * Mathf.Cos(rad));
                 StatusAilmentBase burn = new StatusBurn(null, KIND.BURN, 3.0f, 5, 1.0f);
                 ColliderManager cm = ColliderManager.GetInstance();
-                cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage,
+                cm.EntryCapsuleCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 1.0f, _damage, 5,
                     pos, 0, 5.0f, 0.2f, new StatusAilmentBase[] { burn });
             }
         }
@@ -513,7 +503,7 @@ namespace MageSkill
             if (_owner.GetPhotonView().isMine == false) return;
 
             ColliderManager cm = ColliderManager.GetInstance();
-            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, _owner.transform.position, 1.0f, null);
+            _sphereCollider = cm.EntrySphereCollider(VariableCollider.COLLISION_PLAYER_ATTACK, _owner, 5.0f, _damage, 5,  _owner.transform.position, 1.0f, null);
             _sphereCollider.transform.position = _owner.transform.position;
         }
 
