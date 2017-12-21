@@ -19,51 +19,51 @@ MonoBehaviour:
   - skillName: FIGHTER_CONTINUOUS_ATTACK
     id: 1
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    info: FIGHTER_CONTINUOUS_ATTACK
+    info: Normal Attack x10
   - skillName: FIGHTER_EMERGENCY_AVOID
     id: 2
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    info: FIGHTER_EMERGENCY_AVOID
+    info: Avoid
   - skillName: FIGHTER_TRIP_STAN
     id: 3
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
-    info: FIGHTER_TRIP_STAN
+    info: Fan Stan 2s
   - skillName: TANK_CONTINUOUS_ATTACK
     id: 4
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
-    info: TANK_CONTINUOUS_ATTACK
+    info: Normal Attack x3
   - skillName: TANK_EMERGENCY_AVOID
     id: 5
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
-    info: TANK_EMERGENCY_AVOID
+    info: Avoid
   - skillName: TANK_SHIELD_BASH
     id: 6
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
-    info: TANK_SHIELD_BASH
+    info: Stan 1s
   - skillName: MAGE_FROST_ENERGY
     id: 7
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    info: MAGE_FROST_ENERGY
+    info: Shoot sphere MovDown-10% 3s
   - skillName: MAGE_MAGIC_IMPULSE
     id: 8
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    info: MAGE_MAGIC_IMPULSE
+    info: Shoot big sphere
   - skillName: MAGE_GROUND_FROST
     id: 9
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    info: MAGE_GROUND_FROST
+    info: Fan MovDown-50% 2s
   - skillName: MAGE_METEOR_IMPACT
     id: 10
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    info: MAGE_METEOR_IMPACT
+    info: Fall meteor Burn 6damage 5s
   - skillName: MAGE_ICE_BRUST
     id: 11
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
-    info: MAGE_ICE_BRUST
+    info: Tornado 8s MovDown-10%
   - skillName: MONSTER_CAPACITY_RISE
     id: 12
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
-    info: MONSTER_CAPACITY_RISE
+    info: AtkSpd-0.5s AtkUp+210% 10s
   - skillName: MONSTER_DRAGON_STORM
     id: 13
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
@@ -75,34 +75,108 @@ MonoBehaviour:
   - skillName: MONSTER_STAN_BREATH
     id: 15
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MAGE_THUNDER_FALL
     id: 16
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: 
   - skillName: MAGE_FLAME_PILLAR
     id: 17
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: 
   - skillName: MAGE_CHASE_FLAME
     id: 18
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
+    info: 
   - skillName: MONSTER_EXPLOSION
     id: 19
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_DOUBLE_EDGE_RATE
     id: 20
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_CLEANSE_SYSTEM
     id: 21
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_DARK_IMPACT
     id: 22
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_LIMIT_BREAk
     id: 23
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_STADY_PROTECT
     id: 24
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
+    info: 
   - skillName: MONSTER_LATIS_THUNDER
     id: 25
     sprite: {fileID: 21300000, guid: cafbb0229cd09a44a929ded63df426cb, type: 3}
     info: MONSTER_STAN_BREATH
+  - skillName: FIGHTER_TEMPEST_BLOW
+    id: 26
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_TEMPEST_BLOW
+  - skillName: FIGHTER_EARTH_DESTRUCTION
+    id: 27
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_EARTH_DESTRUCTION
+  - skillName: FIGHTER_CROSS_COUNTER
+    id: 28
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_CROSS_COUNTER
+  - skillName: FIGHTER_DEADLY_IMPACT
+    id: 29
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_DEADLY_IMPACT
+  - skillName: FIGHTER_FLASH_ASSAULT
+    id: 30
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_FLASH_ASSAULT
+  - skillName: FIGHTER_LAST_ATTEMPT
+    id: 31
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_LAST_ATTEMPT
+  - skillName: FIGHTER_RAGE_IMPACT
+    id: 32
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_RAGE_IMPACT
+  - skillName: FIGHTER_INVISIBLE_DODGE
+    id: 33
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_INVISIBLE_DODGE
+  - skillName: FIGHTER_SUMMER_SALT_RAVE
+    id: 34
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: FIGHTER_SUMMER_SALT_RAVE
+  - skillName: TANK_RESRECTIION
+    id: 35
+    sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
+    info: TANK_RESRECTIION
+  - skillName: TANK_BATTKLE_INSPIRE
+    id: 36
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_BATTKLE_INSPIRE
+  - skillName: TANK_ANGRY_SHOUT
+    id: 37
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_ANGRY_SHOUT
+  - skillName: TANK_AGGRESSIVE_SHOUT
+    id: 38
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_AGGRESSIVE_SHOUT
+  - skillName: TANK_ARMOR_BREAK
+    id: 39
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_ARMOR_BREAK
+  - skillName: TANK_DELAY_WAVE
+    id: 40
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_DELAY_WAVE
+  - skillName: TANK_GUARD_AGREEMENT
+    id: 41
+    sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
+    info: TANK_GUARD_AGREEMENT

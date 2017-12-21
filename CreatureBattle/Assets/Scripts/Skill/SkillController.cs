@@ -41,7 +41,25 @@ public enum SKILL_ID
     MONSTER_STADY_PROTECT,
     MONSTER_LATIS_THUNDER,
 
-    ALL_NUM
+    FIGHTER_TEMPEST_BLOW,
+    FIGHTER_EARTH_DESTRUCTION,
+    FIGHTER_CROSS_COUNTER,
+    FIGHTER_DEADLY_IMPACT,
+    FIGHTER_FLASH_ASSAULT,
+    FIGHTER_LAST_ATTEMPT,
+    FIGHTER_RAGE_IMPACT,
+    FIGHTER_INVISIBLE_DODGE,
+    FIGHTER_SUMMER_SALT_RAVE,
+
+    TANK_RESRECTIION,
+    TANK_BATTKLE_INSPIRE,
+    TANK_ANGRY_SHOUT,
+    TANK_AGGRESSIVE_SHOUT,
+    TANK_ARMOR_BREAK,
+    TANK_DELAY_WAVE,
+    TANK_GUARD_AGREEMENT,
+
+    ALL_NUM,
 }
 
 public class SkillController
@@ -55,6 +73,15 @@ public class SkillController
             case SKILL_ID.FIGHTER_CONTINUOUS_ATTACK: return new FighterSkill.ContinuousAttack();
             case SKILL_ID.FIGHTER_EMERGENCY_AVOID: return new FighterSkill.EmergencyAvoid();
             case SKILL_ID.FIGHTER_TRIP_STAN: return new FighterSkill.TripStan();
+            case SKILL_ID.FIGHTER_TEMPEST_BLOW: return new FighterSkill.TempestBlow();
+            case SKILL_ID.FIGHTER_EARTH_DESTRUCTION: return new FighterSkill.EarthDestruction();
+            case SKILL_ID.FIGHTER_CROSS_COUNTER: return new FighterSkill.CrossCounter();
+            case SKILL_ID.FIGHTER_DEADLY_IMPACT: return new FighterSkill.CrossCounter();
+            case SKILL_ID.FIGHTER_FLASH_ASSAULT: return new FighterSkill.FlashAssault();
+            case SKILL_ID.FIGHTER_LAST_ATTEMPT: return new FighterSkill.LastAttempt();
+            case SKILL_ID.FIGHTER_RAGE_IMPACT: return new FighterSkill.RageImpact();
+            case SKILL_ID.FIGHTER_INVISIBLE_DODGE: return new FighterSkill.InvisibleDodge();
+            case SKILL_ID.FIGHTER_SUMMER_SALT_RAVE: return new FighterSkill.SummerSaltRave();
 
             case SKILL_ID.TANK_CONTINUOUS_ATTACK: return new TankSkill.ContinuousAttack();
             case SKILL_ID.TANK_EMERGENCY_AVOID: return new TankSkill.EmergencyAvoid();
@@ -80,6 +107,14 @@ public class SkillController
             case SKILL_ID.MONSTER_LIMIT_BREAK: return new MonsterSkill.LimitBreak();
             case SKILL_ID.MONSTER_STADY_PROTECT: return new MonsterSkill.StadyProtect();
             case SKILL_ID.MONSTER_LATIS_THUNDER: return new MonsterSkill.LatisThunder();
+
+            case SKILL_ID.TANK_RESRECTIION: return new TankSkill.Resurrection();
+            case SKILL_ID.TANK_BATTKLE_INSPIRE: return new TankSkill.BattleInspire();
+            case SKILL_ID.TANK_ANGRY_SHOUT: return new TankSkill.AngryShout();
+            case SKILL_ID.TANK_AGGRESSIVE_SHOUT: return new TankSkill.AggressiveShout();
+            case SKILL_ID.TANK_ARMOR_BREAK: return new TankSkill.ArmorBreak();
+            case SKILL_ID.TANK_DELAY_WAVE: return new TankSkill.DelayWave();
+            case SKILL_ID.TANK_GUARD_AGREEMENT: return new TankSkill.GuardAgreement();
 
             default: return new Skill.NormalAttack();
         }

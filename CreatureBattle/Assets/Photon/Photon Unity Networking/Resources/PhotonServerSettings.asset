@@ -46,4 +46,6 @@ MonoBehaviour:
   - UpdateStatusAilment
   - RefreshStatusAilment
   - TakeRecover
+  - AddStatusAilment4
+  - SkipSkillRecast
   DisableAutoOpenWizard: 1

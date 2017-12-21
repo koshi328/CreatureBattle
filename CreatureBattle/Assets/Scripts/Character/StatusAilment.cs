@@ -10,9 +10,10 @@ namespace StatusAilment
         STAN,
         SILENCE,
         BAN_REC,
-        COUNTER_STAN,
-        CLEANSE_SYSTEM,
-        STADY_PROTECT,
+        COUNTER_STAN,   // カウンタースタン
+        CLEANSE_SYSTEM, // クレンズシステム
+        STADY_PROTECT,  // スタッディプロテクト
+        NO_DAMAGE,      // ダメージ無効状態
 
         // スリップダメージ
         BURN,
@@ -26,6 +27,7 @@ namespace StatusAilment
         ATK_SPD_UP,
         BAN_DIS,    // 行動妨害スキルを無効化する効果
         BAN_DEBUFF, // デバフ全無効
+        LAST_ATTEMPT,   // ラストアテンプト
 
         // デバフ
         DEBUFF,
@@ -36,6 +38,12 @@ namespace StatusAilment
 
         // 累積デバフ
         MOV_DOWN_DUP,
+
+        // その他
+        COVERED,
+        
+        // 全て
+        ALL,
     }
 
     /// <summary>
@@ -71,6 +79,11 @@ namespace StatusAilment
         public StatusAilmentBase GetStatusAilment3(Actor owner, int kind, float time, float rate)
         {
             return new StatusBuff(owner, (StatusAilment.KIND)kind, time, rate);
+        }
+
+        public StatusAilmentBase GetStatusAilment4(Actor owner, int kind, float time, int instanceID)
+        {
+            return new StatusCovered(owner, (StatusAilment.KIND)kind, time, instanceID);
         }
     }
     
@@ -110,14 +123,14 @@ namespace StatusAilment
         /// </summary>
         public void Update()
         {
-            TakeEffect();
-
             _limitTimer -= Time.deltaTime;
             if (_limitTimer <= 0.0f)
             {
                 _isFinished = true;
                 Debug.Log("状態異常が解けた");
             }
+
+            TakeEffect();
         }
 
         /// <summary>
@@ -218,6 +231,13 @@ namespace StatusAilment
                 case KIND.ATK_SPD_UP:
 
                     break;
+                case KIND.LAST_ATTEMPT:
+                    _owner._attackDamage = _owner._defaultDamage + _owner._defaultDamage * 5;
+                    if(_isFinished)
+                    {
+                        _owner.CallTakeDamage(_owner._maxHP);
+                    }
+                    break;
 
                 case KIND.ATK_DOWN:
 
@@ -235,6 +255,21 @@ namespace StatusAilment
                     _owner._maxSpeed = _owner._maxSpeed * (1.0f - _rate);
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// ガードアグリーメントを味方に使用された状態
+    /// </summary>
+    public class StatusCovered : StatusAilmentBase
+    {
+        // インスタンスID
+        public int _playerID { get; set; }
+
+        public StatusCovered(Actor owner, KIND kind, float time, int playerID)
+            : base(owner, kind, time)
+        {
+            _playerID = playerID;
         }
     }
 }

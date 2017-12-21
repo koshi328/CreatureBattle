@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 195344546105527324}
   m_Layer: 11
   m_Name: Misaki
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4682,6 +4682,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Idle
+  - Type: 4
+    SynchronizeType: 0
+    Name: Death
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

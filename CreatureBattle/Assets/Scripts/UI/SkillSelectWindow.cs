@@ -15,7 +15,7 @@ public class SkillSelectWindow : MonoBehaviour {
     ScriptableSkill currentSkills;
 
     Button[] buttonList;
-    int skillNum = 12;
+    int skillNum = 13;
 
     int currentSelectNum;
 	// Use this for initialization

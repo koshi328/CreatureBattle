@@ -160,4 +160,10 @@ public class SkillBase
     {
 
     }
+
+    public virtual void SkipRecast(float skipTime)
+    {
+        if (_state == SKILL_STATE.RECASTING)
+            _timer += skipTime;
+    }
 }
