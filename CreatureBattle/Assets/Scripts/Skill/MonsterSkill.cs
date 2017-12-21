@@ -274,7 +274,7 @@ namespace MonsterSkill
                 StatusAilmentBase silence1 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                 // Z軸に沿った当たり判定
-                CapsuleCollider c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
+                var c1 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
                     new Vector3(-LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i, 0.0f, 0.0f),
                     0, 50.0f, 0.2f, new StatusAilmentBase[] { silence1 });
 
@@ -286,7 +286,7 @@ namespace MonsterSkill
                     StatusAilmentBase silence2 = new StatusAilmentBase(null, KIND.SILENCE, 3.0f);
 
                     // X軸に沿った当たり判定
-                    CapsuleCollider c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
+                    var c2 = cm.EntryCapsuleCollider(VariableCollider.COLLISION_MONSTER_ATTACK, _owner, 10.0f, _damage, 5,
                         new Vector3(0.0f, 0.0f, -LINE_INTERVAL * (float)LINE_NUM / 2.0f + LINE_INTERVAL * i),
                         0, 50.0f, 0.2f, new StatusAilmentBase[] { silence2 });
 
@@ -310,7 +310,7 @@ namespace MonsterSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _sphereCollider;
+        VariableCollider _sphereCollider;
 
         public override void Initialize(Actor owner)
         {
@@ -379,7 +379,7 @@ namespace MonsterSkill
     {
         int _damage;
         Vector3 _vec;
-        CapsuleCollider[] _capsuleCollider = new CapsuleCollider[2];
+        VariableCollider[] _capsuleCollider = new VariableCollider[2];
         static int _usedNum = 0;
 
         public override void Initialize(Actor owner)
@@ -501,7 +501,7 @@ namespace MonsterSkill
         int _damage;
         int _spearNum;
         Vector3 _vec;
-        CapsuleCollider[] _capsuleCollider;
+        VariableCollider[] _capsuleCollider;
 
         public override void Initialize(Actor owner)
         {
@@ -511,7 +511,7 @@ namespace MonsterSkill
             REQUIREMENT_RECAST_TIME = 9.0f;
             _spearNum = 10;
             _damage = 189 / _spearNum;
-            _capsuleCollider = new CapsuleCollider[_spearNum];
+            _capsuleCollider = new VariableCollider[_spearNum];
         }
 
         public override SkillBase MyUpdate()

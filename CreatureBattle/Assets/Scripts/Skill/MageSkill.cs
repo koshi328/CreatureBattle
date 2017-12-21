@@ -13,7 +13,7 @@ namespace MageSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _sphereCollider;
+        VariableCollider _sphereCollider;
 
         public override void Initialize(Actor owner)
         {
@@ -69,6 +69,11 @@ namespace MageSkill
             Initialize(_owner);
             _owner.AnimationSetTrigger("Idle");
         }
+
+        public void Callback()
+        {
+
+        }
     }
 
     /// <summary>
@@ -78,7 +83,7 @@ namespace MageSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _sphereCollider;
+        VariableCollider _sphereCollider;
 
         public override void Initialize(Actor owner)
         {
@@ -142,7 +147,7 @@ namespace MageSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _fanCollider;
+        VariableCollider _fanCollider;
 
         public override void Initialize(Actor owner)
         {
@@ -198,7 +203,7 @@ namespace MageSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _sphereCollider;
+        VariableCollider _sphereCollider;
         Vector3 _targetPos;
 
         public override void Initialize(Actor owner)
@@ -454,7 +459,7 @@ namespace MageSkill
     {
         int _damage;
         Vector3 _vec;
-        SphereCollider _sphereCollider;
+        VariableCollider _sphereCollider;
         static int _usedNum = 0;
 
         public override void Initialize(Actor owner)

@@ -34,6 +34,7 @@ public class SkillBase
     // 時間関係の処理のためのタイマー
     private float _timer;
 
+
     /// <summary>
     /// キャラクターから呼ばれる初期化
     /// </summary>

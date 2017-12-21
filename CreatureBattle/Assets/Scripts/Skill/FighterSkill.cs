@@ -428,7 +428,7 @@ namespace FighterSkill
     public class RageImpact : SkillBase
     {
         int _damage;
-        CapsuleCollider _capsuleCollider;
+        VariableCollider _capsuleCollider;
         Vector3 _vec;
 
         public override void Initialize(Actor owner)

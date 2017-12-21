@@ -3,150 +3,126 @@ using System.Collections.Generic;
 using UnityEngine;
 using StatusAilment;
 
+
+/// <summary>
+/// コライダー
+/// </summary>
 public class VariableCollider : MonoBehaviour
 {
     public static readonly int COLLISION_PLAYER_ATTACK = 9;
     public static readonly int COLLISION_MONSTER_ATTACK = 10;
     public static readonly int COLLISION_PLAYER_BODY = 11;
     public static readonly int COLLISION_MONSTER_BODY = 12;
-
-    public enum COLLIDER_TYPE
-    {
-        SPHERE,
-        CAPSULE,
-        FAN,
-        TYPE_NUM,
-    }
-
-    COLLIDER_TYPE _type;
-
+    
+    // コライダー
     [SerializeField]
-    SphereCollider _sphereCollider;
-    [SerializeField]
-    CapsuleCollider _capsuleCollider;
+    CapsuleCollider _collider;
 
-    float _limitTime;
-
-    int _damage;
-
-    int _damageRange;
-
-    Actor _owner;
+    // 扇か？
+    bool _isFan;
 
     // 角度
     float _angleRange;
 
+    // 残存時間
+    float _limitTime;
+    
+    // 当たり判定を発生させたキャラクター
+    Actor _owner;
+
     // この当たり判定と当たったオブジェクトのインスタンスIDのリスト
     List<int> _instanceIDs;
 
-    // この当たり判定で付与する状態異常のリスト
-    StatusAilmentBase[] _statusAilments;
-    
-    public delegate void SkillDelegate(Actor actor);
-    SkillDelegate hitDelegate = null;
 
+    /// <summary>
+    /// コールバック用の関数
+    /// </summary>
+    /// <param name="actor"></param>
+    public delegate void SkillDelegate(Actor actor);
+    SkillDelegate HitDelegateFunction;
+
+    /// <summary>
+    /// コールバックの関数を登録する
+    /// </summary>
+    /// <param name="argDelgate"></param>
     public void SetDelegate(SkillDelegate argDelgate)
     {
-        hitDelegate = argDelgate;
+        Debug.Log("Delegate was set.");
+        HitDelegateFunction = argDelgate;
     }
-    // デバッグ用　あとで消すべし
-    [SerializeField]
-    MeshFilter _meshFilter;
-    [SerializeField]
-    Mesh _sphereMesh;
-    [SerializeField]
-    Mesh _capsuleMesh;
-    
 
+    /// <summary>
+    /// 生成時の初期化
+    /// </summary>
     void Awake ()
     {
-        _type = COLLIDER_TYPE.SPHERE;
-        _sphereCollider.gameObject.SetActive(false);
-        _capsuleCollider.gameObject.SetActive(false);
+        _collider.gameObject.SetActive(false);
+        _isFan = false;
         _limitTime = 0.0f;
-        _damage = 0;
-        _damageRange = 0;
     }
 
+
+    /// <summary>
+    /// 使う度に呼び出す初期化
+    /// </summary>
     private void Initialize()
     {
         _instanceIDs = null;
-        _statusAilments = null;
-        hitDelegate = null;
+        HitDelegateFunction = null;
     }
 
-    public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, StatusAilmentBase[] statusAilments)
+
+    /// <summary>
+    /// 当たり判定を登録する
+    /// </summary>
+    /// <param name="radius"></param>
+    /// <param name="height"></param>
+    /// <param name="direction"></param>
+    /// <param name="center"></param>
+    /// <param name="owner"></param>
+    /// <param name="layerName"></param>
+    /// <param name="limitTime"></param>
+    /// <returns></returns>
+    public VariableCollider Entry(float radius, float height, int direction, Vector3 center, Actor owner, int layerName, float limitTime)
     {
+        // 初期化
         Initialize();
-        _type = COLLIDER_TYPE.SPHERE;
         _owner = owner;
-        _damage = damage;
-        _damageRange = damageRange;
-        this.gameObject.SetActive(true);
+
+        // コライダーの形状を変える
+        _collider.radius = radius;
+        _collider.height = height;
+        _collider.direction = direction;
+
+        // 座標
         transform.position = center;
-        //_sphereCollider.radius = radius;
-        _sphereCollider.gameObject.SetActive(true);
-        _sphereCollider.gameObject.layer = layerName;
-        _sphereCollider.transform.rotation = Quaternion.identity;
-        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
-        _meshFilter.mesh = _sphereMesh;
+
+        // 回転
+        _collider.transform.rotation = Quaternion.identity;
+
+        // PhysicsLayer名
+        gameObject.layer = layerName;
+
+        // 当たり判定のリストを初期化
         _instanceIDs = new List<int>();
-        _statusAilments = statusAilments;
+
+        // アクティブにする
+        gameObject.SetActive(true);
+
+        // 残存時間が経過した時に非アクティブにする
         Invoke("AutoDelete", limitTime);
 
-        return _sphereCollider;
+        return this;
     }
 
-    public CapsuleCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, int direction, float height, float radius, StatusAilmentBase[] statusAilments)
-    {
-        Initialize();
-        _type = COLLIDER_TYPE.CAPSULE;
-        _owner = owner;
-        _damage = damage;
-        _damageRange = damageRange;
-        this.gameObject.SetActive(true);
-        transform.position = center;
-        _capsuleCollider.direction = direction;
-        _capsuleCollider.height = height;
-        //_capsuleCollider.radius = radius;
-        _capsuleCollider.gameObject.SetActive(true);
-        _capsuleCollider.gameObject.layer = layerName;
-        _capsuleCollider.transform.rotation = Quaternion.identity;
-        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, height, radius * 2.0f);
-        _meshFilter.mesh = _capsuleMesh;
-        _instanceIDs = new List<int>();
-        _statusAilments = statusAilments;
-        Invoke("AutoDelete", limitTime);
 
-        return _capsuleCollider;
-    }
-
-    public SphereCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilmentBase[] statusAilments)
-    {
-        Initialize();
-        _type = COLLIDER_TYPE.FAN;
-        _owner = owner;
-        _damage = damage;
-        _damageRange = damageRange;
-        this.gameObject.SetActive(true);
-        transform.position = center;
-        //_sphereCollider.radius = radius;
-        _sphereCollider.gameObject.SetActive(true);
-        _sphereCollider.gameObject.layer = layerName;
-        _sphereCollider.transform.rotation = Quaternion.identity;
-        _meshFilter.transform.localScale = new Vector3(radius * 2.0f, radius * 2.0f, radius * 2.0f);
-        _meshFilter.mesh = _sphereMesh;
-        transform.eulerAngles = currentAngle;
-        _angleRange = angleRange;
-        _instanceIDs = new List<int>();
-        _statusAilments = statusAilments;
-        Invoke("AutoDelete", limitTime);
-
-        return _sphereCollider;
-    }
-
+    /// <summary>
+    /// 当たった時の処理
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        // 使用者が居なければ処理しない
         if (_owner == null) return;
         if (_owner.transform == other.transform) return;
 
@@ -160,92 +136,38 @@ public class VariableCollider : MonoBehaviour
         _instanceIDs.Add(other.GetInstanceID());
 
         // 扇形の判定の時
-        if (_type == COLLIDER_TYPE.FAN)
+        if (_isFan)
         {
+            // 当たっていなければ処理しない
             if (!IsCollideFan(other.transform)) return;
         }
 
-        // キャラかどうか
+        // キャラでなければ処理しない
         Actor hitActor = other.GetComponent<Actor>();
         if (!hitActor) return;
 
-        // プロテクト状態なら
-        if(hitActor.HaveStatusAilment(KIND.STADY_PROTECT))
-        {
-            hitActor.CallRefreshStatusAilment((int)KIND.STADY_PROTECT);
-            return;
-        }
-
-        // 当たった時の処理
-        // ダメージ
-        int damage = _damage + Random.Range(-_damageRange, _damageRange + 1);
-        hitActor.CallTakeDamage(damage);
-        
-        // 状態異常を付与する
-        if (_statusAilments != null)
-        {
-            // カウンタースタン
-            if (hitActor.HaveStatusAilment(KIND.COUNTER_STAN))
-            {
-                // 状態異常攻撃をした者にスタンをかけて、された方は状態異常を受けない
-                _owner.CallAddStatusAilment((int)KIND.STAN, 5.0f);
-                return;
-            }
-
-            for (int i = 0; i < _statusAilments.Length; i++)
-            {
-                // クレンズシステム状態なら炎上以外の状態異常は受けない
-                if (hitActor.HaveStatusAilment(KIND.CLEANSE_SYSTEM))
-                {
-                    if (_statusAilments[i]._kind != KIND.BURN)
-                    {
-                        continue;
-                    }
-                }
-
-                switch (_statusAilments[i]._kind)
-                {
-                        // 状態異常
-                    case KIND.STAN:
-                    case KIND.SILENCE:
-                    case KIND.BAN_REC:
-                        hitActor.CallAddStatusAilment((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime);
-                        break;
-                        
-                        // スリップダメージ
-                    case KIND.BURN:
-                        var burn = (StatusBurn)_statusAilments[i];
-                        hitActor.CallAddStatusAilment2((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime, burn._damage, burn._damageInterval);
-                        break;
-
-                        // ステータスバフデバフ
-                    case KIND.ATK_UP:
-                    case KIND.DAMAGE_CUT:
-                    case KIND.MOV_UP:
-                    case KIND.REC_UP:
-                    case KIND.ATK_SPD_UP:
-                    case KIND.ATK_DOWN:
-                    case KIND.DAMAGE_UP:
-                    case KIND.MOV_DOWN:
-                    case KIND.REC_DOWN:
-                    case KIND.MOV_DOWN_DUP:
-                        var buff = (StatusBuff)_statusAilments[i];
-                        hitActor.CallAddStatusAilment3((int)_statusAilments[i]._kind, _statusAilments[i]._limitTime, buff._rate);
-                        break;
-                }
-            }
-        }
-        if (hitDelegate == null) return;
-        hitDelegate(hitActor);
+        // スキル毎の当たった時のコールバックを呼ぶ
+        if (HitDelegateFunction == null) return;
+        HitDelegateFunction(hitActor);
     }
 
+
+    /// <summary>
+    /// 扇状の当たり判定をする
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
     private bool IsCollideFan(Transform other)
     {
+        // 座標
         Vector3 pos = transform.position;
         Vector3 targetDir = other.transform.position - pos;
         targetDir.y = 0.0f;
+
+        // 角度
         float angle = Vector3.Angle(targetDir, transform.forward);
 
+        // 扇の範囲内なら当たっている
         if(angle < _angleRange)
         {
             return true;
@@ -256,16 +178,24 @@ public class VariableCollider : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 残存時間が経過した時に呼ばれる非アクティブにする処理
+    /// </summary>
     private void AutoDelete()
     {
-        this.gameObject.SetActive(false);
-        _sphereCollider.gameObject.SetActive(false);
-        _capsuleCollider.gameObject.SetActive(false);
+        // アクティブでなくする
+        gameObject.SetActive(false);
 
+        // インスタンスIDのリストを消す
         _instanceIDs = null;
-        _statusAilments = null;
     }
 
+
+    /// <summary>
+    /// コライダーの持ち主を返す
+    /// </summary>
+    /// <returns></returns>
     public Actor GetOwner()
     {
         return _owner;
