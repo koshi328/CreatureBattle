@@ -19,7 +19,7 @@ TagManager:
   - MonsterAttack
   - PlayerBody
   - MonsterBody
-  - 
+  - ColliderProjection
   - 
   - 
   - 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectManager : MonoBehaviour {
+public class EffectManager : MonoBehaviour
+{
 
     public static EffectManager Instance
     {
@@ -13,6 +14,8 @@ public class EffectManager : MonoBehaviour {
     [SerializeField]
     GameObject hitEffect;
     [SerializeField]
+    GameObject thunderHitEffect;
+    [SerializeField]
     GameObject slashEffect;
     [SerializeField]
     GameObject iceTornadoEffect;
@@ -20,10 +23,18 @@ public class EffectManager : MonoBehaviour {
     GameObject iceEnergyEffect;
     [SerializeField]
     GameObject lightningEffect;
+    [SerializeField]
+    GameObject iceBlessEffect;
+    [SerializeField]
+    GameObject healEffect;
+    [SerializeField]
+    GameObject storeEffect;
+    [SerializeField]
+    GameObject buffEffect;
 
     private void Start()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(this.gameObject);
             return;
@@ -35,6 +46,13 @@ public class EffectManager : MonoBehaviour {
     public GameObject HitEffect(Vector3 pos)
     {
         GameObject obj = Instantiate(hitEffect, pos, Quaternion.identity);
+        Destroy(obj, 0.5f);
+        return obj;
+    }
+    // hit
+    public GameObject ThunderHitEffect(Vector3 pos)
+    {
+        GameObject obj = Instantiate(thunderHitEffect, pos, Quaternion.identity);
         Destroy(obj, 0.5f);
         return obj;
     }
@@ -63,8 +81,32 @@ public class EffectManager : MonoBehaviour {
     // 雷
     public GameObject LightningEffect(Vector3 pos)
     {
-        GameObject obj = Instantiate(iceTornadoEffect, pos, Quaternion.identity);
+        GameObject obj = Instantiate(lightningEffect, pos, Quaternion.identity);
         Destroy(obj, 0.5f);
         return obj;
     }
+    // アイスブレス
+    public GameObject IceBlessEffect(Vector3 pos, Quaternion rot, float time)
+    {
+        GameObject obj = Instantiate(iceBlessEffect, pos, rot);
+        Destroy(obj, time);
+        return obj;
+    }
+    // 回復
+    public GameObject HealEffect(Vector3 pos)
+    {
+        GameObject obj = Instantiate(healEffect, pos, Quaternion.identity);
+        Destroy(obj, 0.5f);
+        return obj;
+    }
+    // 溜めエフェクト
+    public GameObject StoreEffect(Vector3 pos, float time)
+    {
+        GameObject obj = Instantiate(storeEffect, pos, Quaternion.identity);
+        Destroy(obj, time);
+        return obj;
+    }
+    // バフエフェクト--------------
+
+    //-----------------------------
 }

@@ -46,6 +46,13 @@ public class VariableCollider : MonoBehaviour
     // この当たり判定で付与する状態異常のリスト
     StatusAilmentBase[] _statusAilments;
 
+    public delegate void SkillDelegate(Actor actor);
+    SkillDelegate hitDelegate = null;
+
+    public void SetDelegate(SkillDelegate argDelgate)
+    {
+        hitDelegate = argDelgate;
+    }
 
     void Awake ()
     {
@@ -60,6 +67,7 @@ public class VariableCollider : MonoBehaviour
     {
         _instanceIDs = null;
         _statusAilments = null;
+        hitDelegate = null;
     }
 
     public SphereCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, Vector3 center, float radius, StatusAilmentBase[] statusAilments)
@@ -215,6 +223,8 @@ public class VariableCollider : MonoBehaviour
                 }
             }
         }
+        if (hitDelegate == null) return;
+        hitDelegate(hitActor);
     }
 
     private bool IsCollideFan(Transform other)

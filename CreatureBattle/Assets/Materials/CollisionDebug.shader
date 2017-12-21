@@ -35,8 +35,8 @@
 				float3 camDir = normalize(_WorldSpaceCameraPos - i.wPos.xyz);
 				float edge = 1 - dot(camDir, i.normal);
 				edge *= edge;
-
-				return float4(1, 0, 0, edge);
+				edge *= 0.5;
+				return float4(0.2, 0.2, 0.2, edge);
 			}
 			ENDCG
 		}

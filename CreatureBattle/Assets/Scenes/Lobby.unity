@@ -605,11 +605,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 1343797279188904, guid: cf5b750f4684b6249bf2e21c1fe29e57, type: 2}
+  thunderHitEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+    type: 2}
   slashEffect: {fileID: 1225502504428516, guid: 83b20737770a7734aac3b3434ac31b2c,
     type: 2}
-  iceTornadoEffect: {fileID: 0}
-  iceEnergyEffect: {fileID: 0}
-  lightningEffect: {fileID: 0}
+  iceTornadoEffect: {fileID: 1500760850773576, guid: 25fa7c62909852e47b9b768a93cd6237,
+    type: 2}
+  iceEnergyEffect: {fileID: 1799755939941030, guid: 958b8ce394b67094498625d56e28b988,
+    type: 2}
+  lightningEffect: {fileID: 1370325488312058, guid: 529c0d47db785884a9d4bfd51c39d99c,
+    type: 2}
+  iceBlessEffect: {fileID: 1774487880329788, guid: db250b1ed0e767a4cbf619640d64a692,
+    type: 2}
+  healEffect: {fileID: 100010, guid: 214bf6b1f924e43108a92f13c4db31a2, type: 2}
+  storeEffect: {fileID: 1392226008711816, guid: 91cca06fc3f77974997fe4484db633f0,
+    type: 2}
+  buffEffect: {fileID: 0}
 --- !u!4 &312011609
 Transform:
   m_ObjectHideFlags: 0

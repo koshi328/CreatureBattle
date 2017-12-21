@@ -179,6 +179,7 @@ namespace MageSkill
         public override void Activate()
         {
             _owner.AnimationSetTrigger("NormalAttack");
+            EffectManager.Instance.IceBlessEffect(_owner.transform.position + Vector3.up,_owner.transform.rotation,REQUIREMENT_CAST_TIME);
 
             // プレイヤーの向いてる方向へのベクトルを取る
             _vec = _owner.transform.forward;
@@ -322,7 +323,7 @@ namespace MageSkill
             _generatePos.y = 0.0f;
             _generatePos *= 4.0f;
             _generatePos += _owner.transform.position;
-
+            EffectManager.Instance.IceTornadoEffect(_generatePos, 8.0f);
             if (_owner.GetPhotonView().isMine == false) return;
             _brustNum = 8;
         }
