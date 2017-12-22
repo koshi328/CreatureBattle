@@ -225,9 +225,11 @@ public class Actor : MonoBehaviour
             // 被ダメージアップの状態異常
             StatusBuff[] damageUp = (StatusBuff[])GetStatusAilment(KIND.DAMAGE_UP);
 
+            // デバフ同士の効果量を乗算する
             for (int i = 0; i < damageUp.Length; i++)
             {
-                upRateTotal += damageUp[i]._rate;
+                float upRate = 1.0f + damageUp[i]._rate;
+                upRateTotal *= upRate;
             }
         }
 
@@ -240,9 +242,10 @@ public class Actor : MonoBehaviour
             // 被ダメージカットの状態異常
             StatusBuff[] damageCut = (StatusBuff[])GetStatusAilment(KIND.DAMAGE_CUT);
 
+            // バフ同士の効果量を乗算する
             for (int i = 0; i < damageCut.Length; i++)
             {
-                cutRateTotal -= damageCut[i]._rate;
+                cutRateTotal *= damageCut[i]._rate;
             }
         }
 

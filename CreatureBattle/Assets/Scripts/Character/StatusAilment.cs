@@ -14,6 +14,7 @@ namespace StatusAilment
         CLEANSE_SYSTEM, // クレンズシステム
         STADY_PROTECT,  // スタッディプロテクト
         NO_DAMAGE,      // ダメージ無効状態
+        CROSS_COUNTER,  // クロスカウンター中
 
         // スリップダメージ
         BURN,

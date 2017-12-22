@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActorData
   m_EditorClassIdentifier: 
   data:
-  - path: Yuko
+  - path: fighter
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
     hp: 1890
     maxSpeed: 5

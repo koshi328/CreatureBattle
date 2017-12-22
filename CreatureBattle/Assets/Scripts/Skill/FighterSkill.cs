@@ -34,7 +34,7 @@ namespace FighterSkill
 
         public override void Activate()
         {
-            _owner.AnimationSetTrigger("NormalAttack");
+            _owner.AnimationSetTrigger("Slash1");
 
             if (_owner.GetPhotonView().isMine == false) return;
             ColliderManager cm = ColliderManager.GetInstance();
