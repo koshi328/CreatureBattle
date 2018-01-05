@@ -15,12 +15,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Run
-    m_Type: 9
+    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Dodg
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: NormalAttack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -97,9 +103,9 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
+  - m_ConditionMode: 3
     m_ConditionEvent: Run
-    m_EventTreshold: 0
+    m_EventTreshold: 0.1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102268738792374428}
   m_Solo: 0
@@ -218,7 +224,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Attack01
+    m_ConditionEvent: NormalAttack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102766782943230046}
@@ -455,7 +461,7 @@ AnimatorStateMachine:
     m_Position: {x: 108, y: 264, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102268738792374428}
-    m_Position: {x: 324, y: 264, z: 0}
+    m_Position: {x: 372, y: 288, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102299222517452520}
     m_Position: {x: 528, y: 312, z: 0}

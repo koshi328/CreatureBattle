@@ -28,7 +28,7 @@ MonoBehaviour:
     attackInterval: 2.5
     actorType: 0
     skillData: {fileID: 11400000, guid: 4e54b0a300d75c947b0477231c3a042f, type: 2}
-  - path: UnityChan
+  - path: Tank
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
     hp: 3150
     maxSpeed: 5
