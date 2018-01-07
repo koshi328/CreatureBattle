@@ -2,70 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColliderManager : MonoBehaviour
-{
-    static ColliderManager _instance;
-
-    public static ColliderManager GetInstance()
-    {
-        if (_instance == null)
-        {
-            GameObject go = new GameObject();
-            _instance = go.AddComponent<ColliderManager>();
-        }
-        return _instance;
-    }
-
-    static readonly int MAX_NUM = 50;
-
+public class ColliderManager : MonoBehaviour {
     [SerializeField]
-    private GameObject _variableCollider;
-    [SerializeField]
-    VariableCollider[] _colliders;
+    GameObject colliderPrefab;
 
-	void Awake ()
+    int _colliderNum;
+    SkillCollider[] _colliders;
+    public static ColliderManager Instance
     {
-        _instance = this;
-
-        _colliders = new VariableCollider[(int)MAX_NUM];
-        for (int i = 0; i < MAX_NUM; i++)
+        get;
+        private set;
+    }
+    void Awake() {
+		if(Instance != null)
         {
-            GameObject obj = Instantiate(_variableCollider, Vector3.zero, Quaternion.identity, this.transform);
-            _colliders[i] = obj.GetComponent<VariableCollider>();
-            _colliders[i].gameObject.SetActive(false);
+            Destroy(this);
         }
-	}
-	
-    public VariableCollider EntrySphereCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, StatusAilment.StatusAilmentBase[] statusAilments)
-    {
-        for (int i = 0; i < MAX_NUM; i++)
-        {
-            if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntrySphereCollider(layerName, owner, limitTime, damage, damageRange, center, radius, statusAilments);
-        }
-
-        return null;
+        DontDestroyOnLoad(this.gameObject);
+        Instance = this;
+        Initialize(100);
     }
 
-    public VariableCollider EntryCapsuleCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, int direction, float height, float radius, StatusAilment.StatusAilmentBase[] statusAilments)
+    private void Update()
     {
-        for (int i = 0; i < MAX_NUM; i++)
+        for (int i = 0; i < _colliderNum; i++)
         {
-            if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntryCapsuleCollider(layerName, owner, limitTime, damage, damageRange, center, direction, height, radius, statusAilments);
+            if (_colliders[i].gameObject.activeSelf) continue;
+            _colliders[i].MyUpdate();
         }
-
-        return null;
     }
 
-    public VariableCollider EntryFanCollider(int layerName, Actor owner, float limitTime, int damage, int damageRange, Vector3 center, float radius, Vector3 currentAngle, float angleRange, StatusAilment.StatusAilmentBase[] statusAilments)
+    public void Initialize(int colliderNum)
     {
-        for (int i = 0; i < MAX_NUM; i++)
+        _colliderNum = colliderNum;
+        _colliders = new SkillCollider[_colliderNum];
+        for (int i = 0; i < _colliderNum; i++)
         {
-            if (_colliders[i].gameObject.GetActive() == true) continue;
-            return _colliders[i].EntryFanCollider(layerName, owner, limitTime, damage, damageRange, center, radius, currentAngle, angleRange, statusAilments);
+            GameObject obj = Instantiate(colliderPrefab);
+            _colliders[i] = obj.GetComponent<SkillCollider>();
+            _colliders[i].Create();
+            obj.gameObject.transform.SetParent(transform);
+            obj.gameObject.SetActive(false);
         }
+    }
 
+    public SkillCollider GetCollider()
+    {
+        for (int i = 0; i < _colliderNum; i++)
+        {
+            if (_colliders[i].gameObject.activeSelf) continue;
+            return _colliders[i];
+        }
+        Debug.Log("当たり判定が足りなくなりました");
         return null;
     }
 }

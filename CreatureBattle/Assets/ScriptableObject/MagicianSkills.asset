@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Name: MagicianSkills
   m_EditorClassIdentifier: 
   data:
-  - skillID: 7
   - skillID: 8
   - skillID: 9
   - skillID: 10
   - skillID: 11
-  - skillID: 16
-  - skillID: 17
-  - skillID: 18

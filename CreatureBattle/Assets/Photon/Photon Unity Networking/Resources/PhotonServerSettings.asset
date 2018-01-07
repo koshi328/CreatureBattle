@@ -48,4 +48,10 @@ MonoBehaviour:
   - TakeRecover
   - AddStatusAilment4
   - SkipSkillRecast
+  - CreateEffectRPC
+  - RPCAddCondition
+  - RPCReceiveRecovery
+  - RPCSkillExecute
+  - RPCTakeDamage
+  - RPCSetSkills
   DisableAutoOpenWizard: 1

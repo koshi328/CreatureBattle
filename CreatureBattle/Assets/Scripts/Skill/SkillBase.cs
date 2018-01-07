@@ -2,169 +2,131 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// スキルの状態
-public enum SKILL_STATE
-{
-    USABLE,
-    CASTING,
-    ACTIVATING,
-    RECASTING,
-}
+public class SkillBase {
 
-public class SkillBase
-{
-    // スキルがどんな状態か？
-    private SKILL_STATE _state;
-
-    // このスキルを使うキャラクター
-    protected Actor _owner;
-
-    // 通常攻撃など実行したら中断できないアクション中はFalse
-    protected bool _canDiscard = true;
-
-    // キャストにかかる時間
-    protected float REQUIREMENT_CAST_TIME;
-
-    // キャストが終了してから効果が発動し切るまでの時間
-    protected float REQUIREMENT_ACTIVATION_TIME;
-
-    // リキャストにかかる時間
-    protected float REQUIREMENT_RECAST_TIME;
-
-    // 時間関係の処理のためのタイマー
-    private float _timer;
-
-
-    /// <summary>
-    /// キャラクターから呼ばれる初期化
-    /// </summary>
-    /// <param name="owner"></param>
-    public virtual void Initialize(Actor owner)
+    public enum STATE
     {
-        _owner = owner;
-        _state = SKILL_STATE.USABLE;
-        _timer = REQUIREMENT_CAST_TIME;
-        _canDiscard = true;
+        WAIT,
+        CASTING,
+        ACTION,
+        RECASTING
     }
 
+    protected float CAST_TIME = 1.0f;
+    protected float ACTION_TIME = 1.0f;
+    protected float RECAST_TIME = 1.0f;
+    protected float _timer;
+    protected STATE _state;
 
-    /// <summary>
-    /// キャストを開始する
-    /// </summary>
-    public void Execute()
+    public float GetCastTime()
     {
-        _state = SKILL_STATE.CASTING;
-        Cast();
+        return CAST_TIME;
+    }
+    public float GetActionTime()
+    {
+        return ACTION_TIME;
+    }
+    public float GetReCastTime()
+    {
+        return RECAST_TIME;
+    }
+    public void Select(Actor actor)
+    {
+        _timer = CAST_TIME;
+        _state = STATE.CASTING;
+        EntryCast(actor);
+    }
+    public bool NowCasting()
+    {
+        return _state == STATE.CASTING;
+    }
+    public bool NowAction()
+    {
+        return _state == STATE.ACTION;
+    }
+    public bool NowReCasting()
+    {
+        return _state == STATE.RECASTING;
+    }
+    public bool NowWaiting()
+    {
+        return _state == STATE.WAIT;
     }
 
-
-    /// <summary>
-    /// 毎フレーム呼ばれる更新
-    /// </summary>
-    /// <returns></returns>
-    public virtual SkillBase MyUpdate()
+    public void Execute(Actor actor)
     {
         switch(_state)
         {
-                // キャスト開始
-            case SKILL_STATE.USABLE:
-                
-                break;
-
-                // キャスト中
-            case SKILL_STATE.CASTING:
-
+            case STATE.CASTING:
+                Casting(actor);
                 _timer -= Time.deltaTime;
                 if (_timer <= 0.0f)
                 {
-                    _timer = REQUIREMENT_ACTIVATION_TIME;
-                    _state = SKILL_STATE.ACTIVATING;
-                    _canDiscard = false;
-                    Activate();
+                    _timer = ACTION_TIME;
+                    _state = STATE.ACTION;
+                    EndCast(actor);
                 }
                 break;
-
-                // 発動
-            case SKILL_STATE.ACTIVATING:
-
+            case STATE.ACTION:
+                Action(actor);
                 _timer -= Time.deltaTime;
                 if (_timer <= 0.0f)
                 {
-                    _timer = REQUIREMENT_RECAST_TIME;
-                    _state = SKILL_STATE.RECASTING;
-                    //Dispose();
+                    _timer = RECAST_TIME;
+                    _state = STATE.RECASTING;
+                    EndAction(actor);
                 }
                 break;
-
-                // リキャスト中
-            case SKILL_STATE.RECASTING:
-
-                _timer -= Time.deltaTime;
-                if(_timer <= 0.0f)
-                {
-                    _timer = REQUIREMENT_CAST_TIME;
-                    _state = SKILL_STATE.USABLE;
-                }
+            case STATE.RECASTING:
+                Recasting();
                 break;
         }
-
-        return null;
     }
-
-    /// <summary>
-    /// 詠唱開始した時に1回呼ばれる
-    /// </summary>
-    public virtual void Cast()
+    public void Dispose(Actor actor)
     {
-
+        _state = STATE.WAIT;
+        _timer = CAST_TIME;
+        Cancel(actor);
     }
-
-    /// <summary>
-    /// 発動する時に1回呼ばれる関数
-    /// </summary>
-    public virtual void Activate()
+    // virtual ---------------------
+    // キャスト開始
+    protected virtual void EntryCast(Actor actor)
     {
-
+        Debug.Log("EntryCast");
     }
-
-    /// <summary>
-    /// 終了した時の処理
-    /// 予備動作とか予備エフェクトを削除する
-    /// </summary>
-    public virtual void Dispose()
+    // キャスト中
+    protected virtual void Casting(Actor actor)
     {
-
+        Debug.Log("Casting");
     }
-
-    /// <summary>
-    /// キャンセル可能か？
-    /// </summary>
-    /// <returns></returns>
-    public bool CanDiscard()
+    // キャストが終わったとき
+    protected virtual void EndCast(Actor actor)
     {
-        return _canDiscard;
+        Debug.Log("EndCast");
     }
-
-
-    public SKILL_STATE GetState()
+    // アクション中
+    protected virtual void Action(Actor actor)
     {
-        return _state;
+        Debug.Log("Action");
     }
-
-    public float GetRecastPer()
+    // アクションが終わったとき
+    protected virtual void EndAction(Actor actor)
     {
-        float per = 1.0f - _timer / REQUIREMENT_RECAST_TIME;
-        return per;
+        Debug.Log("EndAction");
     }
-
-    public virtual void SetCommandNum(int num)
+    // アクションがキャンセルされた
+    protected virtual void Cancel(Actor actor)
     {
-
+        Debug.Log("Cancel");
     }
-
-    public virtual void SkipRecast(float skipTime)
+    // -----------------------------
+    protected void Recasting()
     {
-        if (_state == SKILL_STATE.RECASTING)
-            _timer += skipTime;
+        _timer -= Time.deltaTime;
+        if(_timer <= 0.0f)
+        {
+            _timer = CAST_TIME;
+            _state = STATE.WAIT;
+        }
     }
 }
