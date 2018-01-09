@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TempestBlow : SkillBase {
 
+    GameObject _rangeObj;
     public TempestBlow()
     {
         CAST_TIME = 0.0f;
@@ -14,6 +15,7 @@ public class TempestBlow : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         Debug.Log("TempestBlow");
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.rotation, 10, 45, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -34,6 +36,8 @@ public class TempestBlow : SkillBase {
         col.SetFanCollider(actor.transform.position, 3.0f, actor.transform.forward, 45.0f);
 
         actor.GetAnimator().SetTrigger("React");
+
+        GameObject.Destroy(_rangeObj.gameObject);
     }
 
     protected override void Action(Actor actor)
@@ -49,5 +53,6 @@ public class TempestBlow : SkillBase {
     protected override void Cancel(Actor actor)
     {
         Debug.Log("Cancel");
+        GameObject.Destroy(_rangeObj.gameObject);
     }
 }

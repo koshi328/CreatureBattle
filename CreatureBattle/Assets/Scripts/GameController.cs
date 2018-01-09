@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
         else
             actorData = Resources.Load("ActorData") as ScriptableActor;
         CreatePlayer("Yuko", Vector3.zero, Quaternion.identity);
+
+        PhotonNetwork.InstantiateSceneObject("EffectManager", Vector3.zero, Quaternion.identity, 0, null);
     }
 
     public void LeaveRoom()

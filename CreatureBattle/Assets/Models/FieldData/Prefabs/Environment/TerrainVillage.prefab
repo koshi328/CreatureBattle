@@ -50,10 +50,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011889746722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b21463cbd69f1ba4596692bb7a0bcbf0, type: 3}
+  m_Script: {fileID: 11500000, guid: f8b11033779dede4b9dfbae74fb92c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: cafe82dfe1a21cd4c97c9dabccdfa21a, type: 2}
+  projCam: {fileID: 0}
+  projTex: {fileID: 0}
 --- !u!154 &154000013388303846
 TerrainCollider:
   m_ObjectHideFlags: 1
@@ -91,7 +92,7 @@ Terrain:
     serializedVersion: 2
     rgba: 4286545791
   m_LegacyShininess: 0.078125
-  m_MaterialTemplate: {fileID: 2100000, guid: cafe82dfe1a21cd4c97c9dabccdfa21a, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 4886037738812e9439aebeff61a47690, type: 2}
   m_BakeLightProbesForTrees: 0
   m_ScaleInLightmap: 1
   m_LightmapParameters: {fileID: 111300000, guid: 90ade8e01ac7ced409c6adf4880a6f32,

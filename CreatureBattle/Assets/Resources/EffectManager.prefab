@@ -82,3 +82,7 @@ MonoBehaviour:
   - {fileID: 1281713384437338, guid: 2882d5467cb23a94cb2bd7b4b317d050, type: 2}
   - {fileID: 1090151972167016, guid: 8ceae9b8afc13014e86f5c4849149ced, type: 2}
   - {fileID: 1366386014199906, guid: 2ab057c8487c7c84396b173b34e0db2e, type: 2}
+  _rangeObj:
+  - {fileID: 1281713384437338, guid: 2882d5467cb23a94cb2bd7b4b317d050, type: 2}
+  - {fileID: 1090151972167016, guid: 8ceae9b8afc13014e86f5c4849149ced, type: 2}
+  - {fileID: 1366386014199906, guid: 2ab057c8487c7c84396b173b34e0db2e, type: 2}

@@ -11,11 +11,23 @@ public class EffectManager : MonoBehaviour {
         MAX_NUM
     }
 
-
     PhotonView _myPhotonView;
     [SerializeField]
     GameObject[] _prefabs = new GameObject[(int)KIND.MAX_NUM];
+    [SerializeField]
+    GameObject[] _rangeObj = new GameObject[3];
+    public static EffectManager Instance
+    {
+        get;
+        private set;
+    }
 	void Start () {
+        if(Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
         _myPhotonView = GetComponent<PhotonView>();
 	}
 
@@ -37,5 +49,31 @@ public class EffectManager : MonoBehaviour {
     public void CreateEffect(Transform parent)
     {
         _myPhotonView.RPC("CreateEffectRPC", PhotonTargets.AllViaServer, parent);
+    }
+
+    public GameObject SphereRange(Vector3 pos, float range, Color color)
+    {
+        GameObject obj = Instantiate(_rangeObj[0], pos, Quaternion.identity);
+        RangeView script = obj.GetComponent<RangeView>();
+        obj.transform.localScale = new Vector3(range, range, range);
+        script.SetColor(color);
+        return obj.gameObject;
+    }
+    public GameObject FanRange(Vector3 pos, Quaternion rot, float range, float angle, Color color)
+    {
+        GameObject obj = Instantiate(_rangeObj[1], pos, rot);
+        RangeView script = obj.GetComponent<RangeView>();
+        obj.transform.localScale = new Vector3(range, range, range);
+        script.SetColor(color);
+        script.SetFan_Range(angle);
+        return obj.gameObject;
+    }
+    public GameObject QuadRange(Vector3 pos, Quaternion rot, Vector3 size, Color color)
+    {
+        GameObject obj = Instantiate(_rangeObj[0], pos, rot);
+        RangeView script = obj.GetComponent<RangeView>();
+        obj.transform.localScale = size;
+        script.SetColor(color);
+        return obj.gameObject;
     }
 }

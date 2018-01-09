@@ -8,9 +8,17 @@ public class RangeView : MonoBehaviour {
     Shader shader;
 
     Material material;
-	void Start () {
+	void Awake () {
         material = new Material(shader);
         GetComponent<MeshRenderer>().material = material;
 	}
-	
+
+    public void SetColor(Color color)
+    {
+        material.SetColor("_Color", color);
+    }
+    public void SetFan_Range(float range)
+    {
+        material.SetFloat("_Range", range);
+    }
 }
