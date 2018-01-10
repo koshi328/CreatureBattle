@@ -7,7 +7,7 @@ public class TempestBlow : SkillBase {
     GameObject _rangeObj;
     public TempestBlow()
     {
-        CAST_TIME = 0.0f;
+        CAST_TIME = 2.2f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 0.6f;
     }
@@ -15,7 +15,7 @@ public class TempestBlow : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         Debug.Log("TempestBlow");
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.rotation, 10, 45, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 10, 45, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -35,7 +35,7 @@ public class TempestBlow : SkillBase {
         });
         col.SetFanCollider(actor.transform.position, 3.0f, actor.transform.forward, 45.0f);
 
-        actor.GetAnimator().SetTrigger("React");
+        actor.GetAnimator().SetTrigger("Slash2");
 
         GameObject.Destroy(_rangeObj.gameObject);
     }

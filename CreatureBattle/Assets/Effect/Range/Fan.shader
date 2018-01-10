@@ -48,7 +48,7 @@
 	float wave = pow(d + t, 10);
 	if (wave >= 0.6)wave = 0.0;
 
-	return float4(_Color.rgb, pow(d + 0.5,10) + wave + pow(p, 10));
+	return float4(_Color.rgb, (pow(d + 0.5,10) + wave + pow(p, 10)) * _Color.a);
 	}
 		ENDCG
 	}

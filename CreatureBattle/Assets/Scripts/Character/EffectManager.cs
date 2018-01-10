@@ -55,25 +55,27 @@ public class EffectManager : MonoBehaviour {
     {
         GameObject obj = Instantiate(_rangeObj[0], pos, Quaternion.identity);
         RangeView script = obj.GetComponent<RangeView>();
-        obj.transform.localScale = new Vector3(range, range, range);
         script.SetColor(color);
+        script.SetSize(new Vector3(range, range, 1));
         return obj.gameObject;
     }
-    public GameObject FanRange(Vector3 pos, Quaternion rot, float range, float angle, Color color)
+    public GameObject FanRange(Vector3 pos, float rotY, float range, float angle, Color color)
     {
-        GameObject obj = Instantiate(_rangeObj[1], pos, rot);
+        GameObject obj = Instantiate(_rangeObj[1], pos,Quaternion.identity);
         RangeView script = obj.GetComponent<RangeView>();
-        obj.transform.localScale = new Vector3(range, range, range);
+        obj.transform.rotation = Quaternion.Euler(90, rotY, 0);
         script.SetColor(color);
         script.SetFan_Range(angle);
+        script.SetSize(new Vector3(range, range, 1));
         return obj.gameObject;
     }
-    public GameObject QuadRange(Vector3 pos, Quaternion rot, Vector3 size, Color color)
+    public GameObject QuadRange(Vector3 pos, float rotY, Vector3 size, Color color)
     {
-        GameObject obj = Instantiate(_rangeObj[0], pos, rot);
+        GameObject obj = Instantiate(_rangeObj[2], pos, Quaternion.identity);
         RangeView script = obj.GetComponent<RangeView>();
-        obj.transform.localScale = size;
+        obj.transform.rotation = Quaternion.Euler(90, rotY, 0);
         script.SetColor(color);
+        script.SetSize(size);
         return obj.gameObject;
     }
 }

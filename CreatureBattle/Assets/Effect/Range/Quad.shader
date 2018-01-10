@@ -38,7 +38,7 @@
 	t = 1.0 - (t - 0.6 * floor(t / 0.6));
 	float wave = pow(d + t, 10);
 	if (wave >= 0.6)wave = 0.0;
-	return float4(_Color.rgb, pow(d + 0.75, 15) + wave);
+	return float4(_Color.rgb, (pow(d + 0.75, 15) + wave) * _Color.a);
 	}
 		ENDCG
 	}

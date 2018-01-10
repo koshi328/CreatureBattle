@@ -18,7 +18,7 @@ public class ActorStatus {
         _attack = attack;
         _attackInterval = attackInterval;
         _condition = condition;
-        _speed = 3.0f;
+        _speed = 7.0f;
     }
 
     public float GetAttack()
