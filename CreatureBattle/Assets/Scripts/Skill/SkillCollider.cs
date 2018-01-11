@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SkillCollider : MonoBehaviour {
 
+    public enum HitTarget
+    {
+        Player,
+        Monster
+    }
+
+
     public delegate void OnHitDelegate(Actor actor);
     OnHitDelegate _hitDelegate = null;
     Actor _owner;
@@ -12,10 +19,23 @@ public class SkillCollider : MonoBehaviour {
 
     List<HitActor> _hitActors = new List<HitActor>();
     float _hitInterval;
+    bool _oneHit;
+    
     // 例外処理
     float _angle;
     bool _isFan;
-    
+
+    static int playerMask = -1;
+    static int monsterMask = -1;
+
+    private void Awake()
+    {
+        if(playerMask == -1)
+            playerMask = LayerMask.NameToLayer("PlayerAttack");
+        if (monsterMask == -1)
+            monsterMask = LayerMask.NameToLayer("MonsterAttack");
+    }
+
     // 初期生成時
     public void Create()
     {
@@ -25,7 +45,7 @@ public class SkillCollider : MonoBehaviour {
         _sphereCollider.enabled = false;
     }
     // ヒット時の詳細処理を設定
-    public void Initialize(Actor owner, float liveTime, float hitInterval,OnHitDelegate hitDelegate = null)
+    public void Initialize(Actor owner, HitTarget target, float liveTime, float hitInterval, OnHitDelegate hitDelegate = null, bool oneHit = false)
     {
         _owner = owner;
         _hitDelegate = hitDelegate;
@@ -33,6 +53,16 @@ public class SkillCollider : MonoBehaviour {
         _hitActors.Clear();
         Invoke("Finalized", liveTime);
         gameObject.SetActive(true);
+        _oneHit = oneHit;
+
+        if(target == HitTarget.Player)
+        {
+            gameObject.layer = monsterMask;
+        }
+        else
+        {
+            gameObject.layer = playerMask;
+        }
     }
     // 形の定義
     public void SetSphereCollider(Vector3 pos, float radius)
@@ -70,6 +100,10 @@ public class SkillCollider : MonoBehaviour {
         if (_isFan) return;
         OnDelegate(hitActor);
         _hitActors.Add(new HitActor(hitActor));
+        if(_oneHit)
+        {
+            Finalized();
+        }
     }
     // FanCollider用
     private void OnTriggerStay(Collider other)
@@ -92,6 +126,10 @@ public class SkillCollider : MonoBehaviour {
         if (!inFan) return;
         OnDelegate(hitActor);
         _hitActors.Add(new HitActor(hitActor));
+        if (_oneHit)
+        {
+            Finalized();
+        }
     }
 
     private void OnTriggerExit(Collider other)

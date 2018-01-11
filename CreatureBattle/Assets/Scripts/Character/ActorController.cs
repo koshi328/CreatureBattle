@@ -31,7 +31,6 @@ public class ActorController : MonoBehaviour {
 	}
 	
 	void Update () {
-        _myActor.MyUpdate();
         if (!_myActor.GetPhotonView().isMine) return;
         // 移動
         float x = Input.GetAxis("Horizontal");
@@ -60,6 +59,18 @@ public class ActorController : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Space))
         {
             _myActor.GetCondition().GetCondition((ActorCondition.KIND)0).AddStack(5.0f, 1.0f, _myActor);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            SkillBase skill = _myActor.GetSkillController().GetSkill(i);
+            if (!skill.NowReCasting())
+            {
+                _commandCanvas.SetFillAmount(i, 1.0f);
+                continue;
+            }
+            float amount = 1.0f - skill.GetTimer() / skill.GetReCastTime();
+            _commandCanvas.SetFillAmount(i, amount);
         }
     }
 }

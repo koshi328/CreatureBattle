@@ -127,6 +127,7 @@ public class SelectController : MonoBehaviour
                 SetPlayerData(selectActorID);
                 skillWindow.ChangeActor(actorData, selectActorID);
             });
+            button.GetComponent<Button>().image.sprite = actorData.data[i].sprite;
         }
     }
 

@@ -54,4 +54,5 @@ MonoBehaviour:
   - RPCSkillExecute
   - RPCTakeDamage
   - RPCSetSkills
+  - RPCCancelSkill
   DisableAutoOpenWizard: 1

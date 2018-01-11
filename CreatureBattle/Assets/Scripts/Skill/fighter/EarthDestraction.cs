@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class EarthDestraction : SkillBase {
 
+    GameObject _rangeObj;
     public EarthDestraction()
     {
-        CAST_TIME = 0.0f;
+        CAST_TIME = 1.0f;
         RECAST_TIME = 15.0f;
         ACTION_TIME = 1.0f;
     }
 
     protected override void EntryCast(Actor actor)
     {
-        Debug.Log("EarthDestraction");
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 10.0f, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -23,11 +24,12 @@ public class EarthDestraction : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        //if (!actor.GetPhotonView().isMine) return;
+        GameObject.Destroy(_rangeObj.gameObject);
+        if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, 0.6f, 0.6f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 0.6f, (argActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.EARTH_DESTRACTION, 3.0f, 0.0f);
+            argActor.AddCondition(ActorCondition.KIND.EARTH_DESTRACTION, 10.0f, 0.0f);
             argActor.TakeDamage(75.0f);
         });
         col.SetSphereCollider(actor.transform.position, 6.0f);
@@ -45,6 +47,6 @@ public class EarthDestraction : SkillBase {
 
     protected override void Cancel(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj.gameObject);
     }
 }

@@ -25,7 +25,7 @@ public class RageImpact : SkillBase {
     {
         //if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, 0.6f, 0.6f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 0.6f, (argActor) =>
         {
             argActor.TakeDamage(35.0f);
         });
