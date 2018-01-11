@@ -35,4 +35,9 @@ public class TrackCamera : MonoBehaviour {
     {
         _refTransform = target;
     }
+
+    public void SetOffset(Vector3 vec)
+    {
+        _offset = vec;
+    }
 }

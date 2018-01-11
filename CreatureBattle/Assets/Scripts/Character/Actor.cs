@@ -38,6 +38,14 @@ public class Actor : MonoBehaviour {
             actorData.data[actorID].hp);
 
         _moveDirection = Vector3.zero;
+
+        // カメラの位置の設定
+        Camera.main.transform.localPosition = new Vector3(
+            Camera.main.transform.localPosition.x, 
+            Camera.main.transform.localPosition.y, 
+            actorData.data[actorID].cameraDistance);
+        TrackCamera camera = Camera.main.GetComponentInParent<TrackCamera>();
+        camera.SetOffset(actorData.data[actorID].cameraOffset);
     }
 
     public void MyUpdate()
@@ -110,7 +118,7 @@ public class Actor : MonoBehaviour {
     public void ReceiveRecovery(float recovery)
     {
         if (!_myPhotonView.isMine) return;
-        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, recovery);
+        _myPhotonView.RPC("RPCReceiveRecovery", PhotonTargets.AllViaServer, recovery);
     }
     [PunRPC]
     public void RPCReceiveRecovery(float recovery)

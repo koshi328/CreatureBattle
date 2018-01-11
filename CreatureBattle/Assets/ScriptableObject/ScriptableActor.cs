@@ -21,6 +21,8 @@ public class ScriptableActor : ScriptableObject {
         public float attackInterval;// 通常攻撃の間隔
         public ACTOR_TYPE actorType;// 人間かモンスターか
         public ScriptableSkill skillData;
+        public Vector3 cameraOffset;      // 注目点のオフセット
+        public float cameraDistance;    // カメラの距離
     }
 
     public ActorData[] data;
