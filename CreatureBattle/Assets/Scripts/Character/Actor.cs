@@ -40,7 +40,7 @@ public class Actor : MonoBehaviour {
         _moveDirection = Vector3.zero;
     }
 
-    public void MyUpdate()
+    public void Update()
     {
         _myAnimator.SetFloat("Run", Vector3.Distance(_moveDirection, Vector3.zero));
         _condition.Execute(this);
@@ -87,8 +87,7 @@ public class Actor : MonoBehaviour {
     }
     public void SetSkills(int[] elements)
     {
-        _skillController.Initialize(elements);
-        //_myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements);
+        _myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements);
     }
     [PunRPC]
     void RPCSetSkills(int[] elements)
@@ -126,6 +125,16 @@ public class Actor : MonoBehaviour {
     void RPCAddCondition(int kind, float time, float rate)
     {
         _condition.GetCondition((ActorCondition.KIND)kind).AddStack(time, rate, this);
+    }
+
+    public void CancelSkill()
+    {
+        _myPhotonView.RPC("RPCCancelSkill", PhotonTargets.AllViaServer);
+    }
+    [PunRPC]
+    void RPCCancelSkill()
+    {
+        _skillController.CancelSkill(this);
     }
     // ---------------------------
     void MoveMent()

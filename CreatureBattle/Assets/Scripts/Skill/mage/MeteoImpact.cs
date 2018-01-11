@@ -25,7 +25,7 @@ public class MeteoImpact : SkillBase {
     {
         //if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (argActor) =>
         {
             argActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
             argActor.TakeDamage(54.0f);

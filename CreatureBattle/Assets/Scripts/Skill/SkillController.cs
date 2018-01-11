@@ -38,8 +38,7 @@ public class SkillController {
             }
             if ((actor.CheckMovement() && NowCasting()) || actor.GetCondition().DontMove())
             {
-                _haveSkills[_currentElem].Dispose(actor);
-                _currentElem = -1;
+                actor.CancelSkill();
             }
         }
     }
@@ -69,5 +68,17 @@ public class SkillController {
     public bool NowWaiting()
     {
         return _currentElem == -1;
+    }
+
+    public SkillBase GetSkill(int elem)
+    {
+        return _haveSkills[elem];
+    }
+
+    public void CancelSkill(Actor actor)
+    {
+        if (_currentElem == -1) return;
+        _haveSkills[_currentElem].Dispose(actor);
+        _currentElem = -1;
     }
 }

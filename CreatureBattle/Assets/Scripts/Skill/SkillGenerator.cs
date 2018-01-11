@@ -47,12 +47,12 @@ public class SkillGenerator
             case SKILL_ID.FIGHTER_RAGE_IMPACT: return new RageImpact();
             case SKILL_ID.TANK_STAND_GUARD: return new StandGuard();
             case SKILL_ID.TANK_ANGRY_SHOUT: return null;
-            case SKILL_ID.TANK_SHIELD_BASH: return null;
+            case SKILL_ID.TANK_SHIELD_BASH: return new ShieldBash();
             case SKILL_ID.TANK_AGGRESSIVE_SHOUT: return null;
-            case SKILL_ID.MAGE_GROUND_FROST: return null;
-            case SKILL_ID.MAGE_METEOR_IMPACT: return null;
-            case SKILL_ID.MAGE_THUNDER_TRAP: return null;
-            case SKILL_ID.MAGE_CHASE_FLAME: return null;
+            case SKILL_ID.MAGE_GROUND_FROST: return new GroundFrost();
+            case SKILL_ID.MAGE_METEOR_IMPACT: return new MeteoImpact();
+            case SKILL_ID.MAGE_THUNDER_TRAP: return new ThunderTrap();
+            case SKILL_ID.MAGE_CHASE_FLAME: return new ChaseFlame();
             case SKILL_ID.MONSTER_DRAGON_STORM: return null;
             case SKILL_ID.MONSTER_ABNORMAL_COUNTER: return null;
             case SKILL_ID.MONSTER_STAN_BREATH: return null;

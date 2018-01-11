@@ -6,8 +6,11 @@ public class EffectManager : MonoBehaviour {
 
     public enum KIND
     {
-        Burn,
-
+        GroundFrost,
+        MeteoImpact,
+        ThnderTrap,
+        ChaseFlame,
+        ThnderTrapHit,
         MAX_NUM
     }
 
@@ -36,25 +39,17 @@ public class EffectManager : MonoBehaviour {
     {
 
     }
-    [PunRPC]
-    void CreateEffectRPC(Transform parent)
-    {
-
-    }
 
     public void CreateEffect(Vector3 pos, float rotY, float size)
     {
         _myPhotonView.RPC("CreateEffectRPC", PhotonTargets.AllViaServer, pos, rotY, size);
-    }
-    public void CreateEffect(Transform parent)
-    {
-        _myPhotonView.RPC("CreateEffectRPC", PhotonTargets.AllViaServer, parent);
     }
 
     public GameObject SphereRange(Vector3 pos, float range, Color color)
     {
         GameObject obj = Instantiate(_rangeObj[0], pos, Quaternion.identity);
         RangeView script = obj.GetComponent<RangeView>();
+        obj.transform.rotation = Quaternion.Euler(90, 0, 0);
         script.SetColor(color);
         script.SetSize(new Vector3(range, range, 1));
         return obj.gameObject;
@@ -77,5 +72,10 @@ public class EffectManager : MonoBehaviour {
         script.SetColor(color);
         script.SetSize(size);
         return obj.gameObject;
+    }
+
+    public GameObject GetEffectInstance(KIND kind)
+    {
+        return Instantiate(_prefabs[(int)kind]);
     }
 }

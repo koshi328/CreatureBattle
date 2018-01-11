@@ -30,6 +30,10 @@ public class SkillBase {
     {
         return RECAST_TIME;
     }
+    public float GetTimer()
+    {
+        return _timer;
+    }
     public void Select(Actor actor)
     {
         _timer = CAST_TIME;
