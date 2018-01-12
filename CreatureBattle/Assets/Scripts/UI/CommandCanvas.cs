@@ -7,10 +7,13 @@ public class CommandCanvas : MonoBehaviour
 {
     [SerializeField]
     Button[] _commandButton;
+    [SerializeField]
+    ScriptableAllSkills _skillData;
 
     [SerializeField]
+    Image[] _commandRecastImage;
+    [SerializeField]
     Image[] _commandImage;
-
 
     /// <summary>
     /// ボタンをクリックした時のイベントを設定する
@@ -41,6 +44,11 @@ public class CommandCanvas : MonoBehaviour
     /// <param name="amount"></param>
     public void SetFillAmount(int elem, float amount)
     {
-        _commandImage[elem].fillAmount = amount;
+        _commandRecastImage[elem].fillAmount = amount;
+    }
+
+    public void SetImage(int elem, int skillID)
+    {
+        _commandImage[elem].sprite = _skillData.data[skillID].sprite;
     }
 }

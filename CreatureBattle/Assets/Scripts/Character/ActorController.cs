@@ -28,6 +28,10 @@ public class ActorController : MonoBehaviour {
             skills_id[i] = (int)value;
         }
         _myActor.SetSkills(skills_id);
+        for (int i = 0; i < 4; i++)
+        {
+            _commandCanvas.SetImage(i,skills_id[i]);
+        }
 	}
 	
 	void Update () {
@@ -66,10 +70,10 @@ public class ActorController : MonoBehaviour {
             SkillBase skill = _myActor.GetSkillController().GetSkill(i);
             if (!skill.NowReCasting())
             {
-                _commandCanvas.SetFillAmount(i, 1.0f);
+                _commandCanvas.SetFillAmount(i, 0.0f);
                 continue;
             }
-            float amount = 1.0f - skill.GetTimer() / skill.GetReCastTime();
+            float amount = skill.GetTimer() / skill.GetReCastTime();
             _commandCanvas.SetFillAmount(i, amount);
         }
     }

@@ -50,10 +50,8 @@ public class Actor : MonoBehaviour {
 
     public void Update()
     {
-        _myAnimator.SetFloat("Run", Vector3.Distance(_moveDirection, Vector3.zero));
         _condition.Execute(this);
         _skillController.Execute(this);
-        if (_condition.DontMove()) return;
         MoveMent();
     }
 
@@ -95,11 +93,12 @@ public class Actor : MonoBehaviour {
     }
     public void SetSkills(int[] elements)
     {
-        _myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements);
+        _myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements[0], elements[1], elements[2], elements[3]);
     }
     [PunRPC]
-    void RPCSetSkills(int[] elements)
+    void RPCSetSkills(int e1, int e2, int e3, int e4)
     {
+        int[] elements = { e1, e2, e3, e4 };
         _skillController.Initialize(elements);
     }
 
@@ -124,15 +123,15 @@ public class Actor : MonoBehaviour {
     {
         _status.ReceiveRecovery(recovery);
     }
-    public void AddCondition(ActorCondition.KIND kind, float time, float rate)
+    public void AddCondition(ActorCondition.KIND kind, float time, float rate, bool isTimeUpdate = true)
     {
         if (!_myPhotonView.isMine) return;
-        _myPhotonView.RPC("RPCAddCondition", PhotonTargets.AllViaServer, (int)kind, time, rate);
+        _myPhotonView.RPC("RPCAddCondition", PhotonTargets.AllViaServer, (int)kind, time, rate,isTimeUpdate);
     }
     [PunRPC]
-    void RPCAddCondition(int kind, float time, float rate)
+    void RPCAddCondition(int kind, float time, float rate, bool isTimeUpdate)
     {
-        _condition.GetCondition((ActorCondition.KIND)kind).AddStack(time, rate, this);
+        _condition.GetCondition((ActorCondition.KIND)kind).AddStack(time, rate, this, isTimeUpdate);
     }
 
     public void CancelSkill()
@@ -147,9 +146,14 @@ public class Actor : MonoBehaviour {
     // ---------------------------
     void MoveMent()
     {
-        if (_skillController.NowAction()) return;
+        if (_condition.DontMove() || _skillController.NowAction() || _skillController.NowCasting())
+        {
+            _myAnimator.SetFloat("Run", 0.0f);
+            return;
+        }
         transform.rotation = Quaternion.LookRotation(Vector3.Lerp(_moveDirection, transform.forward, 0.4f));
         _navMesh.Move(_moveDirection * _status.GetSpeed() * Time.deltaTime);
+        _myAnimator.SetFloat("Run", Vector3.Distance(_moveDirection, Vector3.zero));
     }
 
     public PhotonView GetPhotonView()

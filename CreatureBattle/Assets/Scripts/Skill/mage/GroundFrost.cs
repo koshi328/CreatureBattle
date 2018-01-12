@@ -28,6 +28,9 @@ public class GroundFrost : SkillBase {
     protected override void EndCast(Actor actor)
     {
         GameObject.Destroy(_rangeObj);
+        _effect.transform.position = actor.transform.position + Vector3.up;
+        _effect.transform.rotation = actor.transform.rotation;
+        _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 3.0f, 3.0f, (argActor) =>
@@ -36,9 +39,6 @@ public class GroundFrost : SkillBase {
             argActor.TakeDamage(60.0f);
         });
         col.SetFanCollider(actor.transform.position, 15.0f, actor.transform.forward, 30.0f);
-        _effect.transform.position = actor.transform.position;
-        _effect.transform.rotation = actor.transform.rotation;
-        _effect.Play();
     }
 
     protected override void Action(Actor actor)

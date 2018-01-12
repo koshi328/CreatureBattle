@@ -2,6 +2,7 @@
 	Properties
 	{
 		_MainTex("MainTex",2D) = "white"{}
+		_ProjectionTex("ProjectionTex",2D) = "white"{}
 	}
 	SubShader
 	{
@@ -11,7 +12,6 @@
 #pragma vertex vert
 #pragma fragment frag
 #include "UnityCG.cginc"
-#include "AutoLight.cginc"
 
 		struct v2f
 		{
@@ -48,5 +48,4 @@
 		ENDCG
 		}
 	}
-	FallBack "Diffuse"
 }

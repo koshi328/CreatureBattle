@@ -36,7 +36,7 @@ public class SkillController {
             {
                 _currentElem = -1;
             }
-            if ((actor.CheckMovement() && NowCasting()) || actor.GetCondition().DontMove())
+            if (actor.GetCondition().DontMove())
             {
                 actor.CancelSkill();
             }

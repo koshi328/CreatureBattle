@@ -44,11 +44,15 @@ public class SkillCollider : MonoBehaviour {
         _boxCollider.enabled = false;
         _sphereCollider.enabled = false;
     }
+    public void AddDelegate(OnHitDelegate hitDelegate)
+    {
+        _hitDelegate += hitDelegate;
+    }
     // ヒット時の詳細処理を設定
     public void Initialize(Actor owner, HitTarget target, float liveTime, float hitInterval, OnHitDelegate hitDelegate = null, bool oneHit = false)
     {
         _owner = owner;
-        _hitDelegate = hitDelegate;
+        _hitDelegate += hitDelegate;
         _hitInterval = hitInterval;
         _hitActors.Clear();
         Invoke("Finalized", liveTime);

@@ -110,12 +110,15 @@ public class Condition
     {
         return _stack;
     }
-    public virtual void AddStack(float time, float rate, Actor actor)
+    public virtual void AddStack(float time, float rate, Actor actor, bool isTimeUpdate = true)
     {
+        if(isTimeUpdate)
+        {
+            _time = Mathf.Clamp(time, 0, _maxTime);
+        }
         if (_stack >= _maxStack) return;
         _rate = rate;
         _stack++;
-        _time = Mathf.Clamp(time, 0, _maxTime);
         Entry(actor);
     }
     public void SetTime(float time)

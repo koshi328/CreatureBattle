@@ -34,8 +34,8 @@ public class RangeView : MonoBehaviour {
 
     private void Update()
     {
-        float sx = transform.localScale.x + (_size.x - transform.localScale.x) * 0.1f;
-        float sy = transform.localScale.y + (_size.y - transform.localScale.y) * 0.1f;
+        float sx = transform.localScale.x + (_size.x - transform.localScale.x) * 0.4f;
+        float sy = transform.localScale.y + (_size.y - transform.localScale.y) * 0.4f;
         transform.localScale = new Vector3(sx, sy, 1);
     }
 

@@ -43,12 +43,12 @@ public class SkillGenerator
         {
     case SKILL_ID.FIGHTER_TEMPEST_BLOW:return new TempestBlow();
     case SKILL_ID.FIGHTER_EARTH_DESTRUCTION:return new EarthDestraction();
-            case SKILL_ID.FIGHTER_DEADLY_IMPACT:return new DeadlyImDeadlyImpact();
+            case SKILL_ID.FIGHTER_DEADLY_IMPACT:return new DeadlyImpact();
             case SKILL_ID.FIGHTER_RAGE_IMPACT: return new RageImpact();
             case SKILL_ID.TANK_STAND_GUARD: return new StandGuard();
-            case SKILL_ID.TANK_ANGRY_SHOUT: return null;
+            case SKILL_ID.TANK_ANGRY_SHOUT: return new AngryShout();
             case SKILL_ID.TANK_SHIELD_BASH: return new ShieldBash();
-            case SKILL_ID.TANK_AGGRESSIVE_SHOUT: return null;
+            case SKILL_ID.TANK_AGGRESSIVE_SHOUT: return new AggressiveShout();
             case SKILL_ID.MAGE_GROUND_FROST: return new GroundFrost();
             case SKILL_ID.MAGE_METEOR_IMPACT: return new MeteoImpact();
             case SKILL_ID.MAGE_THUNDER_TRAP: return new ThunderTrap();

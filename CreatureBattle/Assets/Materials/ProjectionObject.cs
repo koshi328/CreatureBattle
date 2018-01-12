@@ -21,8 +21,9 @@ public class ProjectionObject : MonoBehaviour {
         {
             projTex = Resources.Load("PaintTex") as Texture;
         }
-        Matrix4x4 projVP = projCam.projectionMatrix
+        Matrix4x4 projVP = GL.GetGPUProjectionMatrix(projCam.projectionMatrix, false)
     * projCam.worldToCameraMatrix;
+
 
         var biasMat = new Matrix4x4();
         biasMat.SetRow(0, new Vector4(0.5f, 0.0f, 0.0f, 0.5f));
