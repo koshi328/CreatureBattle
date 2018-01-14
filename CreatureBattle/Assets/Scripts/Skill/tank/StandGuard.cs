@@ -26,7 +26,7 @@ public class StandGuard : SkillBase {
     {
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (argActor) =>
         {
             argActor.AddCondition(ActorCondition.KIND.STAND_GUARD, 10.0f, 0.0f);
         });

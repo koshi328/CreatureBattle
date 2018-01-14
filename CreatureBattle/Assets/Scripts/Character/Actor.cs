@@ -104,7 +104,6 @@ public class Actor : MonoBehaviour {
 
     public void TakeDamage(float damage)
     {
-        if (!_myPhotonView.isMine) return;
         _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, damage);
     }
     [PunRPC]
@@ -115,7 +114,6 @@ public class Actor : MonoBehaviour {
 
     public void ReceiveRecovery(float recovery)
     {
-        if (!_myPhotonView.isMine) return;
         _myPhotonView.RPC("RPCReceiveRecovery", PhotonTargets.AllViaServer, recovery);
     }
     [PunRPC]
@@ -125,7 +123,6 @@ public class Actor : MonoBehaviour {
     }
     public void AddCondition(ActorCondition.KIND kind, float time, float rate, bool isTimeUpdate = true)
     {
-        if (!_myPhotonView.isMine) return;
         _myPhotonView.RPC("RPCAddCondition", PhotonTargets.AllViaServer, (int)kind, time, rate,isTimeUpdate);
     }
     [PunRPC]
@@ -163,5 +160,9 @@ public class Actor : MonoBehaviour {
     public Animator GetAnimator()
     {
         return _myAnimator;
+    }
+    public ActorStatus GetStatus()
+    {
+        return _status;
     }
 }

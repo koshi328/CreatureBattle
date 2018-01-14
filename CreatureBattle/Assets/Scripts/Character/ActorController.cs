@@ -5,12 +5,14 @@ using UnityEngine;
 public class ActorController : MonoBehaviour {
     Actor _myActor;
     CommandCanvas _commandCanvas;
+    StatusCanvas _statusCanavs;
     Transform _cameraTrans;
 	void Start () {
         _myActor = GetComponent<Actor>();
         _cameraTrans = Camera.main.transform;
         _cameraTrans.parent.GetComponent<TrackCamera>().SetTarget(transform);
         _commandCanvas = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
+        _statusCanavs = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
         _commandCanvas.SetCommand(0, () => { _myActor.SkillExecute(0); });
         _commandCanvas.SetCommand(1, () => { _myActor.SkillExecute(1); });
         _commandCanvas.SetCommand(2, () => { _myActor.SkillExecute(2); });
@@ -35,6 +37,7 @@ public class ActorController : MonoBehaviour {
 	}
 	
 	void Update () {
+        _statusCanavs.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
         // 移動
         float x = Input.GetAxis("Horizontal");
@@ -68,6 +71,7 @@ public class ActorController : MonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             SkillBase skill = _myActor.GetSkillController().GetSkill(i);
+            if (skill == null) continue;
             if (!skill.NowReCasting())
             {
                 _commandCanvas.SetFillAmount(i, 0.0f);

@@ -30,7 +30,7 @@ public class ShieldBash : SkillBase {
         {
             argActor.AddCondition(ActorCondition.KIND.STAN, 1.0f, 0.0f, false);
         });
-        col.SetFanCollider(actor.transform.position, 8.0f, actor.transform.forward * -1, 45.0f);
+        col.SetFanCollider(actor.transform.position, 8.0f, actor.transform.forward, 45.0f);
     }
 
     protected override void Action(Actor actor)
