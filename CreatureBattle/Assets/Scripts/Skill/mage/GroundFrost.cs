@@ -11,7 +11,8 @@ public class GroundFrost : SkillBase {
         CAST_TIME = 2.0f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 3.0f;
-        _effect = EffectManager.Instance.GetEffectInstance(EffectManager.KIND.GroundFrost).GetComponent<ParticleSystem>();
+        GameObject prefab = Resources.Load("Effect/ItoEffects/frost") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
         _effect.Stop();
     }
 

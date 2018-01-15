@@ -44,12 +44,13 @@ public class ActorStatus {
 
     public void TakeDamage(float damage)
     {
-        damage = damage * _condition.ReciveDamageRate;
+        damage = damage * _condition.ReciveDamageRate + Random.Range(-5, 5);
         _hp = Mathf.Clamp(_hp - damage, 0, _maxHP);
     }
 
     public void ReceiveRecovery(float recovery)
     {
+        if (_condition.GetCondition(ActorCondition.KIND.EXPLOSION).GetStack() != 0) return;
         _hp = Mathf.Clamp(_hp + recovery, 0, _maxHP);
     }
 }

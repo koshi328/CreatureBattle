@@ -53,15 +53,15 @@ public class SkillGenerator
             case SKILL_ID.MAGE_METEOR_IMPACT: return new MeteoImpact();
             case SKILL_ID.MAGE_THUNDER_TRAP: return new ThunderTrap();
             case SKILL_ID.MAGE_CHASE_FLAME: return new ChaseFlame();
-            case SKILL_ID.MONSTER_DRAGON_STORM: return null;
-            case SKILL_ID.MONSTER_ABNORMAL_COUNTER: return null;
-            case SKILL_ID.MONSTER_STAN_BREATH: return null;
-            case SKILL_ID.MONSTER_INITIALIZE_WAVE: return null;
-            case SKILL_ID.MONSTER_EXPLOSION: return null;
-            case SKILL_ID.MONSTER_DOUBLE_EDGE_RATE: return null;
-            case SKILL_ID.MONSTER_LIMIT_BREAK: return null;
-            case SKILL_ID.MONSTER_STADY_PROTECT: return null;
-            case SKILL_ID.MONSTER_LATIS_THUNDER: return null;
+            case SKILL_ID.MONSTER_DRAGON_STORM: return new DragonStorm();
+            case SKILL_ID.MONSTER_ABNORMAL_COUNTER: return new AbnormalCounter();
+            case SKILL_ID.MONSTER_STAN_BREATH: return new StanBreath();
+            case SKILL_ID.MONSTER_INITIALIZE_WAVE: return new InitializeWave();
+            case SKILL_ID.MONSTER_EXPLOSION: return new Explosion();
+            case SKILL_ID.MONSTER_DOUBLE_EDGE_RATE: return new DoubleEdgeRage();
+            case SKILL_ID.MONSTER_LIMIT_BREAK: return new LimitBreak();
+            case SKILL_ID.MONSTER_STADY_PROTECT: return new StuddiProtect();
+            case SKILL_ID.MONSTER_LATIS_THUNDER: return new LatticeThunder();
         }
         return null;
     }

@@ -2,15 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragonStorm : MonoBehaviour {
+public class DragonStorm : SkillBase {
+    GameObject _rangeObj;
+    public DragonStorm()
+    {
+        CAST_TIME = 0.5f;
+        RECAST_TIME = 7.0f;
+        ACTION_TIME = 1.0f;
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    protected override void EntryCast(Actor actor)
+    {
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 10.0f, new Color(1, 0.5f, 0, 1));
+    }
+
+    protected override void Casting(Actor actor)
+    {
+
+    }
+
+    protected override void EndCast(Actor actor)
+    {
+        if (!actor.GetPhotonView().isMine) return;
+        SkillCollider col = ColliderManager.Instance.GetCollider();
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (argActor) =>
+        {
+            argActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
+            argActor.TakeDamage(141.0f);
+        });
+        col.SetSphereCollider(actor.transform.position, 6.0f);
+    }
+
+    protected override void Action(Actor actor)
+    {
+
+    }
+
+    protected override void EndAction(Actor actor)
+    {
+        GameObject.Destroy(_rangeObj);
+    }
+
+    protected override void Cancel(Actor actor)
+    {
+        GameObject.Destroy(_rangeObj);
+    }
 }
