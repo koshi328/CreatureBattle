@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChaseFlame : SkillBase {
     GameObject _rangeObj;
+    ParticleSystem[] _effect = new ParticleSystem[4];
     int _stack;
     public ChaseFlame()
     {
@@ -11,6 +12,12 @@ public class ChaseFlame : SkillBase {
         RECAST_TIME = 5.0f;
         ACTION_TIME = 1.0f;
         _stack = 0;
+        GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_fire2") as GameObject;
+        for (int i = 0; i < 4; i++)
+        {
+            _effect[i] = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+            _effect[i].Stop();
+        }
     }
 
     protected override void EntryCast(Actor actor)
@@ -25,6 +32,11 @@ public class ChaseFlame : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        for (int i = 0; i < 4; i++)
+        {
+            _effect[i].transform.position = actor.transform.position + actor.transform.forward * (i + 1) * 3.0f;
+            _effect[i].Play();
+        }
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor,SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (argActor) =>

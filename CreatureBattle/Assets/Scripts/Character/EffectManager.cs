@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class EffectManager : MonoBehaviour {
 
-    public enum KIND
-    {
-        GroundFrost,
-        MeteoImpact,
-        ThnderTrap,
-        ChaseFlame,
-        ThnderTrapHit,
-        MAX_NUM
-    }
-
     PhotonView _myPhotonView;
     [SerializeField]
-    GameObject[] _prefabs = new GameObject[(int)KIND.MAX_NUM];
-    [SerializeField]
     GameObject[] _rangeObj = new GameObject[3];
+
     public static EffectManager Instance
     {
         get;
@@ -72,10 +61,5 @@ public class EffectManager : MonoBehaviour {
         script.SetColor(color);
         script.SetSize(size);
         return obj.gameObject;
-    }
-
-    public GameObject GetEffectInstance(KIND kind)
-    {
-        return Instantiate(_prefabs[(int)kind]);
     }
 }

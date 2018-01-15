@@ -6,7 +6,6 @@ public class ActorCondition : MonoBehaviour {
     public enum KIND
     {
         STAN,              
-        BURN,              
         SILENCE,
         // ファイター
         TEMPEST_BLOW,    
@@ -39,7 +38,6 @@ public class ActorCondition : MonoBehaviour {
     {
         _conditions = new Condition[(int)KIND.MAX_NUM];
         _conditions[(int)KIND.STAN]              = new StanCondition(1, 60);
-        _conditions[(int)KIND.BURN]              = new BurnCondition(1, 60);
         _conditions[(int)KIND.SILENCE]           = new SilenceCondition(1, 60);
         // ファイター
         _conditions[(int)KIND.TEMPEST_BLOW]      = new TempestBlowCondition(99, 10);
@@ -88,6 +86,27 @@ public class ActorCondition : MonoBehaviour {
     public Condition GetCondition(KIND kind)
     {
         return _conditions[(int)kind];
+    }
+
+    public void ClearDebuff()
+    {
+        _conditions[(int)KIND.STAN].SetTime(0.0f);
+        _conditions[(int)KIND.SILENCE].SetTime(0.0f);
+        _conditions[(int)KIND.TEMPEST_BLOW].SetTime(0.0f);
+        _conditions[(int)KIND.EARTH_DESTRACTION].SetTime(0.0f);
+        _conditions[(int)KIND.DEADLY_IMPACT].SetTime(0.0f);
+        _conditions[(int)KIND.GROUND_FROST].SetTime(0.0f);
+        _conditions[(int)KIND.METEO_IMPACT].SetTime(0.0f);
+        _conditions[(int)KIND.STAN_BLESS].SetTime(0.0f);
+        _conditions[(int)KIND.EXPLOSION].SetTime(0.0f);
+
+        //_conditions[(int)KIND.AGGRESSIVE_SHOUT].SetTime(0.0f);
+        //_conditions[(int)KIND.STAND_GUARD].SetTime(0.0f);
+        //_conditions[(int)KIND.ANGRY_SHOUT].SetTime(0.0f);
+        //_conditions[(int)KIND.INITIALIZE_WAVE].SetTime(0.0f);
+        //_conditions[(int)KIND.DOUBLE_EDGE].SetTime(0.0f);
+        //_conditions[(int)KIND.LIMIT_BREAK].SetTime(0.0f);
+        //_conditions[(int)KIND.STUDII_PROTECT].SetTime(0.0f);
     }
 }
 
@@ -160,25 +179,7 @@ public class StanCondition : Condition
     {
     }
 }
-public class BurnCondition : Condition
-{
-    float interval = 1.0f;
-    float time;
-    public BurnCondition(int maxStack, float maxTime)
-        : base(maxStack, maxTime)
-    {
-        time = interval;
-    }
-    protected override void Execute(Actor actor)
-    {
-        time += Time.deltaTime;
-        if(time >= interval)
-        {
-            time = 0.0f;
-            Debug.Log("burn");
-        }
-    }
-}
+
 public class SilenceCondition : Condition
 {
     public SilenceCondition(int maxStack, float maxTime)

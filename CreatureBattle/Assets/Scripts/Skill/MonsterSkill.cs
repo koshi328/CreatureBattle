@@ -24,6 +24,7 @@ public class InitializeWaveCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
+        actor.GetCondition().ClearDebuff();
         actor.GetCondition().ReciveDamageRate *= 0.65f;
     }
 }

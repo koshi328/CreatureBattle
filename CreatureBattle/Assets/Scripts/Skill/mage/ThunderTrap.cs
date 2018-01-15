@@ -29,8 +29,6 @@ public class ThunderTrap : SkillBase {
         {
             argActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f);
             argActor.TakeDamage(38.0f);
-            GameObject obj = EffectManager.Instance.GetEffectInstance(EffectManager.KIND.ThnderTrapHit);
-            obj.transform.position = argActor.transform.position;
         }, true);
         col.SetSphereCollider(actor.transform.position, 4.0f);
     }
