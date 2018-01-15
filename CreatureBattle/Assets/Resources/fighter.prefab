@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 195213520251475224}
   - component: {fileID: 114770960645974344}
   m_Layer: 0
-  m_Name: Fighter
+  m_Name: fighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2240,7 +2240,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 313cbd98d2ae0634c89a07c987ba3f11, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2280,7 +2280,7 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: Run
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Idle
   - Type: 9
     SynchronizeType: 0
