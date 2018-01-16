@@ -2082,7 +2082,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d4b038b1d2b8e9d439546f2c209a5da5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2102,10 +2102,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Idle
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Run
   - Type: 9
     SynchronizeType: 0

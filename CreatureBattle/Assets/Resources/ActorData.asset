@@ -40,5 +40,5 @@ MonoBehaviour:
     attackInterval: 1.6
     actorType: 0
     skillData: {fileID: 11400000, guid: 0235be1c8c16e28449ed2bc14b8e742c, type: 2}
-    cameraOffset: {x: 0, y: 2, z: 0}
+    cameraOffset: {x: 0, y: 4, z: 0}
     cameraDistance: -8
