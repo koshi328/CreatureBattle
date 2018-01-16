@@ -2109,7 +2109,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6cd3986abb23dc4469bde3132014c407, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2140,7 +2140,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Idle
   - Type: 1
     SynchronizeType: 0
@@ -2251,8 +2251,8 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114422760272802496}
   - {fileID: 114409524341337290}
+  - {fileID: 114422760272802496}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

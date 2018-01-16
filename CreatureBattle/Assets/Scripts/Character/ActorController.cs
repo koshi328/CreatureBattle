@@ -40,26 +40,30 @@ public class ActorController : MonoBehaviour {
         _statusCanavs.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
         // 移動
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("LeftHorizontal");
+        float z = Input.GetAxis("LeftVertical");
         Vector3 dirZ = (transform.position - _cameraTrans.transform.position).normalized * z;
         Vector3 dirX = _cameraTrans.transform.right * x;
         Vector3 dir = (dirZ + dirX).normalized;
         _myActor.SetMoveDirection(new Vector3(dir.x, 0, dir.z));
         // スキルの実行テスト
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        //if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetButtonDown("Skill1"))
         {
-            _myActor.SkillExecute(0);
+                _myActor.SkillExecute(0);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        if(Input.GetButtonDown("Skill2"))
         {
-            _myActor.SkillExecute(1);
+                _myActor.SkillExecute(1);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        if(Input.GetButtonDown("Skill3"))
         {
             _myActor.SkillExecute(2);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        if(Input.GetButtonDown("Skill4"))
         {
             _myActor.SkillExecute(3);
         }
