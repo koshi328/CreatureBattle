@@ -549,10 +549,10 @@ GameObject:
   - component: {fileID: 54965387329767842}
   - component: {fileID: 136166687970731108}
   - component: {fileID: 114742855316615192}
-  - component: {fileID: 114603339179796970}
   - component: {fileID: 114855240818259858}
   - component: {fileID: 195207633399978442}
   - component: {fileID: 114347899172220830}
+  - component: {fileID: 114603339179796970}
   m_Layer: 12
   m_Name: Monster
   m_TagString: Untagged
@@ -1559,7 +1559,7 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: Idle
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Run
   - Type: 9
     SynchronizeType: 0
@@ -1611,8 +1611,8 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114603339179796970}
   - {fileID: 114855240818259858}
+  - {fileID: 114603339179796970}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
