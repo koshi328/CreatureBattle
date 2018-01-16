@@ -54,7 +54,7 @@ public class ActorCondition : MonoBehaviour {
         _conditions[(int)KIND.STAN_BLESS]        = new StanBlessCondition(1, 60);
         _conditions[(int)KIND.INITIALIZE_WAVE]   = new InitializeWaveCondition(1, 60);
         _conditions[(int)KIND.EXPLOSION]         = new ExplosionCondition(1, 60);
-        _conditions[(int)KIND.DOUBLE_EDGE]       = new DoubleEdgeCondition(1, 60);
+        _conditions[(int)KIND.DOUBLE_EDGE]       = new DoubleEdgeCondition(99, 60);
         _conditions[(int)KIND.LIMIT_BREAK]       = new LimitBreakCondition(1, 60);
         _conditions[(int)KIND.STUDII_PROTECT]    = new StudiiProtectCondition(1, 60);
     }
