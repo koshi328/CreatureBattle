@@ -805,11 +805,11 @@ GameObject:
   - component: {fileID: 54873854746241846}
   - component: {fileID: 136765640229429084}
   - component: {fileID: 114611091247561686}
-  - component: {fileID: 114409524341337290}
   - component: {fileID: 114422760272802496}
   - component: {fileID: 114146701438939970}
   - component: {fileID: 195880307027407178}
-  m_Layer: 0
+  - component: {fileID: 114409524341337290}
+  m_Layer: 11
   m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2143,7 +2143,7 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: Idle
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Run
   - Type: 9
     SynchronizeType: 0
@@ -2251,8 +2251,8 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114409524341337290}
   - {fileID: 114422760272802496}
+  - {fileID: 114409524341337290}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

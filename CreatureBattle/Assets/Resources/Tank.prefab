@@ -354,10 +354,10 @@ GameObject:
   - component: {fileID: 54634054747120102}
   - component: {fileID: 136559247489939418}
   - component: {fileID: 114577417096655750}
-  - component: {fileID: 114454677114834454}
   - component: {fileID: 114930490357559242}
   - component: {fileID: 114903500715451232}
   - component: {fileID: 195416586352027450}
+  - component: {fileID: 114454677114834454}
   m_Layer: 11
   m_Name: Tank
   m_TagString: Untagged
@@ -2151,8 +2151,8 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114454677114834454}
   - {fileID: 114930490357559242}
+  - {fileID: 114454677114834454}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

@@ -476,11 +476,11 @@ GameObject:
   - component: {fileID: 54131290421678896}
   - component: {fileID: 136830514764017766}
   - component: {fileID: 114780078896059540}
-  - component: {fileID: 114211899864098110}
   - component: {fileID: 114261556880085994}
   - component: {fileID: 195213520251475224}
   - component: {fileID: 114770960645974344}
-  m_Layer: 0
+  - component: {fileID: 114211899864098110}
+  m_Layer: 11
   m_Name: fighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2277,7 +2277,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Run
   - Type: 9
     SynchronizeType: 0
@@ -2402,8 +2402,8 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114211899864098110}
   - {fileID: 114261556880085994}
+  - {fileID: 114211899864098110}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
