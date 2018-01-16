@@ -7,6 +7,7 @@ public class SkillController {
     SkillBase[] _haveSkills;
     int _currentElem;
 
+
     public SkillController()
     {
         _haveSkills = new SkillBase[4];

@@ -18,6 +18,15 @@ public class SkillBase {
     protected float _timer;
     protected STATE _state;
 
+    ParticleSystem _effect;
+
+    public SkillBase()
+    {
+        GameObject prefab = Resources.Load("Effect/ItoEffects/Shock") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.Stop();
+    }
+
     public float GetCastTime()
     {
         return CAST_TIME;
@@ -39,6 +48,7 @@ public class SkillBase {
         _timer = CAST_TIME;
         _state = STATE.CASTING;
         EntryCast(actor);
+        _effect.Play();
     }
     public bool NowCasting()
     {
@@ -62,6 +72,7 @@ public class SkillBase {
         switch(_state)
         {
             case STATE.CASTING:
+                _effect.transform.position = actor.transform.position;
                 Casting(actor);
                 _timer -= Time.deltaTime;
                 if (_timer <= 0.0f)
@@ -69,6 +80,7 @@ public class SkillBase {
                     _timer = ACTION_TIME;
                     _state = STATE.ACTION;
                     EndCast(actor);
+                    _effect.Stop();
                 }
                 break;
             case STATE.ACTION:
