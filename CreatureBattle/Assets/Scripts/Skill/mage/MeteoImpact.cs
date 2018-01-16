@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeteoImpact : SkillBase {
-    static GameObject _effectPrefab;
+    GameObject _rangeObj;
+    ParticleSystem _effect;
     public MeteoImpact()
     {
-        CAST_TIME = 1.0f;
+        CAST_TIME = 2.0f;
         RECAST_TIME = 12.0f;
-        ACTION_TIME = 2.0f;
-        if (_effectPrefab == null)
-            _effectPrefab = Resources.Load("Prefabs/Effect/RageImpactEffect") as GameObject;
+        ACTION_TIME = 1.5f;
+
+        GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_fire6") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.Stop();
     }
 
     protected override void EntryCast(Actor actor)
     {
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 16.0f, 8.0f, new Color(1, 0.5f, 0, 1));
 
+        _effect.transform.position = actor.transform.position + actor.transform.forward * 16.0f;
+        _effect.Play();
     }
 
     protected override void Casting(Actor actor)
@@ -25,24 +31,15 @@ public class MeteoImpact : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        GameObject effect = GameObject.Instantiate(_effectPrefab, actor.transform.position + Vector3.up * 2, actor.transform.rotation);
-        FlyingObject flyingObj = effect.GetComponent<FlyingObject>();
-        flyingObj.SetDirection(actor.transform.forward, 40.0f);
-        if (!actor.GetPhotonView().isMine)
-        {
-            flyingObj.SetChildCollider(null, 10.0f);
-            return;
-        }
+        GameObject.Destroy(_rangeObj.gameObject);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.1f, 0.1f, (argActor) =>
         {
             argActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
             argActor.TakeDamage(54.0f);
         });
-        col.SetFanCollider(actor.transform.position, 8.0f, actor.transform.forward, 45.0f);
-        flyingObj.SetChildCollider(col, 10.0f);
-        col.SetSphereCollider(Vector3.zero, 1.0f);
+        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 8.0f);
     }
 
     protected override void Action(Actor actor)
@@ -52,11 +49,13 @@ public class MeteoImpact : SkillBase {
 
     protected override void EndAction(Actor actor)
     {
+        _effect.Stop();
 
     }
 
     protected override void Cancel(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj.gameObject);
+        _effect.Stop();
     }
 }
