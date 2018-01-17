@@ -102,6 +102,12 @@ public class SkillCollider : MonoBehaviour {
         Actor hitActor = other.gameObject.GetComponent<Actor>();
         if (hitActor == null) return;
         if (_isFan) return;
+        if(hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
+        {
+            hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
+            Finalized();
+            return;
+        }
         OnDelegate(hitActor);
         _hitActors.Add(new HitActor(hitActor));
         if(_oneHit)
@@ -115,6 +121,12 @@ public class SkillCollider : MonoBehaviour {
         if (!_isFan) return;
         Actor hitActor = other.gameObject.GetComponent<Actor>();
         if (hitActor == null) return;
+        if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
+        {
+            hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
+            Finalized();
+            return;
+        }
         // すでに登録してある場合
         HitActor registeredActor = _hitActors.Find(x => x.actor == hitActor );
         // Fanの範囲外

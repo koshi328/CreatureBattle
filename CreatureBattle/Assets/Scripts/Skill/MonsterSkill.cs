@@ -65,6 +65,7 @@ public class LimitBreakCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
+        _time = 1.0f;
         actor.GetCondition().ReciveDamageRate *= 0.25f;
         actor.GetCondition().GiveDamageRate *= 1.55f;
     }
@@ -78,10 +79,6 @@ public class StudiiProtectCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
-        time += Time.deltaTime;
-        if (time >= 3.0f)
-        {
-            time = 0.0f;
-        }
+        _time = 1.0f;
     }
 }

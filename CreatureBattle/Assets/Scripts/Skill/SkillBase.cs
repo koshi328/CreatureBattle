@@ -69,6 +69,7 @@ public class SkillBase {
 
     public void Execute(Actor actor)
     {
+        Update(actor);
         switch(_state)
         {
             case STATE.CASTING:
@@ -108,32 +109,36 @@ public class SkillBase {
     // キャスト開始
     protected virtual void EntryCast(Actor actor)
     {
-        Debug.Log("EntryCast");
+
     }
     // キャスト中
     protected virtual void Casting(Actor actor)
     {
-        Debug.Log("Casting");
+
     }
     // キャストが終わったとき
     protected virtual void EndCast(Actor actor)
     {
-        Debug.Log("EndCast");
+
     }
     // アクション中
     protected virtual void Action(Actor actor)
     {
-        Debug.Log("Action");
+
     }
     // アクションが終わったとき
     protected virtual void EndAction(Actor actor)
     {
-        Debug.Log("EndAction");
+
     }
     // アクションがキャンセルされた
     protected virtual void Cancel(Actor actor)
     {
-        Debug.Log("Cancel");
+
+    }
+    protected virtual void Update(Actor actor)
+    {
+
     }
     // -----------------------------
     protected void Recasting()

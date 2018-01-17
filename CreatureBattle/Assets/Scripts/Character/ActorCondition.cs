@@ -162,7 +162,7 @@ public class Condition
     public void Update(Actor actor)
     {
         if (_stack <= 0) return;
-        if (_time < 0.0f)
+        if (_time <= 0.0f)
         {
             Exit(actor);
             return;
