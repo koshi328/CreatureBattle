@@ -67,15 +67,6 @@ public class ActorController : MonoBehaviour {
         {
             _myActor.SkillExecute(3);
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            _myActor.TakeDamage(1000);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            _myActor.ReceiveRecovery(1000);
-        }
-
             for (int i = 0; i < 4; i++)
         {
             SkillBase skill = _myActor.GetSkillController().GetSkill(i);

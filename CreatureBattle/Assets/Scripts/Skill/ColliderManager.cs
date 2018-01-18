@@ -27,7 +27,7 @@ public class ColliderManager : MonoBehaviour {
     {
         for (int i = 0; i < _colliderNum; i++)
         {
-            if (_colliders[i].gameObject.activeSelf) continue;
+            if (!_colliders[i].gameObject.activeSelf) continue;
             _colliders[i].MyUpdate();
         }
     }

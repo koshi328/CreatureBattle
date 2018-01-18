@@ -19,6 +19,7 @@ public class MeteoImpactCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
+        if (!actor.GetPhotonView().isMine) return;
         time += Time.deltaTime;
         if (time >= 1.0f)
         {

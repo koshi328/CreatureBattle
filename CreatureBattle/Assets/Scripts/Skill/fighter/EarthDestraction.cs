@@ -39,7 +39,7 @@ public class EarthDestraction : SkillBase {
             argActor.AddCondition(ActorCondition.KIND.EARTH_DESTRACTION, 10.0f, 0.0f);
             argActor.TakeDamage(75.0f);
         });
-        col.SetSphereCollider(actor.transform.position, 6.0f);
+        col.SetSphereCollider(actor.transform.position, 10.0f);
     }
 
     protected override void Action(Actor actor)

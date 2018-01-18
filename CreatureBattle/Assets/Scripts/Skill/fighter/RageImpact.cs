@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RageImpact : SkillBase {
-    static GameObject _effectPrefab;
+    GameObject _rangeObj;
+    ParticleSystem _effect;
     public RageImpact()
     {
         CAST_TIME = 1.0f;
         RECAST_TIME = 7.0f;
         ACTION_TIME = 1.0f;
-        if (_effectPrefab == null)
-            _effectPrefab = Resources.Load("Prefabs/Effect/RageImpactEffect") as GameObject;
+        GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.transform.localScale = new Vector3(3.0f, 1.0f, 1.0f);
+        _effect.Stop();
     }
 
     protected override void EntryCast(Actor actor)
     {
-
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -25,21 +28,18 @@ public class RageImpact : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        GameObject effect = GameObject.Instantiate(_effectPrefab, actor.transform.position + Vector3.up * 2, actor.transform.rotation);
-        FlyingObject flyingObj = effect.GetComponent<FlyingObject>();
-        flyingObj.SetDirection(actor.transform.forward, 40.0f);
-        if (!actor.GetPhotonView().isMine)
-        {
-            flyingObj.SetChildCollider(null, 10.0f);
-            return;
-        }
+        Vector3 pos = actor.transform.position + actor.transform.forward * 15.0f;
+        _effect.transform.position = pos;
+        _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
+        _effect.Play();
+        GameObject.Destroy(_rangeObj);
+        if (!actor.GetPhotonView().isMine)return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 10.0f, 10.0f, (argActor) =>
         {
             argActor.TakeDamage(35.0f);
         });
-        flyingObj.SetChildCollider(col, 10.0f);
-        col.SetQubeCollider(Vector3.zero, Quaternion.identity, new Vector3(2, 1, 1));
+        col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(4, 1, 15));
     }
 
     protected override void Action(Actor actor)
@@ -54,6 +54,6 @@ public class RageImpact : SkillBase {
 
     protected override void Cancel(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj);
     }
 }

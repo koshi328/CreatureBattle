@@ -12,7 +12,7 @@ public class AbnormalCounter : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-
+        actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, CAST_TIME, 0.0f);
     }
 
     protected override void Casting(Actor actor)
@@ -37,6 +37,6 @@ public class AbnormalCounter : SkillBase {
 
     protected override void Cancel(Actor actor)
     {
-
+        actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
     }
 }

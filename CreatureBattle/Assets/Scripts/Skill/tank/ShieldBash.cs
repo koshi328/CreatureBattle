@@ -33,9 +33,9 @@ public class ShieldBash : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (argActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.STAN, 1.0f, 0.0f, false);
+            argActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f, false);
         });
-        col.SetFanCollider(actor.transform.position, 8.0f, actor.transform.forward, 45.0f);
+        col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 90.0f);
     }
 
     protected override void Action(Actor actor)

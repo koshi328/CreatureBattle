@@ -12,6 +12,7 @@ public class StuddiProtect : SkillBase {
     }
     protected override void Update(Actor actor)
     {
+        if (!actor.GetPhotonView().isMine) return;
         if (actor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() == 0)
         {
             _time += Time.deltaTime;

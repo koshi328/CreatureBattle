@@ -8,6 +8,7 @@ public class StanBlessCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
+        if (!actor.GetPhotonView().isMine) return;
         time += Time.deltaTime;
         if (time >= 1.0f)
         {
@@ -38,6 +39,7 @@ public class ExplosionCondition : Condition
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().RecoveryRate *= 0.0f;
+        if (!actor.GetPhotonView().isMine) return;
         time += Time.deltaTime;
         if (time >= 1.0f)
         {
@@ -80,5 +82,14 @@ public class StudiiProtectCondition : Condition
     protected override void Execute(Actor actor)
     {
         _time = 1.0f;
+    }
+}
+
+public class AbnormalCounterCondition : Condition
+{
+    public AbnormalCounterCondition(int maxStack, float maxTime)
+        : base(maxStack, maxTime)
+    {
+
     }
 }

@@ -25,6 +25,7 @@ public class ActorCondition : MonoBehaviour {
         DOUBLE_EDGE,
         LIMIT_BREAK,
         STUDII_PROTECT,
+        ABNORMAL_COUNTER,
 
         MAX_NUM
     }
@@ -57,6 +58,7 @@ public class ActorCondition : MonoBehaviour {
         _conditions[(int)KIND.DOUBLE_EDGE]       = new DoubleEdgeCondition(99, 60);
         _conditions[(int)KIND.LIMIT_BREAK]       = new LimitBreakCondition(1, 60);
         _conditions[(int)KIND.STUDII_PROTECT]    = new StudiiProtectCondition(1, 60);
+        _conditions[(int)KIND.ABNORMAL_COUNTER]  = new AbnormalCounterCondition(1, 60);
     }
 
     public void Execute(Actor actor)
@@ -134,6 +136,13 @@ public class Condition
         if(isTimeUpdate)
         {
             _time = Mathf.Clamp(time, 0, _maxTime);
+        }
+        else
+        {
+            if(_stack == 0)
+            {
+                _time = time;
+            }
         }
         if (_stack >= _maxStack) return;
         _rate = rate;

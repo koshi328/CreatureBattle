@@ -102,10 +102,8 @@ public class SkillCollider : MonoBehaviour {
         Actor hitActor = other.gameObject.GetComponent<Actor>();
         if (hitActor == null) return;
         if (_isFan) return;
-        if(hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
+        if(CounterSkillProcess(hitActor))
         {
-            hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
-            Finalized();
             return;
         }
         OnDelegate(hitActor);
@@ -121,10 +119,8 @@ public class SkillCollider : MonoBehaviour {
         if (!_isFan) return;
         Actor hitActor = other.gameObject.GetComponent<Actor>();
         if (hitActor == null) return;
-        if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
+        if (CounterSkillProcess(hitActor))
         {
-            hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
-            Finalized();
             return;
         }
         // すでに登録してある場合
@@ -166,7 +162,7 @@ public class SkillCollider : MonoBehaviour {
         for (int i = 0; i < _hitActors.Count; i++)
         {
             _hitActors[i].time += Time.deltaTime;
-            if (_hitActors[i].time > _hitInterval) continue;
+            if (_hitActors[i].time < _hitInterval) continue;
             _hitActors[i].time = 0.0f;
             OnDelegate(_hitActors[i].actor);
         }
@@ -192,6 +188,25 @@ public class SkillCollider : MonoBehaviour {
         float angle = Mathf.Acos(Vector3.Dot(trans.forward, Vector3.Normalize(targetDir))) * 180 / 3.14f;
         if(angle <= _angle)
         {
+            return true;
+        }
+        return false;
+    }
+
+    bool CounterSkillProcess(Actor hitActor)
+    {
+        if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
+        {
+            hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
+            Finalized();
+            return true;
+        }
+        if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.ABNORMAL_COUNTER).GetStack() != 0)
+        {
+            hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
+            _owner.TakeDamage(225);
+            _owner.AddCondition(ActorCondition.KIND.STAN, 5.0f, 0.0f, false);
+            Finalized();
             return true;
         }
         return false;

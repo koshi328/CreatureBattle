@@ -24,6 +24,7 @@ public class ThunderTrap : SkillBase {
     protected override void EndCast(Actor actor)
     {
         if (!actor.GetPhotonView().isMine) return;
+        GameObject obj = PhotonNetwork.Instantiate("ThunderTrap", actor.transform.position, Quaternion.identity, 0);
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 9999.0f, 9999.0f, (argActor) =>
         {
@@ -31,6 +32,7 @@ public class ThunderTrap : SkillBase {
             argActor.TakeDamage(38.0f);
         }, true);
         col.SetSphereCollider(actor.transform.position, 4.0f);
+        obj.GetComponent<HitDestroyObject>().SetParentCollider(col);
     }
 
     protected override void Action(Actor actor)

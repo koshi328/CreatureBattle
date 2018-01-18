@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoubleEdgeRage : SkillBase {
-
+    GameObject _rangeObj;
     public DoubleEdgeRage()
     {
         CAST_TIME = 0.0f;
@@ -13,7 +13,7 @@ public class DoubleEdgeRage : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -26,12 +26,13 @@ public class DoubleEdgeRage : SkillBase {
         if (!actor.GetPhotonView().isMine) return;
         actor.AddCondition(ActorCondition.KIND.DOUBLE_EDGE, 1.0f, 0.0f);
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
         {
             float damage = argActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
-            argActor.TakeDamage(60 * 2 + damage);
+            argActor.TakeDamage(60 + damage);
+            argActor.TakeDamage(60 + damage);
         });
-        col.SetFanCollider(actor.transform.position + actor.transform.forward, 20.0f, actor.transform.forward, 45.0f);
+        col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(4, 1, 15));
     }
 
     protected override void Action(Actor actor)
@@ -41,11 +42,11 @@ public class DoubleEdgeRage : SkillBase {
 
     protected override void EndAction(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj);
     }
 
     protected override void Cancel(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj);
     }
 }

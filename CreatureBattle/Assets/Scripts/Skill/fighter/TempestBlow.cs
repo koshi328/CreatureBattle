@@ -14,7 +14,7 @@ public class TempestBlow : SkillBase {
     
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 10, 45, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 45, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -33,7 +33,7 @@ public class TempestBlow : SkillBase {
             argActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
             argActor.TakeDamage(8.0f);
         });
-        col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 45.0f);
+        col.SetFanCollider(actor.transform.position, 15.0f, actor.transform.forward, 45.0f);
     }
 
     protected override void Action(Actor actor)

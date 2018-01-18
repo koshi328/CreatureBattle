@@ -18,7 +18,7 @@ public class StanBreath : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward, actor.transform.eulerAngles.y, 30, 60, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward, actor.transform.eulerAngles.y, 40, 60, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -39,7 +39,7 @@ public class StanBreath : SkillBase {
             argActor.AddCondition(ActorCondition.KIND.STAN_BLESS, 8.0f, 0.0f);
             argActor.AddCondition(ActorCondition.KIND.STAN, 8.0f, 0.0f);
         });
-        col.SetFanCollider(actor.transform.position + actor.transform.forward, 30.0f, actor.transform.forward, 60.0f);
+        col.SetFanCollider(actor.transform.position + actor.transform.forward, 40.0f, actor.transform.forward, 60.0f);
     }
 
     protected override void Action(Actor actor)
@@ -55,5 +55,6 @@ public class StanBreath : SkillBase {
     protected override void Cancel(Actor actor)
     {
         GameObject.Destroy(_rangeObj);
+        _effect.Stop();
     }
 }
