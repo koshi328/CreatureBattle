@@ -31,7 +31,7 @@ public class DragonStorm : SkillBase {
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.5f, 0.5f, (argActor) =>
         {
             argActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
             argActor.TakeDamage(141.0f);

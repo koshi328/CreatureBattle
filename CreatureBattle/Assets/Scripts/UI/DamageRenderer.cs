@@ -11,14 +11,6 @@ public class DamageRenderer : MonoBehaviour {
     [SerializeField]
     Canvas _canvas;
 
-	void Start () {
-		
-	}
-	
-	void Update () {
-        
-    }
-
     public void Render(Vector3 pos, int damage, Color color)
     {
         pos = new Vector3(pos.x + Random.Range(-0.1f, 0.1f), pos.y + Random.Range(-0.1f, 0.1f), pos.z + Random.Range(-0.1f, 0.1f));
