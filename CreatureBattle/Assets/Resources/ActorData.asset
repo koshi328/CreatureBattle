@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActorData
   m_EditorClassIdentifier: 
   data:
-  - path: fighter
+  - path: Characters/fighter
     sprite: {fileID: 21300000, guid: 3dd4960ce0f7f244eb8809c08ec1184d, type: 3}
     hp: 1890
     maxSpeed: 5
@@ -22,7 +22,7 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 82ef8030a89408f4d814d01215ee28c9, type: 2}
     cameraOffset: {x: 0, y: 2, z: 0}
     cameraDistance: -8
-  - path: Mage
+  - path: Characters/Mage
     sprite: {fileID: 21300000, guid: ca333424feae14444bcdefc695c8f15c, type: 3}
     hp: 1260
     maxSpeed: 5
@@ -32,7 +32,7 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 4e54b0a300d75c947b0477231c3a042f, type: 2}
     cameraOffset: {x: 0, y: 2, z: 0}
     cameraDistance: -8
-  - path: Tank
+  - path: Characters/Tank
     sprite: {fileID: 21300000, guid: 13a7bca52fdc8064b95dc21df09ef089, type: 3}
     hp: 3150
     maxSpeed: 5

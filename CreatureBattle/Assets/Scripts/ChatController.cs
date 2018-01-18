@@ -20,6 +20,7 @@ public class ChatController : MonoBehaviour {
 
     public void SendMessage()
     {
+        if (_input.text == "") return;
         SendHashTable(PhotonNetwork.playerName + ":" + _input.text + "\n");
         _input.text = "";
     }
