@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Actor : MonoBehaviour {
 
@@ -12,6 +13,10 @@ public class Actor : MonoBehaviour {
     PhotonView _myPhotonView;
     Animator _myAnimator;
     Vector3 _moveDirection;
+    DamageRenderer _damageRenderer;
+    [SerializeField]
+    Image _hpBar;
+
     private void Awake()
     {
         _skillController = new SkillController();
@@ -21,6 +26,7 @@ public class Actor : MonoBehaviour {
         _myAnimator = GetComponent<Animator>();
         _status = new ActorStatus();
         _condition.Initialize();
+        _damageRenderer = GameObject.Find("DamageRenderer").GetComponent<DamageRenderer>();
 
         // ステータスの設定
         ScriptableActor actorData;
@@ -53,6 +59,7 @@ public class Actor : MonoBehaviour {
         _condition.Execute(this);
         _skillController.Execute(this);
         MoveMent();
+        SetHpBarFillRate();
     }
 
     public void SetMoveDirection(Vector3 dir)
@@ -110,6 +117,7 @@ public class Actor : MonoBehaviour {
     void RPCTakeDamage(float damage)
     {
         _status.TakeDamage(damage);
+        _damageRenderer.Render(transform.position, (int)damage, Color.red);
     }
 
     public void ReceiveRecovery(float recovery)
@@ -120,6 +128,7 @@ public class Actor : MonoBehaviour {
     public void RPCReceiveRecovery(float recovery)
     {
         _status.ReceiveRecovery(recovery);
+        _damageRenderer.Render(transform.position, (int)recovery, Color.green);
     }
     public void AddCondition(ActorCondition.KIND kind, float time, float rate, bool isTimeUpdate = true)
     {
@@ -164,5 +173,11 @@ public class Actor : MonoBehaviour {
     public ActorStatus GetStatus()
     {
         return _status;
+    }
+
+    void SetHpBarFillRate()
+    {
+        float rate = _status.GetHP() / _status.GetMaxHP();
+        _hpBar.fillAmount = rate;
     }
 }

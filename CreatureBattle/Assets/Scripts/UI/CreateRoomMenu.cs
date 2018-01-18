@@ -7,10 +7,6 @@ public class CreateRoomMenu : MonoBehaviour {
     [SerializeField]
     InputField _roomNameInput;
     [SerializeField]
-    Slider _playerNumSlider;
-    [SerializeField]
-    Text _playerNum;
-    [SerializeField]
     Button _decideButton;
     [SerializeField]
     Button _cancelButton;
@@ -18,9 +14,6 @@ public class CreateRoomMenu : MonoBehaviour {
     Toggle _monsterCheckBox;
 	// Use this for initialization
 	void Start () {
-        // sliderを変えると表示されている人数も変更する
-        _playerNumSlider.onValueChanged.AddListener(value => { _playerNum.text = value.ToString() + "人"; });
-
         // ButtonEventの設定
         _decideButton.onClick.AddListener(CreateRoom);
         _cancelButton.onClick.AddListener(() => { gameObject.SetActive(false); });
@@ -30,7 +23,6 @@ public class CreateRoomMenu : MonoBehaviour {
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         string roomName = _roomNameInput.text;
-        int maxPlayer = (int)_playerNumSlider.value;
         // 同じ名前のルームがあったら生成しない
         for (int i = 0; i < rooms.Length; i++)
         {
@@ -43,7 +35,7 @@ public class CreateRoomMenu : MonoBehaviour {
 
         RoomOptions option = new RoomOptions();
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
-        option.MaxPlayers = (byte)maxPlayer;
+        option.MaxPlayers = (byte)4;
         option.IsOpen = true;
         option.IsVisible = true;
         table.Add("player1", 0);
