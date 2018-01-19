@@ -61,4 +61,5 @@ MonoBehaviour:
   - Marco
   - Polo
   - TaggedPlayer
+  - SetStatus
   DisableAutoOpenWizard: 1

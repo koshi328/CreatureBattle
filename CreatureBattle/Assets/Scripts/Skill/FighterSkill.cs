@@ -26,12 +26,9 @@ public class DeadlyImpactCondition : Condition
         : base(maxStack, maxTime)
     {
     }
-    protected override void Execute(Actor actor)
-    {
-        actor.GetCondition().GiveDamageRate *= (_stack * 1.01f);
-    }
     protected override void Exit(Actor actor)
     {
+        if (_stack >= _maxStack) return;
         _time = _maxTime;
         _stack++;
         Execute(actor);

@@ -8,6 +8,9 @@ public class EffectManager : MonoBehaviour {
     [SerializeField]
     GameObject[] _rangeObj = new GameObject[3];
 
+    [SerializeField]
+    GameObject[] _hitEffect;
+
     public static EffectManager Instance
     {
         get;
@@ -24,14 +27,14 @@ public class EffectManager : MonoBehaviour {
 	}
 
     [PunRPC]
-    void CreateEffectRPC(Vector3 pos, float rotY, float size)
+    void CreateEffectRPC(int elem, Vector3 pos)
     {
-
+        Instantiate(_hitEffect[elem], pos, Quaternion.identity);
     }
 
-    public void CreateEffect(Vector3 pos, float rotY, float size)
+    public void CreateEffect(int elem, Vector3 pos)
     {
-        _myPhotonView.RPC("CreateEffectRPC", PhotonTargets.AllViaServer, pos, rotY, size);
+        _myPhotonView.RPC("CreateEffectRPC", PhotonTargets.AllViaServer, elem, pos);
     }
 
     public GameObject SphereRange(Vector3 pos, float range, Color color)

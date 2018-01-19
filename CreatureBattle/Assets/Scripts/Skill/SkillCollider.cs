@@ -13,6 +13,7 @@ public class SkillCollider : MonoBehaviour {
 
     public delegate void OnHitDelegate(Actor actor);
     OnHitDelegate _hitDelegate = null;
+    OnHitDelegate _genericDelegate = null;
     Actor _owner;
     BoxCollider _boxCollider;
     CapsuleCollider _sphereCollider;
@@ -44,15 +45,15 @@ public class SkillCollider : MonoBehaviour {
         _boxCollider.enabled = false;
         _sphereCollider.enabled = false;
     }
-    public void AddDelegate(OnHitDelegate hitDelegate)
+    public void SetGenericDelegate(OnHitDelegate genericDelegate)
     {
-        _hitDelegate += hitDelegate;
+        _genericDelegate = genericDelegate;
     }
     // ヒット時の詳細処理を設定
     public void Initialize(Actor owner, HitTarget target, float liveTime, float hitInterval, OnHitDelegate hitDelegate = null, bool oneHit = false)
     {
         _owner = owner;
-        _hitDelegate += hitDelegate;
+        _hitDelegate = hitDelegate;
         _hitInterval = hitInterval;
         _hitActors.Clear();
         Invoke("Finalized", liveTime);
@@ -107,6 +108,7 @@ public class SkillCollider : MonoBehaviour {
             return;
         }
         OnDelegate(hitActor);
+        OnGenericDelegate(hitActor);
         _hitActors.Add(new HitActor(hitActor));
         if(_oneHit)
         {
@@ -137,6 +139,7 @@ public class SkillCollider : MonoBehaviour {
         }
         if (!inFan) return;
         OnDelegate(hitActor);
+        OnGenericDelegate(hitActor);
         _hitActors.Add(new HitActor(hitActor));
         if (_oneHit)
         {
@@ -173,11 +176,17 @@ public class SkillCollider : MonoBehaviour {
         if (_hitDelegate == null) return;
         _hitDelegate(actor);
     }
+    private void OnGenericDelegate(Actor actor)
+    {
+        if (_genericDelegate == null) return;
+        _genericDelegate(actor);
+    }
 
     private void Finalized()
     {
         _hitActors.Clear();
         _hitDelegate = null;
+        _genericDelegate = null;
         _hitInterval = 0.0f;
         gameObject.SetActive(false);
     }
@@ -197,12 +206,14 @@ public class SkillCollider : MonoBehaviour {
     {
         if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
         {
+            OnGenericDelegate(hitActor);
             hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
             Finalized();
             return true;
         }
         if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.ABNORMAL_COUNTER).GetStack() != 0)
         {
+            OnGenericDelegate(hitActor);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
             _owner.TakeDamage(225);
             _owner.AddCondition(ActorCondition.KIND.STAN, 5.0f, 0.0f, false);

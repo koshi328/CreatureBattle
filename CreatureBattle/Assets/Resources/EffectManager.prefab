@@ -78,13 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fffed24900ed6d429b567d5ec5275d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabs:
-  - {fileID: 1774487880329788, guid: db250b1ed0e767a4cbf619640d64a692, type: 2}
-  - {fileID: 1500760850773576, guid: 25fa7c62909852e47b9b768a93cd6237, type: 2}
-  - {fileID: 1500760850773576, guid: 25fa7c62909852e47b9b768a93cd6237, type: 2}
-  - {fileID: 1500760850773576, guid: 25fa7c62909852e47b9b768a93cd6237, type: 2}
-  - {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9, type: 2}
   _rangeObj:
   - {fileID: 1281713384437338, guid: 2882d5467cb23a94cb2bd7b4b317d050, type: 2}
   - {fileID: 1090151972167016, guid: 8ceae9b8afc13014e86f5c4849149ced, type: 2}
   - {fileID: 1366386014199906, guid: 2ab057c8487c7c84396b173b34e0db2e, type: 2}
+  _hitEffect:
+  - {fileID: 1000011709871622, guid: 8f7c15162dab04fd2b6f777567b76fdc, type: 2}

@@ -28,7 +28,7 @@ public class RageImpact : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        Vector3 pos = actor.transform.position + actor.transform.forward * 15.0f;
+        Vector3 pos = actor.transform.position + actor.transform.forward * 7.5f;
         _effect.transform.position = pos;
         _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
         _effect.Play();

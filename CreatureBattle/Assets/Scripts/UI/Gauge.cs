@@ -8,6 +8,8 @@ public class Gauge : MonoBehaviour {
     Image _fill;
     [SerializeField]
     Image _backFill;
+    [SerializeField]
+    Text _text;
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,5 +26,6 @@ public class Gauge : MonoBehaviour {
         current = _backFill.fillAmount;
         current = current - (current - ratio) * 0.1f;
         _backFill.fillAmount = current;
+        _text.text = value.ToString() + "/" + maxValue.ToString();
     }
 }

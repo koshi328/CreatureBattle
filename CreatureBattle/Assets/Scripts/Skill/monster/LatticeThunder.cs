@@ -59,7 +59,7 @@ public class LatticeThunder : SkillBase {
         for (int i = 0; i < pos_memory.Length; i++)
         {
             SkillCollider col = ColliderManager.Instance.GetCollider();
-            col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
+            col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 99.0f, (argActor) =>
             {
                 argActor.TakeDamage(374.0f);
                 argActor.AddCondition(ActorCondition.KIND.SILENCE, 3.0f, 0.0f);

@@ -42,15 +42,17 @@ public class ActorStatus {
         return _speed * _condition.SpeedDownRate;
     }
 
-    public void TakeDamage(float damage)
+    public float TakeDamage(float damage)
     {
-        damage = damage * _condition.ReciveDamageRate + Random.Range(-5, 5);
+        damage = damage * _condition.ReciveDamageRate;
         _hp = Mathf.Clamp(_hp - damage, 0, _maxHP);
+        return damage;
     }
 
-    public void ReceiveRecovery(float recovery)
+    public float ReceiveRecovery(float recovery)
     {
-        if (_condition.GetCondition(ActorCondition.KIND.EXPLOSION).GetStack() != 0) return;
+        if (_condition.GetCondition(ActorCondition.KIND.EXPLOSION).GetStack() != 0) return 0;
         _hp = Mathf.Clamp(_hp + recovery, 0, _maxHP);
+        return recovery;
     }
 }

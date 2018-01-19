@@ -27,31 +27,14 @@ public class Actor : MonoBehaviour {
         _status = new ActorStatus();
         _condition.Initialize();
         _damageRenderer = GameObject.Find("DamageRenderer").GetComponent<DamageRenderer>();
-
+        _moveDirection = Vector3.zero;
         // ステータスの設定
-        ScriptableActor actorData;
-        if (PhotonNetwork.playerName == "monster")
-            actorData = Resources.Load("MonsterData") as ScriptableActor;
-        else
-            actorData = Resources.Load("ActorData") as ScriptableActor;
+        _status.Initialize(_condition, 1, 1, 1);
+        if (!_myPhotonView.isMine) return;
         object value;
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
         int actorID = (int)value;
-        _status.Initialize(
-            _condition, 
-            actorData.data[actorID].attackDamage,
-            actorData.data[actorID].attackInterval,
-            actorData.data[actorID].hp);
-
-        _moveDirection = Vector3.zero;
-
-        // カメラの位置の設定
-        Camera.main.transform.localPosition = new Vector3(
-            Camera.main.transform.localPosition.x, 
-            Camera.main.transform.localPosition.y, 
-            actorData.data[actorID].cameraDistance);
-        TrackCamera camera = Camera.main.GetComponentInParent<TrackCamera>();
-        camera.SetOffset(actorData.data[actorID].cameraOffset);
+        _myPhotonView.RPC("SetStatus", PhotonTargets.AllViaServer, PhotonNetwork.playerName, actorID);
     }
 
     public void Update()
@@ -100,12 +83,11 @@ public class Actor : MonoBehaviour {
     }
     public void SetSkills(int[] elements)
     {
-        _myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements[0], elements[1], elements[2], elements[3]);
+        _myPhotonView.RPC("RPCSetSkills", PhotonTargets.AllBufferedViaServer, elements);
     }
     [PunRPC]
-    void RPCSetSkills(int e1, int e2, int e3, int e4)
+    void RPCSetSkills(int[] elements)
     {
-        int[] elements = { e1, e2, e3, e4 };
         _skillController.Initialize(elements);
     }
 
@@ -116,8 +98,11 @@ public class Actor : MonoBehaviour {
     [PunRPC]
     void RPCTakeDamage(float damage)
     {
-        _status.TakeDamage(damage);
-        _damageRenderer.Render(transform.position, (int)damage, Color.red);
+        float d = _status.TakeDamage(damage);
+        _damageRenderer.Render(transform.position, (int)d, Color.red);
+        if (_skillController.NowAction() || _skillController.NowCasting()) return;
+        _myAnimator.SetTrigger("React");
+        EffectManager.Instance.CreateEffect(0, transform.position);
     }
 
     public void ReceiveRecovery(float recovery)
@@ -127,8 +112,8 @@ public class Actor : MonoBehaviour {
     [PunRPC]
     public void RPCReceiveRecovery(float recovery)
     {
-        _status.ReceiveRecovery(recovery);
-        _damageRenderer.Render(transform.position, (int)recovery, Color.green);
+        float r = _status.ReceiveRecovery(recovery);
+        _damageRenderer.Render(transform.position, (int)r, Color.green);
     }
     public void AddCondition(ActorCondition.KIND kind, float time, float rate, bool isTimeUpdate = true)
     {
@@ -148,6 +133,32 @@ public class Actor : MonoBehaviour {
     void RPCCancelSkill()
     {
         _skillController.CancelSkill(this);
+    }
+
+    [PunRPC]
+    void SetStatus(string playerName, int actorID)
+    {
+        // ステータスの設定
+        ScriptableActor actorData;
+        if (playerName == "monster")
+            actorData = Resources.Load("MonsterData") as ScriptableActor;
+        else
+            actorData = Resources.Load("ActorData") as ScriptableActor;
+
+        _status.Initialize(
+            _condition,
+            actorData.data[actorID].attackDamage,
+            actorData.data[actorID].attackInterval,
+            actorData.data[actorID].hp);
+
+        if (!_myPhotonView.isMine) return;
+        // カメラの位置の設定
+        Camera.main.transform.localPosition = new Vector3(
+            Camera.main.transform.localPosition.x,
+            Camera.main.transform.localPosition.y,
+            actorData.data[actorID].cameraDistance);
+        TrackCamera camera = Camera.main.GetComponentInParent<TrackCamera>();
+        camera.SetOffset(actorData.data[actorID].cameraOffset);
     }
     // ---------------------------
     void MoveMent()
