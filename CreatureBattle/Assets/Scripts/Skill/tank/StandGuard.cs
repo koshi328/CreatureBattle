@@ -24,6 +24,7 @@ public class StandGuard : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Cry");
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.1f, (argActor) =>

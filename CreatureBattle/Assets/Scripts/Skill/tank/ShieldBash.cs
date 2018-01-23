@@ -26,6 +26,7 @@ public class ShieldBash : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Attack03");
         _effect.transform.position = actor.transform.position + actor.transform.forward * 5 + new Vector3(0, 2, 0);
         _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
         _effect.Play();

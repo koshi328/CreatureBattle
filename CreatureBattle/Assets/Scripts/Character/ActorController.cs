@@ -39,6 +39,7 @@ public class ActorController : MonoBehaviour {
 	void Update () {
         _statusCanavs.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
+        if (_myActor.GetStatus().GetHP() <= 0) return;
         // 移動
         float x = Input.GetAxis("LeftHorizontal");
         float z = Input.GetAxis("LeftVertical");
@@ -73,11 +74,27 @@ public class ActorController : MonoBehaviour {
             if (skill == null) continue;
             if (!skill.NowReCasting())
             {
-                _commandCanvas.SetFillAmount(i, 0.0f);
+                _commandCanvas.SetFillAmount(i, 1.0f);
                 continue;
             }
-            float amount = skill.GetTimer() / skill.GetReCastTime();
+            float amount = 1.0f - skill.GetTimer() / skill.GetReCastTime();
             _commandCanvas.SetFillAmount(i, amount);
         }
+
+        // 死んだとき
+        DeathProcess();
+    }
+
+    void DeathProcess()
+    {
+        if (_myActor.GetStatus().GetHP() > 0) return;
+        StartCoroutine(DeathWait());
+    }
+
+    IEnumerator DeathWait()
+    {
+        yield return new WaitForSeconds(4.0f);
+        GameObject deathView = GameObject.Find("DeathView");
+        _cameraTrans.parent.GetComponent<TrackCamera>().SetTarget(deathView.transform);
     }
 }

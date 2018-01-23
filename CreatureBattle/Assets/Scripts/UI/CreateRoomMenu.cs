@@ -12,6 +12,9 @@ public class CreateRoomMenu : MonoBehaviour {
     Button _cancelButton;
     [SerializeField]
     Toggle _monsterCheckBox;
+
+    string _message;
+    float _fade;
 	// Use this for initialization
 	void Start () {
         // ButtonEventの設定
@@ -23,12 +26,19 @@ public class CreateRoomMenu : MonoBehaviour {
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         string roomName = _roomNameInput.text;
+        if (roomName == "")
+        {
+            _message = "部屋の名前を決めてください";
+            _fade = 3.0f;
+            return;
+        }
         // 同じ名前のルームがあったら生成しない
         for (int i = 0; i < rooms.Length; i++)
         {
             if (rooms[i].Name == roomName)
             {
-                Debug.Log("すでに存在する名前です");
+                _message = "すでに存在する名前です";
+                _fade = 3.0f;
                 return;
             }
         }
@@ -53,5 +63,21 @@ public class CreateRoomMenu : MonoBehaviour {
             SceneController.Instance.LoadScene("Select", 2.0f, true);
             Debug.Log("部屋を生成");
         }
+    }
+
+    private void OnGUI()
+    {
+        if (_fade <= 0.0f) return;
+        _fade -= Time.deltaTime;
+        float x = Screen.width / 2.5f;
+        float y = Screen.height / 3 * 2;
+        float w = 1000;
+        float h = 60;
+        GUIStyle style = new GUIStyle();
+        GUIStyleState state = new GUIStyleState();
+        state.textColor = new Color(1.0f, 0.0f, 0.0f, _fade);
+        style.normal = state;
+
+        GUI.Label(new Rect(x, y, w, h), _message, style);
     }
 }

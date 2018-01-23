@@ -62,4 +62,7 @@ MonoBehaviour:
   - Polo
   - TaggedPlayer
   - SetStatus
+  - RPCSetActorID
+  - RPCDone
+  - RPCInitialize
   DisableAutoOpenWizard: 1

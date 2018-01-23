@@ -72,9 +72,10 @@ public class LobbyController : MonoBehaviour {
             element.transform.GetComponentInChildren<Text>().text = info;
             element.GetComponent<Button>().onClick.AddListener(() =>
             {
+                _decideWindow.roomName = element.name;
                 _decideWindow.SetMessage(element.name + "に入室します。\nよろしいですか？");
                 _decideWindow.gameObject.SetActive(true);
-                _decideWindow.YesButtonAddEvent(() => { JoinRoom(element.name);_decideWindow.gameObject.SetActive(false); }, true);
+                _decideWindow.YesButtonAddEvent(() => { JoinRoom(_decideWindow.roomName);_decideWindow.gameObject.SetActive(false); }, true);
             });
             element.name = rooms[i].Name;
         }

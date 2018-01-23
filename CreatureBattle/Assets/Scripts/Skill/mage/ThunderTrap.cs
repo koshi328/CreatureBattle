@@ -8,7 +8,7 @@ public class ThunderTrap : SkillBase {
     {
         CAST_TIME = 0.0f;
         RECAST_TIME = 10.0f;
-        ACTION_TIME = 3.0f;
+        ACTION_TIME = 2.0f;
     }
 
     protected override void EntryCast(Actor actor)
@@ -23,6 +23,7 @@ public class ThunderTrap : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Trap");
         if (!actor.GetPhotonView().isMine) return;
         GameObject obj = PhotonNetwork.Instantiate("ThunderTrap", actor.transform.position, Quaternion.identity, 0);
         SkillCollider col = ColliderManager.Instance.GetCollider();

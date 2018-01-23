@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AbnormalCounter : SkillBase {
+    GameObject _rangeObj;
     public AbnormalCounter()
     {
         CAST_TIME = 3.0f;
@@ -12,6 +13,7 @@ public class AbnormalCounter : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 30.0f, new Color(0, 0.3f, 1, 1));
         actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, CAST_TIME, 0.0f);
     }
 
@@ -32,11 +34,12 @@ public class AbnormalCounter : SkillBase {
 
     protected override void EndAction(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj);
     }
 
     protected override void Cancel(Actor actor)
     {
         actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
+        GameObject.Destroy(_rangeObj);
     }
 }

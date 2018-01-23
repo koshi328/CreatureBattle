@@ -32,6 +32,7 @@ public class ChaseFlame : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Cast02");
         for (int i = 0; i < 4; i++)
         {
             _effect[i].transform.position = actor.transform.position + actor.transform.forward * (i + 1) * 3.0f;

@@ -34,9 +34,9 @@ public class SkillSelectWindow : MonoBehaviour {
     public void ChangeActor(ScriptableActor actorData, int actorID)
     {
         currentSelectNum = 0;
-        selectCon.SetSkillData(0, -1);
-        selectCon.SetSkillData(1, -1);
-        selectCon.SetSkillData(2, -1);
+        selectCon.SetSkill(0, -1);
+        selectCon.SetSkill(1, -1);
+        selectCon.SetSkill(2, -1);
         ScriptableSkill skills = actorData.data[actorID].skillData;
         for (int i = 0; i < skills.data.Length; i++)
         {
@@ -46,9 +46,9 @@ public class SkillSelectWindow : MonoBehaviour {
             button.name = actorData.data[actorID].skillData.data[i].skillID.ToString();
             button.onClick.AddListener(()=> 
             {
-                selectCon.SetSkillData(currentSelectNum, int.Parse(button.gameObject.name));
+                if (currentSelectNum >= 3) return;
+                selectCon.SetSkill(currentSelectNum, int.Parse(button.gameObject.name));
                 currentSelectNum++;
-            currentSelectNum = Mathf.Min(currentSelectNum, 2);
             });
             button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, skillsData.data[skills.data[i].skillID].info);
         }
@@ -58,6 +58,16 @@ public class SkillSelectWindow : MonoBehaviour {
             button.onClick.RemoveAllListeners();
             button.image.sprite = null;
             button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, "");
+        }
+    }
+
+
+    public void SkillReset()
+    {
+        currentSelectNum = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            selectCon.SetSkill(i, -1);
         }
     }
 }

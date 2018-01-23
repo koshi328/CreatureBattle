@@ -29,6 +29,7 @@ public class EarthDestraction : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Power");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
         GameObject.Destroy(_rangeObj.gameObject);

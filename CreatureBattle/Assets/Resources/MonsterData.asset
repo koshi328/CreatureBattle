@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - path: Characters/Monster
-    sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    sprite: {fileID: 21300000, guid: 7c3b09edcad1f8b49864e11e6f9d823d, type: 3}
     hp: 5000
     maxSpeed: 5
     attackDamage: 10

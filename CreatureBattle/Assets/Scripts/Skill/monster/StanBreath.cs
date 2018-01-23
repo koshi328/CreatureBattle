@@ -28,6 +28,7 @@ public class StanBreath : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Breath");
         _effect.transform.position = actor.transform.position + Vector3.up;
         _effect.transform.rotation = actor.transform.rotation;
         _effect.Play();

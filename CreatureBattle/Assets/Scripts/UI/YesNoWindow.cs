@@ -11,8 +11,10 @@ public class YesNoWindow : MonoBehaviour {
     Button _noButton;
     [SerializeField]
     Text _messageText;
-	// Use this for initialization
-	void Start () {
+
+    public string roomName;
+    // Use this for initialization
+    void Start () {
         NoButtonAddEvent(()=> { this.gameObject.SetActive(false); });
     }
     

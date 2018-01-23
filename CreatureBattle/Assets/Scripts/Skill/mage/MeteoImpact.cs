@@ -31,6 +31,7 @@ public class MeteoImpact : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Cast02");
         GameObject.Destroy(_rangeObj.gameObject);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();

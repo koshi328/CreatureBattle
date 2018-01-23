@@ -29,6 +29,7 @@ public class AggressiveShout : SkillBase
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Cry");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
 

@@ -5,17 +5,20 @@ using UnityEngine;
 public class DeadlyImpact : SkillBase {
 
     GameObject _rangeObj;
+    ParticleSystem _effect;
     public DeadlyImpact()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 0.0f;
         RECAST_TIME = 15.0f;
-        ACTION_TIME = 1.0f;
+        ACTION_TIME = 0.6f;
+        GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.Stop();
     }
 
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 6, 45, new Color(1, 0.5f, 0, 1));
-        actor.AddCondition(ActorCondition.KIND.DEADLY_IMPACT, 0.0f, 0.0f, false);
     }
 
     protected override void Casting(Actor actor)
@@ -25,7 +28,8 @@ public class DeadlyImpact : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        GameObject.Destroy(_rangeObj.gameObject);
+        actor.GetAnimator().SetTrigger("Stan");
+
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 0.6f, (argActor) =>
@@ -43,11 +47,20 @@ public class DeadlyImpact : SkillBase {
 
     protected override void EndAction(Actor actor)
     {
-
+        GameObject.Destroy(_rangeObj.gameObject);
+        _effect.transform.position = actor.transform.position + actor.transform.forward * 2;
+        _effect.transform.rotation = actor.transform.rotation;
+        _effect.Play();
     }
 
     protected override void Cancel(Actor actor)
     {
         GameObject.Destroy(_rangeObj.gameObject);
+    }
+
+    protected override void Update(Actor actor)
+    {
+        if (actor.GetCondition().GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() != 0) return;
+        actor.AddCondition(ActorCondition.KIND.DEADLY_IMPACT, 0.0f, 0.0f, false);
     }
 }

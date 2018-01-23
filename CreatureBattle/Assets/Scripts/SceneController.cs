@@ -74,4 +74,9 @@ public class SceneController :MonoBehaviour {
         _nowFade = false;
         _fadeFilter.gameObject.SetActive(false);
     }
+
+    public bool NowFade()
+    {
+        return _nowFade;
+    }
 }

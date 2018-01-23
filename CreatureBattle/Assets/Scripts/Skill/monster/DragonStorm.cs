@@ -27,6 +27,7 @@ public class DragonStorm : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Scream");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;

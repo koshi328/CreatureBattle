@@ -5,16 +5,20 @@ using UnityEngine;
 public class Explosion : SkillBase {
 
     GameObject _rangeObj;
+    ParticleSystem _effect;
     public Explosion()
     {
         CAST_TIME = 0.0f;
         RECAST_TIME = 6.0f;
         ACTION_TIME = 1.0f;
+        GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/Explosion") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.Stop();
     }
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 30, 30.0f, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -24,6 +28,9 @@ public class Explosion : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Scream");
+        _effect.transform.position = actor.transform.position + actor.transform.forward * 30 + Vector3.up * 5;
+        _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
@@ -31,7 +38,7 @@ public class Explosion : SkillBase {
             argActor.TakeDamage(60.0f);
             argActor.AddCondition(ActorCondition.KIND.EXPLOSION, 11.0f, 0.0f);
         });
-        col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(4, 1, 15));
+        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 30, 30.0f);
     }
 
     protected override void Action(Actor actor)
@@ -47,5 +54,6 @@ public class Explosion : SkillBase {
     protected override void Cancel(Actor actor)
     {
         GameObject.Destroy(_rangeObj);
+        _effect.Stop();
     }
 }

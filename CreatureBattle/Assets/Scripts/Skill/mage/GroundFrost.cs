@@ -28,6 +28,7 @@ public class GroundFrost : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Cast02");
         GameObject.Destroy(_rangeObj);
         _effect.transform.position = actor.transform.position + Vector3.up;
         _effect.transform.rotation = actor.transform.rotation;

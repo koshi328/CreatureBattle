@@ -39,6 +39,13 @@ public class Actor : MonoBehaviour {
 
     public void Update()
     {
+        // 死んだとき
+        if(_status.GetHP() <= 0)
+        {
+            _skillController.CancelSkill(this);
+            _myAnimator.SetBool("Death", true);
+            return;
+        }
         _condition.Execute(this);
         _skillController.Execute(this);
         MoveMent();

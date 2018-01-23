@@ -585,8 +585,8 @@ GameObject:
   - component: {fileID: 136194332313486010}
   - component: {fileID: 114590061302322468}
   - component: {fileID: 114994779636616668}
-  - component: {fileID: 195991308952292958}
   - component: {fileID: 114581811549558702}
+  - component: {fileID: 195991308952292958}
   - component: {fileID: 114849964640738818}
   m_Layer: 12
   m_Name: Monster

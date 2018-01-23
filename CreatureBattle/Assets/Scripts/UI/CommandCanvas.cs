@@ -50,5 +50,6 @@ public class CommandCanvas : MonoBehaviour
     public void SetImage(int elem, int skillID)
     {
         _commandImage[elem].sprite = _skillData.data[skillID].sprite;
+        _commandRecastImage[elem].sprite = _skillData.data[skillID].sprite;
     }
 }

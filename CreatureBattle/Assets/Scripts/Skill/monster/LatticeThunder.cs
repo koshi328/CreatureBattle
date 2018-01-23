@@ -33,6 +33,7 @@ public class LatticeThunder : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
+        actor.GetAnimator().SetTrigger("Scream");
         for (int i = 0; i < pos_memory.Length; i++)
         {
             Vector3 pos = actor.transform.forward * pos_memory[i].y * one_range_size;
@@ -59,7 +60,7 @@ public class LatticeThunder : SkillBase {
         for (int i = 0; i < pos_memory.Length; i++)
         {
             SkillCollider col = ColliderManager.Instance.GetCollider();
-            col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 99.0f, (argActor) =>
+            col.Initialize(actor, SkillCollider.HitTarget.Player, 0.2f, 99.0f, (argActor) =>
             {
                 argActor.TakeDamage(374.0f);
                 argActor.AddCondition(ActorCondition.KIND.SILENCE, 3.0f, 0.0f);
