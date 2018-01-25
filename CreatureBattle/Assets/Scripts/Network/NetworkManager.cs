@@ -31,7 +31,7 @@ public class NetworkManager : MonoBehaviour {
     void OnJoinedRoom()
     {
         Debug.Log("Join成功");
-        //PhotonNetwork.isMessageQueueRunning = false;
+        PhotonNetwork.isMessageQueueRunning = false;
         SceneController.Instance.LoadScene("Select", 2.0f, true);
     }
 

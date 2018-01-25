@@ -25,39 +25,27 @@ public class SkillSelectWindow : MonoBehaviour {
         for (int i = 0; i < skillNum; i++)
         {
             buttonList[i] = Instantiate(buttonPrefab, transform).GetComponent<Button>();
-            buttonList[i].transform.localPosition = new Vector3((i % 4) * 150, (i / 4) * -150, 0) + new Vector3(-270, 150);
-            buttonList[i].name = i.ToString();
-            SkillSelectButton buttonScript = buttonList[i].gameObject.AddComponent<SkillSelectButton>();
+            buttonList[i].transform.localPosition = new Vector3((i % 4) * 150, (i / 4) * -150, 0) + new Vector3(-220, 150);
         }
 	}
 
     public void ChangeActor(ScriptableActor actorData, int actorID)
     {
-        currentSelectNum = 0;
-        selectCon.SetSkill(0, -1);
-        selectCon.SetSkill(1, -1);
-        selectCon.SetSkill(2, -1);
+        SkillReset();
         ScriptableSkill skills = actorData.data[actorID].skillData;
         for (int i = 0; i < skills.data.Length; i++)
         {
             Button button = buttonList[i];
             button.image.sprite = skillsData.data[skills.data[i].skillID].sprite;
-            button.onClick.RemoveAllListeners();
-            button.name = actorData.data[actorID].skillData.data[i].skillID.ToString();
-            button.onClick.AddListener(()=> 
-            {
-                if (currentSelectNum >= 3) return;
-                selectCon.SetSkill(currentSelectNum, int.Parse(button.gameObject.name));
-                currentSelectNum++;
-            });
-            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, skillsData.data[skills.data[i].skillID].info);
+            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, 
+                skillsData.data[skills.data[i].skillID].info,
+                actorData.data[actorID].skillData.data[i].skillID, this);
         }
         for (int i = skills.data.Length; i < skillNum; i++)
         {
             Button button = buttonList[i];
-            button.onClick.RemoveAllListeners();
             button.image.sprite = null;
-            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, "");
+            button.GetComponent<SkillSelectButton>().SetInfomation(skillInfomationText, "", -1, this);
         }
     }
 
@@ -69,5 +57,19 @@ public class SkillSelectWindow : MonoBehaviour {
         {
             selectCon.SetSkill(i, -1);
         }
+
+        for (int i = 0; i < skillNum; i++)
+        {
+            buttonList[i].enabled = true;
+            buttonList[i].GetComponent<SkillSelectButton>().OnButtonEnable();
+        }
+    }
+
+    public bool SetSkill(int id)
+    {
+        if (currentSelectNum >= 3) return false;
+        selectCon.SetSkill(currentSelectNum, id);
+        currentSelectNum++;
+        return true;
     }
 }

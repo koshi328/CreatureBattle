@@ -11,7 +11,7 @@ public class TempestBlow : SkillBase {
     {
         CAST_TIME = 0.5f;
         RECAST_TIME = 10.0f;
-        ACTION_TIME = 0.6f;
+        ACTION_TIME = 1.2f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_slash2") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
         _effect.Stop();
@@ -19,6 +19,7 @@ public class TempestBlow : SkillBase {
     
     protected override void EntryCast(Actor actor)
     {
+        time = 0.0f;
         _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 45, new Color(1, 0.5f, 0, 1));
     }
 
@@ -36,7 +37,7 @@ public class TempestBlow : SkillBase {
         actor.GetAnimator().SetTrigger("Slash2");
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 0.1f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.2f, 0.2f, (argActor) =>
         {
             argActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
             argActor.TakeDamage(8.0f);
@@ -48,7 +49,7 @@ public class TempestBlow : SkillBase {
     protected override void Action(Actor actor)
     {
         time += Time.deltaTime;
-        if (time >= 0.2f)
+        if (time >= 0.4f)
         {
             _effect.Stop();
             time = 0.0f;
