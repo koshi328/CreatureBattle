@@ -682,12 +682,12 @@ GameObject:
   - component: {fileID: 136855719214849182}
   - component: {fileID: 114140592854909056}
   - component: {fileID: 114220839059886236}
-  - component: {fileID: 114031809590224974}
   - component: {fileID: 195523205596789718}
+  - component: {fileID: 114031809590224974}
   - component: {fileID: 114673295905314940}
   m_Layer: 11
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Human
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2735,7 +2735,7 @@ NavMeshAgent:
   m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2.5
   m_BaseOffset: -2.05

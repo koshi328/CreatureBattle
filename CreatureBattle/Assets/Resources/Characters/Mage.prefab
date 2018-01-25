@@ -934,12 +934,12 @@ GameObject:
   - component: {fileID: 136761623069112646}
   - component: {fileID: 114920679761332210}
   - component: {fileID: 114420045257946856}
-  - component: {fileID: 114245006060251316}
   - component: {fileID: 195852413369639674}
+  - component: {fileID: 114245006060251316}
   - component: {fileID: 114703985620262970}
   m_Layer: 11
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Human
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2314,7 +2314,7 @@ MonoBehaviour:
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 0
+    DrawErrorGizmo: 1
   m_RotationModel:
     SynchronizeEnabled: 1
     InterpolateOption: 2

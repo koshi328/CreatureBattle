@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DigitalRuby.SoundManagerNamespace;
 
 public class EarthDestraction : SkillBase {
 
@@ -29,6 +30,7 @@ public class EarthDestraction : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
+
         actor.GetAnimator().SetTrigger("Power");
         _effect.transform.position = actor.transform.position;
         _effect.Play();

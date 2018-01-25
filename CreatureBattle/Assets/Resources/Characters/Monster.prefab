@@ -585,12 +585,12 @@ GameObject:
   - component: {fileID: 136194332313486010}
   - component: {fileID: 114590061302322468}
   - component: {fileID: 114994779636616668}
-  - component: {fileID: 114581811549558702}
   - component: {fileID: 195991308952292958}
-  - component: {fileID: 114849964640738818}
+  - component: {fileID: 114581811549558702}
+  - component: {fileID: 114943622015727868}
   m_Layer: 12
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114994779636616668}
-  - {fileID: 114849964640738818}
+  - {fileID: 114943622015727868}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -1742,7 +1742,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHp: {fileID: 114441557109423728}
---- !u!114 &114849964640738818
+--- !u!114 &114871074218567840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1888487124843760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25509de983d3244293a108ddce89e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114943622015727868
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1759,9 +1770,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Idle
-  - Type: 9
+  - Type: 1
     SynchronizeType: 2
     Name: Run
+  - Type: 9
+    SynchronizeType: 0
+    Name: NormalAttack
   - Type: 9
     SynchronizeType: 0
     Name: Punch
@@ -1782,27 +1796,13 @@ MonoBehaviour:
     Name: Swap
   - Type: 9
     SynchronizeType: 0
-    Name: SwapR
-  - Type: 9
-    SynchronizeType: 0
     Name: PunchR
   - Type: 9
     SynchronizeType: 0
-    Name: NormalAttack
+    Name: SwapR
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
---- !u!114 &114871074218567840
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1888487124843760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f25509de983d3244293a108ddce89e88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114994779636616668
 MonoBehaviour:
   m_ObjectHideFlags: 1

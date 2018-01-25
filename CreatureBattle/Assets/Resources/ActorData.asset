@@ -20,7 +20,7 @@ MonoBehaviour:
     attackInterval: 0.8
     actorType: 0
     skillData: {fileID: 11400000, guid: 82ef8030a89408f4d814d01215ee28c9, type: 2}
-    cameraOffset: {x: 0, y: 2, z: 0}
+    cameraOffset: {x: 0, y: 3, z: 0}
     cameraDistance: -8
   - path: Characters/Mage
     sprite: {fileID: 21300000, guid: 9ce44e2cb31f06f4b85d12c15e2bbb9c, type: 3}
@@ -30,7 +30,7 @@ MonoBehaviour:
     attackInterval: 2.5
     actorType: 0
     skillData: {fileID: 11400000, guid: 4e54b0a300d75c947b0477231c3a042f, type: 2}
-    cameraOffset: {x: 0, y: 2, z: 0}
+    cameraOffset: {x: 0, y: 3, z: 0}
     cameraDistance: -8
   - path: Characters/Tank
     sprite: {fileID: 21300000, guid: 788e1f37e55e5c740aefdf6668a7d36c, type: 3}
@@ -40,5 +40,5 @@ MonoBehaviour:
     attackInterval: 1.6
     actorType: 0
     skillData: {fileID: 11400000, guid: 0235be1c8c16e28449ed2bc14b8e742c, type: 2}
-    cameraOffset: {x: 0, y: 4, z: 0}
+    cameraOffset: {x: 0, y: 5, z: 0}
     cameraDistance: -8
