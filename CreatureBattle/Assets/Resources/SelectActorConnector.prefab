@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4550106881732910}
-  - component: {fileID: 114167560047319616}
   - component: {fileID: 114307292974108866}
+  - component: {fileID: 114517405126550914}
   m_Layer: 0
   m_Name: SelectActorConnector
   m_TagString: Untagged
@@ -41,17 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114167560047319616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1171319256496862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0e8a1bf6eddfef41aa042c2711bb027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114307292974108866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -72,9 +61,20 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114167560047319616}
+  - {fileID: 114517405126550914}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114517405126550914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1171319256496862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e8a1bf6eddfef41aa042c2711bb027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

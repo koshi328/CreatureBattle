@@ -46,6 +46,7 @@ public class SkillController {
 
     public void Select(int elem, Actor actor)
     {
+        if (_currentElem != -1) return;
         if (elem >= _haveSkills.Length) return;
         if (_haveSkills[elem].NowReCasting()) return;
         _haveSkills[elem].Select(actor);

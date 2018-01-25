@@ -9,15 +9,17 @@ public class SelectController : MonoBehaviour
     [SerializeField]
     SkillSelectWindow skillWindow;
     [SerializeField]
-    Button _decideButton;
-    [SerializeField]
     Image[] _playerImage = new Image[4];
+    [SerializeField]
+    Outline[] _playerImageOutLine = new Outline[4];
     [SerializeField]
     Image[] _skillImage = new Image[3];
     [SerializeField]
     GameObject _characterSelectList;
     [SerializeField]
     GameObject _characterButtonPrefab;
+    [SerializeField]
+    GameObject _decideFilter;
 
     [SerializeField]
     ScriptableActor actorData;
@@ -27,17 +29,18 @@ public class SelectController : MonoBehaviour
 
     int selectActorID;
     int[] selectSkillID = new int[4];
-    int decideNum;
+
+    int _myElem;
+    SelectActorConnector[] _connector = new SelectActorConnector[4];
     // Use this for initialization
     void Start()
     {
-        //PhotonNetwork.isMessageQueueRunning = true;
-        decideNum = 0;
+        PhotonNetwork.isMessageQueueRunning = true;
         selectActorID = 0;
-        selectSkillID[0] = 0;
-        selectSkillID[1] = 0;
-        selectSkillID[2] = 0;
-        selectSkillID[3] = 0;
+        for (int i = 0; i < selectSkillID.Length; i++)
+        {
+            selectSkillID[i] = -1;
+        }
 
         // モンスター側のplayerか人間側のplayerか判断して処理する
         object isMonster = null;
@@ -63,6 +66,7 @@ public class SelectController : MonoBehaviour
         if ((int)player != 0)
         {
             PhotonNetwork.LeaveRoom();
+            SceneController.Instance.LoadScene("Lobby", 2.0f, true);
             return;
         }
         var roomProperties = new ExitGames.Client.Photon.Hashtable();
@@ -74,6 +78,52 @@ public class SelectController : MonoBehaviour
         else
             actorData = Resources.Load("ActorData") as ScriptableActor;
         CreateCharacterList();
+
+        
+        string name = PhotonNetwork.playerName;
+             if (name == "player1") _myElem = 0;
+        else if (name == "player2") _myElem = 1;
+        else if (name == "player3") _myElem = 2;
+        else if (name == "monster") _myElem = 3;
+        SelectActorConnector temp = PhotonNetwork.Instantiate("SelectActorConnector", Vector3.zero, Quaternion.identity, 0).GetComponent<SelectActorConnector>();
+        temp.Initialize(_myElem, PhotonNetwork.playerName);
+    }
+
+    private void Update()
+    {
+        if (SceneController.Instance.NowFade()) return;
+        string name = PhotonNetwork.playerName;
+             if (name == "player1") _myElem = 0;
+        else if (name == "player2") _myElem = 1;
+        else if (name == "player3") _myElem = 2;
+        else if (name == "monster") _myElem = 3;
+        for (int i = 0; i < 4; i++)
+        {
+            if (!_connector[i])
+            {
+                _playerImageOutLine[i].effectColor = new Color(0.3f, 0.3f, 0.3f, 0.7f);
+                continue;
+            }
+            if (_myElem == i)
+                _playerImageOutLine[i].effectColor = new Color(0, 0, 1, 0.7f);
+            else
+                _playerImageOutLine[i].effectColor = new Color(0, 1, 0, 0.7f);
+            if (_connector[i].isDone())
+            {
+                _playerImageOutLine[i].effectColor = new Color(1, 1, 0, 0.7f);
+            }
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            if (!_connector[i]) return;
+            if (!_connector[i].isDone()) return;
+            if(i == 3)
+            {
+                PhotonNetwork.isMessageQueueRunning = false;
+                SceneController.Instance.LoadScene("Game", 2.0f, true);
+                PhotonNetwork.room.IsVisible = false;
+            }
+        }
     }
 
     void SetPlayerData(int actorID)
@@ -82,19 +132,17 @@ public class SelectController : MonoBehaviour
         playerTable.Add("ActorID", actorID);
         PhotonNetwork.SetPlayerCustomProperties(playerTable);
     }
-
-    public void SetSkillData(int skillElem, int skillID)
+    void OnPhotonPlayerConnected()
     {
-        skillElem = Mathf.Clamp(skillElem, 0, 3);
-        var playerTable = new ExitGames.Client.Photon.Hashtable();
-        playerTable.Add("skill" + (skillElem + 1).ToString(), skillID);
-        PhotonNetwork.SetPlayerCustomProperties(playerTable);
+        SetPlayerData(selectActorID);
     }
-
-
 
     void CreateCharacterList()
     {
+        while(_characterSelectList.transform.childCount != 0)
+        {
+            Destroy(_characterSelectList.transform.GetChild(0));
+        }
         for (int i = 0; i < actorData.data.Length; i++)
         {
             GameObject button = Instantiate(_characterButtonPrefab, _characterSelectList.transform);
@@ -103,6 +151,7 @@ public class SelectController : MonoBehaviour
             button.GetComponent<Button>().onClick.AddListener(() =>
             {
                 selectActorID = int.Parse(button.gameObject.name);
+                // これを消せば、準備完了ボタンを押すまで相手の画面に表示されない
                 SetPlayerData(selectActorID);
                 skillWindow.ChangeActor(actorData, selectActorID);
             });
@@ -117,10 +166,10 @@ public class SelectController : MonoBehaviour
         ExitGames.Client.Photon.Hashtable table = data[1] as ExitGames.Client.Photon.Hashtable;
         int elem = 0;
         string name = player.NickName;
-        if (name == "player1") elem = 0;
-        if (name == "player2") elem = 1;
-        if (name == "player3") elem = 2;
-        if (name == "monster") elem = 3;
+             if (name == "player1") elem = 0;
+        else if (name == "player2") elem = 1;
+        else if (name == "player3") elem = 2;
+        else if (name == "monster") elem = 3;
 
         if (PhotonNetwork.playerName == "monster" && name != "monster")
         {
@@ -136,67 +185,25 @@ public class SelectController : MonoBehaviour
             _playerImage[elem].sprite = actorData.data[(int)value].sprite;
         }
     }
-
-    void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable table)
-    {
-        {
-            object value = null;
-            if (table.TryGetValue("player1", out value))
-            {
-                if ((int)value == 2) decideNum++;
-            }
-        }
-        {
-            object value = null;
-            if (table.TryGetValue("player2", out value))
-            {
-                if ((int)value == 2) decideNum++;
-            }
-        }
-        {
-            object value = null;
-            if (table.TryGetValue("player3", out value))
-            {
-                if ((int)value == 2) decideNum++;
-            }
-        }
-        {
-            object value = null;
-            if (table.TryGetValue("monster", out value))
-            {
-                if ((int)value == 2) decideNum++;
-            }
-        }
-
-        if (decideNum >= PhotonNetwork.room.PlayerCount)
-        {
-            PhotonNetwork.isMessageQueueRunning = false;
-            SceneController.Instance.LoadScene("Game", 2.0f, true);
-            PhotonNetwork.room.IsVisible = false;
-        }
-    }
-
+    
     public void Decide()
     {
-        object value = null;
-        PhotonNetwork.room.CustomProperties.TryGetValue(PhotonNetwork.playerName, out value);
-        if ((int)value == 2) return;
-        var roomProperties = new ExitGames.Client.Photon.Hashtable();
-        roomProperties.Add(PhotonNetwork.playerName, 2);
-        PhotonNetwork.room.SetCustomProperties(roomProperties);
-
-
+        if (selectActorID == -1) return;
+        if (selectSkillID[2] == -1) return;
         var playerTable = new ExitGames.Client.Photon.Hashtable();
         playerTable.Add("ActorID", selectActorID);
         for (int i = 0; i <= 3; i++)
             playerTable.Add("skill" + (i + 1).ToString(), selectSkillID[i]);
         PhotonNetwork.SetPlayerCustomProperties(playerTable);
+        _connector[_myElem].Done(true);
+        _decideFilter.SetActive(true);
     }
 
     public void SetSkill(int elem, int id)
     {
         if (id < 0)
         {
+            selectSkillID[elem] = id;
             _skillImage[elem].sprite = null;
             return;
         }
@@ -204,5 +211,61 @@ public class SelectController : MonoBehaviour
         selectSkillID[elem] = id;
     }
 
+    public void SetConnector(int elem, SelectActorConnector connector)
+    {
+        if (connector == null)
+        {
+            _connector[elem] = connector;
+            return;
+        }
+        if (!PhotonNetwork.isMasterClient)
+        {
+            _connector[elem] = connector;
+            return;
+        }
+        if (_connector[elem] != null)
+        {
+            if (_connector[elem] == connector) return;
+            string[] nameList = { "player1", "player2", "player3", "monster" };
+            object value = null;
+            for (int i = 0; i < nameList.Length; i++)
+            {
+                PhotonNetwork.room.CustomProperties.TryGetValue(nameList[i], out value);
+                if ((int)value == 0)
+                {
+                    var roomProperties = new ExitGames.Client.Photon.Hashtable();
+                    roomProperties.Add(nameList[i], 1);
+                    PhotonNetwork.room.SetCustomProperties(roomProperties);
+                    _connector[elem].Initialize(elem, _connector[elem]._playerName);
+                    connector.Initialize(i, nameList[i]);
+                    connector.ChangePhotonPlayerName(nameList[i]);
+                    return;
+                }
+            }
+            connector.LeaveRoom();
+        }
+        else
+        {
+            _connector[elem] = connector;
+        }
+    }
 
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(0, 0, 100, 100), PhotonNetwork.playerName);
+        for (int i = 0; i < 4; i++)
+        {
+            if(_connector[i] == null)
+            {
+                continue;
+            }
+            GUI.Label(new Rect(100 * (i + 1), 0, 100, 100), _connector[i]._playerName);
+        }
+    }
+
+    void OnMasterClientSwitched()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneController.Instance.LoadScene("Lobby", 2.0f, true);
+    }
 }

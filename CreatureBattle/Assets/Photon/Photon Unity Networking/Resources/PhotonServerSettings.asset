@@ -65,4 +65,6 @@ MonoBehaviour:
   - RPCSetActorID
   - RPCDone
   - RPCInitialize
+  - ChangePhotonPlayerNameRPC
+  - LeaveRoomRPC
   DisableAutoOpenWizard: 1

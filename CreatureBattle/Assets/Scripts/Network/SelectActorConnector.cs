@@ -1,64 +1,78 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class SelectActorConnector : MonoBehaviour
-//{
+public class SelectActorConnector : MonoBehaviour
+{
 
-//    PhotonView _myPhotonView;
-//    bool _done;
+    PhotonView _myPhotonView;
+    bool _done;
+    
 
-//    int _actorID;
+    int _element;
+    public string _playerName;
+    private void Awake()
+    {
+        _done = false;
+        _myPhotonView = GetComponent<PhotonView>();
+    }
 
-//    int _element;
-//    private void Awake()
-//    {
-//        _actorID = -1;
-//        _done = false;
-//        _myPhotonView = GetComponent<PhotonView>();
-//    }
+    [PunRPC]
+    void RPCInitialize(int elem, string playerName)
+    {
+        _element = elem;
+        _playerName = playerName;
+        GameObject.Find("SelectController").GetComponent<SelectController>().SetConnector(elem, this);
+    }
+    public void Initialize(int elem, string playerName)
+    {
+        _myPhotonView.RPC("RPCInitialize", PhotonTargets.AllBufferedViaServer, elem, playerName);
+    }
 
-//    [PunRPC]
-//    void RPCInitialize(int elem)
-//    {
-//        GameObject.Find("SelectController").GetComponent<SelectController>().SetConnector(elem, this);
-//        _element = elem;
-//    }
-//    public void Initialize(int elem)
-//    {
-//        _myPhotonView.RPC("RPCInitialize", PhotonTargets.AllBufferedViaServer, elem);
-//    }
+    [PunRPC]
+    void RPCDone(bool isDone)
+    {
+        _done = isDone;
+    }
+    public void Done(bool isDone)
+    {
+        _myPhotonView.RPC("RPCDone", PhotonTargets.AllBufferedViaServer, isDone);
+    }
+    public bool isDone()
+    {
+        return _done;
+    }
 
-//    [PunRPC]
-//    void RPCDone(bool isDone)
-//    {
-//        _done = isDone;
-//    }
-//    public void Done(bool isDone)
-//    {
-//        _myPhotonView.RPC("RPCDone", PhotonTargets.AllBufferedViaServer, isDone);
-//    }
-//    public bool isDone()
-//    {
-//        return _done;
-//    }
 
-//    [PunRPC]
-//    void RPCSetActorID(int id)
-//    {
-//        _actorID = id;
-//    }
-//    public void SetActorID(int id)
-//    {
-//        _myPhotonView.RPC("RPCSetActorID", PhotonTargets.AllBufferedViaServer, id);
-//    }
-//    public int GetActorID()
-//    {
-//        return _actorID;
-//    }
+    public void LeaveRoom()
+    {
+        _myPhotonView.RPC("LeaveRoomRPC",PhotonTargets.AllViaServer);
+    }
+    [PunRPC]
+    void LeaveRoomRPC()
+    {
+        if (!_myPhotonView.isMine) return;
+        PhotonNetwork.LeaveRoom();
+        SceneController.Instance.LoadScene("Lobby", 2.0f, true);
+    }
 
-//    private void OnDestroy()
-//    {
-//        GameObject.Find("SelectController").GetComponent<SelectController>().SetConnector(_element, null);
-//    }
-//}
+    public void ChangePhotonPlayerName(string playerName)
+    {
+        _myPhotonView.RPC("ChangePhotonPlayerNameRPC", PhotonTargets.AllBufferedViaServer, playerName);
+    }
+    [PunRPC]
+    void ChangePhotonPlayerNameRPC(string playerName)
+    {
+        if (!_myPhotonView.isMine) return;
+        PhotonNetwork.playerName = playerName;
+    }
+
+    private void OnDestroy()
+    {
+        GameObject.Find("SelectController").GetComponent<SelectController>().SetConnector(_element, null);
+        if (!PhotonNetwork.isMasterClient) return;
+        var roomProperties = new ExitGames.Client.Photon.Hashtable();
+        roomProperties.Add(_playerName, 0);
+        PhotonNetwork.room.SetCustomProperties(roomProperties);
+    }
+}
