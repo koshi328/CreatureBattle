@@ -25,7 +25,7 @@ public class SkillSelectWindow : MonoBehaviour {
         for (int i = 0; i < skillNum; i++)
         {
             buttonList[i] = Instantiate(buttonPrefab, transform).GetComponent<Button>();
-            buttonList[i].transform.localPosition = new Vector3((i % 4) * 150, (i / 4) * -150, 0) + new Vector3(-270, 150);
+            buttonList[i].transform.localPosition = new Vector3((i % 4) * 150, (i / 4) * -150, 0) + new Vector3(-220, 150);
         }
 	}
 

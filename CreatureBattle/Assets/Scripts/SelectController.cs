@@ -91,6 +91,13 @@ public class SelectController : MonoBehaviour
 
     private void Update()
     {
+        // デバッグ用
+        if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.Z))
+        {
+            PhotonNetwork.isMessageQueueRunning = false;
+            SceneController.Instance.LoadScene("Game", 2.0f, true);
+            PhotonNetwork.room.IsVisible = false;
+        }
         if (SceneController.Instance.NowFade()) return;
         string name = PhotonNetwork.playerName;
              if (name == "player1") _myElem = 0;
@@ -124,6 +131,7 @@ public class SelectController : MonoBehaviour
                 PhotonNetwork.room.IsVisible = false;
             }
         }
+
     }
 
     void SetPlayerData(int actorID)
