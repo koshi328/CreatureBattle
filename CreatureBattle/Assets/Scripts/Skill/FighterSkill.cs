@@ -28,9 +28,10 @@ public class DeadlyImpactCondition : Condition
     }
     protected override void Exit(Actor actor)
     {
+        if (!actor.GetPhotonView().isMine) return;
         if (_stack >= _maxStack) return;
         _time = _maxTime;
-        _stack++;
+        actor.AddCondition(ActorCondition.KIND.DEADLY_IMPACT, 3.0f, 0.0f);
         Execute(actor);
     }
 }

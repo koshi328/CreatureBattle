@@ -6,6 +6,7 @@ public class DeadlyImpact : SkillBase {
 
     GameObject _rangeObj;
     ParticleSystem _effect;
+    bool init;
     public DeadlyImpact()
     {
         CAST_TIME = 0.0f;
@@ -14,6 +15,7 @@ public class DeadlyImpact : SkillBase {
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
         _effect.Stop();
+        init = false;
     }
 
     protected override void EntryCast(Actor actor)
@@ -60,7 +62,9 @@ public class DeadlyImpact : SkillBase {
 
     protected override void Update(Actor actor)
     {
-        if (actor.GetCondition().GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() != 0) return;
-        actor.AddCondition(ActorCondition.KIND.DEADLY_IMPACT, 0.0f, 0.0f, false);
+        if (init) return;
+        init = true;
+        if (!actor.GetPhotonView().isMine) return;
+        actor.AddCondition(ActorCondition.KIND.DEADLY_IMPACT, 3.0f, 0.0f, false);
     }
 }
