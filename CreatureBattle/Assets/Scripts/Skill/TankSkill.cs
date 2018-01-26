@@ -32,7 +32,7 @@ public class AngryShoutCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
-        actor.GetCondition().ReciveDamageRate *= 0.65f;
+        actor.GetCondition().ReciveDamageRate *= 1.35f;
         actor.GetCondition().SpeedDownRate *= 0.5f;
 
     }

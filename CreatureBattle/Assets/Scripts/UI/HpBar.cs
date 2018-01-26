@@ -7,7 +7,9 @@ public class HpBar : MonoBehaviour {
 
     [SerializeField]
     Image _currentHp;
-
+    [SerializeField]
+    Text test;
+    [SerializeField]
     Actor _actor;
 
 	void Start () {
@@ -15,6 +17,6 @@ public class HpBar : MonoBehaviour {
     }
 
     void LateUpdate(){
-
+        test.text = _actor.GetStatus().GetHP().ToString();
     }
 }

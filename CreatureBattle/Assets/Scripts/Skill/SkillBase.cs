@@ -73,7 +73,9 @@ public class SkillBase {
         switch(_state)
         {
             case STATE.CASTING:
-                _effect.transform.position = actor.transform.position;
+                _effect.transform.position = actor.GetFootTrans().position;
+                _effect.transform.localScale = actor.GetFootTrans().localScale;
+                _effect.startSize = actor.GetFootTrans().localScale.x;
                 Casting(actor);
                 _timer -= Time.deltaTime;
                 if (_timer <= 0.0f)

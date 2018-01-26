@@ -130,8 +130,8 @@ public class ActorCondition : MonoBehaviour {
     {
         if (GiveDamageRate > 1.0f)
         {
-            _giveDamageUp.transform.position = actor.transform.position;
-            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            _giveDamageUp.transform.position = actor.GetCenterTrans().position;
+            _giveDamageUp.transform.localScale = actor.GetCenterTrans().localScale;
             if (!_giveDamageUp.isPlaying)
                 _giveDamageUp.Play();
         }
@@ -140,8 +140,8 @@ public class ActorCondition : MonoBehaviour {
 
         if (ReciveDamageRate < 1.0f)
         {
-            _reciveDamageDown.transform.position = actor.transform.position;
-            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            _reciveDamageDown.transform.position = actor.GetCenterTrans().position;
+            _reciveDamageDown.transform.localScale = actor.GetCenterTrans().localScale;
             if (!_reciveDamageDown.isPlaying)
                 _reciveDamageDown.Play();
         }
@@ -150,8 +150,8 @@ public class ActorCondition : MonoBehaviour {
 
         if (SpeedDownRate < 1.0f)
         {
-            _speedDown.transform.position = actor.transform.position;
-            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            _speedDown.transform.position = actor.GetFootTrans().position;
+            _speedDown.transform.localScale = actor.GetFootTrans().localScale;
             if (!_speedDown.isPlaying)
                 _speedDown.Play();
         }

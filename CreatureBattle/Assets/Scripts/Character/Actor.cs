@@ -21,6 +21,8 @@ public class Actor : MonoBehaviour {
     [SerializeField]
     Transform _reactTrans;
     [SerializeField]
+    Transform _footTrans;
+    [SerializeField]
     ScriptableAllSkills _scriptableAllSkills;
 
     private void Awake()
@@ -119,9 +121,9 @@ public class Actor : MonoBehaviour {
     {
         float d = _status.TakeDamage(damage);
         _damageRenderer.Render(transform.position, (int)d, Color.red);
+        SetHpBarFillRate();
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
         EffectManager.Instance.CreateEffect(0, _reactTrans.position);
-        SetHpBarFillRate();
         if (_skillController.NowAction()) return;
         _myAnimator.SetTrigger("React");
     }
@@ -232,5 +234,14 @@ public class Actor : MonoBehaviour {
         }
 
         _castingBar.gameObject.SetActive(false);
+    }
+
+    public Transform GetCenterTrans()
+    {
+        return _reactTrans;
+    }
+    public Transform GetFootTrans()
+    {
+        return _footTrans;
     }
 }
