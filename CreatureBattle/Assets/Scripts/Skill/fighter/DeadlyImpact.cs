@@ -34,7 +34,7 @@ public class DeadlyImpact : SkillBase {
 
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 0.6f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 99.0f, (argActor) =>
         {
             float damage = 50.0f + (50.0f * (argActor.GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() * 0.01f));
             argActor.TakeDamage(damage);

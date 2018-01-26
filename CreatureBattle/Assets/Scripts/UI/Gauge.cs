@@ -26,6 +26,6 @@ public class Gauge : MonoBehaviour {
         current = _backFill.fillAmount;
         current = current - (current - ratio) * 0.1f;
         _backFill.fillAmount = current;
-        _text.text = value.ToString() + "/" + maxValue.ToString();
+        _text.text = ((int)value).ToString() + "/" + ((int)maxValue).ToString();
     }
 }

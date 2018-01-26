@@ -13,12 +13,22 @@ public class GroundFrostCondition : Condition
 public class MeteoImpactCondition : Condition
 {
     float time = 0.0f;
+    ParticleSystem _effect;
     public MeteoImpactCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
+        GameObject prefab = Resources.Load("Effect/ItoEffects/Burn") as GameObject;
+        _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
+        _effect.Stop();
+    }
+
+    protected override void Entry(Actor actor)
+    {
+        _effect.Play();
     }
     protected override void Execute(Actor actor)
     {
+        _effect.transform.position = actor.transform.position;
         if (!actor.GetPhotonView().isMine) return;
         time += Time.deltaTime;
         if (time >= 1.0f)
@@ -26,5 +36,9 @@ public class MeteoImpactCondition : Condition
             time = 0.0f;
             actor.TakeDamage(6);
         }
+    }
+    protected override void Exit(Actor actor)
+    {
+        _effect.Stop();
     }
 }

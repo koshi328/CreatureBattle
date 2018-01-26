@@ -7,7 +7,7 @@ public class DragonStorm : SkillBase {
     ParticleSystem _effect;
     public DragonStorm()
     {
-        CAST_TIME = 2.5f;
+        CAST_TIME = 2.0f;
         RECAST_TIME = 7.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/DragonStorm") as GameObject;

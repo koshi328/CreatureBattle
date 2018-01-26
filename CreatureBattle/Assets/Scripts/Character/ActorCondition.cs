@@ -35,6 +35,10 @@ public class ActorCondition : MonoBehaviour {
     public float SpeedDownRate { get; set; }
     public float RecoveryRate { get; set; }
 
+    ParticleSystem _giveDamageUp;
+    ParticleSystem _reciveDamageDown;
+    ParticleSystem _speedDown;
+
     public void Initialize()
     {
         _conditions = new Condition[(int)KIND.MAX_NUM];
@@ -59,6 +63,10 @@ public class ActorCondition : MonoBehaviour {
         _conditions[(int)KIND.LIMIT_BREAK]       = new LimitBreakCondition(1, 60);
         _conditions[(int)KIND.STUDII_PROTECT]    = new StudiiProtectCondition(1, 60);
         _conditions[(int)KIND.ABNORMAL_COUNTER]  = new AbnormalCounterCondition(1, 60);
+
+        _giveDamageUp = Instantiate(Resources.Load("Effect/ItoEffects/DamageUp") as GameObject).GetComponent<ParticleSystem>();
+        _reciveDamageDown = Instantiate(Resources.Load("Effect/ItoEffects/DefenseUp") as GameObject).GetComponent<ParticleSystem>();
+        _speedDown = Instantiate(Resources.Load("Effect/ItoEffects/SpeedDown") as GameObject).GetComponent<ParticleSystem>();
     }
 
     public void Execute(Actor actor)
@@ -70,6 +78,13 @@ public class ActorCondition : MonoBehaviour {
         for (int i = 0; i < (int)KIND.MAX_NUM; i++)
         {
             _conditions[i].Update(actor);
+        }
+
+        EffectUpdate(actor);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            actor.AddCondition(KIND.AGGRESSIVE_SHOUT, 10.0f, 0.0f);
         }
     }
 
@@ -109,6 +124,39 @@ public class ActorCondition : MonoBehaviour {
         //_conditions[(int)KIND.DOUBLE_EDGE].SetTime(0.0f);
         //_conditions[(int)KIND.LIMIT_BREAK].SetTime(0.0f);
         //_conditions[(int)KIND.STUDII_PROTECT].SetTime(0.0f);
+    }
+
+    private void EffectUpdate(Actor actor)
+    {
+        if (GiveDamageRate > 1.0f)
+        {
+            _giveDamageUp.transform.position = actor.transform.position;
+            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            if (!_giveDamageUp.isPlaying)
+                _giveDamageUp.Play();
+        }
+        else
+            _giveDamageUp.Stop();
+
+        if (ReciveDamageRate < 1.0f)
+        {
+            _reciveDamageDown.transform.position = actor.transform.position;
+            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            if (!_reciveDamageDown.isPlaying)
+                _reciveDamageDown.Play();
+        }
+        else
+            _reciveDamageDown.Stop();
+
+        if (SpeedDownRate < 1.0f)
+        {
+            _speedDown.transform.position = actor.transform.position;
+            _giveDamageUp.transform.localScale = actor.transform.localScale;
+            if (!_speedDown.isPlaying)
+                _speedDown.Play();
+        }
+        else
+            _speedDown.Stop();
     }
 }
 
@@ -186,6 +234,11 @@ public class StanCondition : Condition
     public StanCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
+    }
+
+    protected override void Execute(Actor actor)
+    {
+        actor.GetAnimator().SetTrigger("React");
     }
 }
 
