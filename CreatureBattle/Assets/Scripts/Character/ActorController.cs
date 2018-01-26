@@ -5,7 +5,8 @@ using UnityEngine;
 public class ActorController : MonoBehaviour {
     Actor _myActor;
     CommandCanvas _commandCanvas;
-    StatusCanvas _statusCanavs;
+    StatusCanvas _statusCanavas;
+    CastingCanvas _castingCanavas;
     Transform _cameraTrans;
     BattleManager _battleManager;
 	void Start () {
@@ -13,7 +14,8 @@ public class ActorController : MonoBehaviour {
         _cameraTrans = Camera.main.transform;
         _cameraTrans.parent.GetComponent<TrackCamera>().SetTarget(transform);
         _commandCanvas = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
-        _statusCanavs = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
+        _statusCanavas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
+        _castingCanavas = GameObject.Find("CastingCanvas").GetComponent<CastingCanvas>();
         _commandCanvas.SetCommand(0, () => { _myActor.SkillExecute(0); });
         _commandCanvas.SetCommand(1, () => { _myActor.SkillExecute(1); });
         _commandCanvas.SetCommand(2, () => { _myActor.SkillExecute(2); });
@@ -40,7 +42,7 @@ public class ActorController : MonoBehaviour {
     }
 	
 	void Update () {
-        _statusCanavs.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
+        _statusCanavas.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
         if (!_battleManager.IsBattling()) return;
         if (_myActor.GetStatus().GetHP() <= 0) return;

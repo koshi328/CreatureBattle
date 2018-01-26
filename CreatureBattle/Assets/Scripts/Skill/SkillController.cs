@@ -5,12 +5,14 @@ using UnityEngine;
 public class SkillController {
 
     SkillBase[] _haveSkills;
+    string[] _skillNames;
     int _currentElem;
 
 
     public SkillController()
     {
         _haveSkills = new SkillBase[4];
+        _skillNames = new string[4];
         _currentElem = -1;
     }
 
@@ -19,6 +21,7 @@ public class SkillController {
         for (int i = 0; i < _haveSkills.Length; i++)
         {
             _haveSkills[i] = SkillGenerator.GetSkill((SKILL_ID)elements[i]);
+            _skillNames[i] = 
         }
     }
 
@@ -82,5 +85,10 @@ public class SkillController {
         if (_currentElem == -1) return;
         _haveSkills[_currentElem].Dispose(actor);
         _currentElem = -1;
+    }
+
+    public string GetSkillName(int elem)
+    {
+        return _skillNames[elem];
     }
 }
