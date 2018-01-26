@@ -27,6 +27,7 @@ public class InitializeWaveCondition : Condition
     {
         actor.GetCondition().ClearDebuff();
         actor.GetCondition().ReciveDamageRate *= 0.65f;
+        actor.GetCondition().SpeedDownRate *= 1.5f;
     }
 }
 public class ExplosionCondition : Condition

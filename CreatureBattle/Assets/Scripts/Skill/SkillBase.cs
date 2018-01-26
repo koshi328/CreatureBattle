@@ -105,6 +105,7 @@ public class SkillBase {
         _timer = CAST_TIME;
         Cancel(actor);
         actor.GetAnimator().SetTrigger("React");
+        _effect.Stop();
     }
     // virtual ---------------------
     // キャスト開始

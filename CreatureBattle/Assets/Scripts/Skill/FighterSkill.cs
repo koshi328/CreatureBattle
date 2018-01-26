@@ -6,7 +6,7 @@
     }
     protected override void Execute(Actor actor)
     {
-        actor.GetCondition().ReciveDamageRate *= (_stack * 1.02f);
+        actor.GetCondition().ReciveDamageRate *= (1 + _stack * 0.02f);
     }
 }
 public class EarthDestractionCondition : Condition

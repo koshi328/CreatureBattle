@@ -14,7 +14,7 @@ public class StandGuard : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward * 2, actor.transform.eulerAngles.y + 180, 25, 45, new Color(0, 0.2f, 1.0f, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward * 2, actor.transform.eulerAngles.y + 180, 40, 45, new Color(0, 0.2f, 1.0f, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -31,7 +31,7 @@ public class StandGuard : SkillBase {
         {
             argActor.AddCondition(ActorCondition.KIND.STAND_GUARD, 10.0f, 0.0f);
         });
-        col.SetFanCollider(actor.transform.position + actor.transform.forward * 2, 25.0f, actor.transform.forward * -1, 45.0f);
+        col.SetFanCollider(actor.transform.position + actor.transform.forward * 2, 40.0f, actor.transform.forward * -1, 45.0f);
     }
 
     protected override void Action(Actor actor)

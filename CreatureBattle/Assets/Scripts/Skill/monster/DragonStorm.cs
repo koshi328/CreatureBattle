@@ -7,7 +7,7 @@ public class DragonStorm : SkillBase {
     ParticleSystem _effect;
     public DragonStorm()
     {
-        CAST_TIME = 0.5f;
+        CAST_TIME = 2.5f;
         RECAST_TIME = 7.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/DragonStorm") as GameObject;
@@ -30,14 +30,6 @@ public class DragonStorm : SkillBase {
         actor.GetAnimator().SetTrigger("Scream");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
-        if (!actor.GetPhotonView().isMine) return;
-        SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.5f, 0.5f, (argActor) =>
-        {
-            argActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
-            argActor.TakeDamage(141.0f);
-        });
-        col.SetSphereCollider(actor.transform.position, 30.0f);
     }
 
     protected override void Action(Actor actor)
@@ -48,6 +40,14 @@ public class DragonStorm : SkillBase {
     protected override void EndAction(Actor actor)
     {
         GameObject.Destroy(_rangeObj);
+        if (!actor.GetPhotonView().isMine) return;
+        SkillCollider col = ColliderManager.Instance.GetCollider();
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 0.1f, (argActor) =>
+        {
+            argActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
+            argActor.TakeDamage(141.0f);
+        });
+        col.SetSphereCollider(actor.transform.position, 30.0f);
     }
 
     protected override void Cancel(Actor actor)

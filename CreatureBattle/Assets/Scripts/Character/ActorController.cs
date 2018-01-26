@@ -20,7 +20,7 @@ public class ActorController : MonoBehaviour {
         _commandCanvas.SetCommand(3, () => { _myActor.SkillExecute(3); });
 
         GameObject.Find("BuffList").GetComponent<BuffIconController>().SetCondition(_myActor.GetCondition());
-
+        _battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         // スキルの設定
         int[] skills_id = new int[4];
         for (int i = 0; i < 4; i++)
@@ -35,8 +35,6 @@ public class ActorController : MonoBehaviour {
         {
             _commandCanvas.SetImage(i,skills_id[i]);
         }
-
-        _battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
     }
 	
 	void Update () {

@@ -6,7 +6,7 @@
     }
     protected override void Execute(Actor actor)
     {
-        actor.GetCondition().ReciveDamageRate *= 0.3f;
+        actor.GetCondition().ReciveDamageRate *= 0.5f;
     }
 }
 public class AggressiveShoutCondition : Condition
@@ -17,7 +17,7 @@ public class AggressiveShoutCondition : Condition
     }
     protected override void Execute(Actor actor)
     {
-        actor.GetCondition().GiveDamageRate *= 1.25f;
+        actor.GetCondition().GiveDamageRate *= 1.15f;
         if(actor.GetCondition().GetCondition(ActorCondition.KIND.STAN).GetStack() != 0)
         {
             _time = 0.0f;
@@ -33,5 +33,7 @@ public class AngryShoutCondition : Condition
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().ReciveDamageRate *= 0.65f;
+        actor.GetCondition().SpeedDownRate *= 0.5f;
+
     }
 }

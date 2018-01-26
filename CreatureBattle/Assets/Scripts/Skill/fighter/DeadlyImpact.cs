@@ -20,7 +20,7 @@ public class DeadlyImpact : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 6, 45, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 12, 45, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -39,7 +39,7 @@ public class DeadlyImpact : SkillBase {
             float damage = 50.0f + (50.0f * (argActor.GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() * 0.01f));
             argActor.TakeDamage(damage);
         });
-        col.SetFanCollider(actor.transform.position, 6.0f, actor.transform.forward, 45.0f);
+        col.SetFanCollider(actor.transform.position, 12.0f, actor.transform.forward, 45.0f);
     }
 
     protected override void Action(Actor actor)

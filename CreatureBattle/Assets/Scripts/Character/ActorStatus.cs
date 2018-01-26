@@ -11,14 +11,14 @@ public class ActorStatus {
     float _speed;
     ActorCondition _condition;
 
-    public void Initialize(ActorCondition condition, float attack, float attackInterval, float maxHP)
+    public void Initialize(ActorCondition condition, float attack, float attackInterval, float maxHP, float maxSpeed)
     {
         _hp = maxHP;
         _maxHP = maxHP;
         _attack = attack;
         _attackInterval = attackInterval;
         _condition = condition;
-        _speed = 7.0f;
+        _speed = maxSpeed;
     }
 
     public float GetAttack()

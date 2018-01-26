@@ -10,7 +10,7 @@ public class LatticeThunder : SkillBase {
     float one_range_size = 15.0f;
     public LatticeThunder()
     {
-        CAST_TIME = 1.0f;
+        CAST_TIME = 1.5f;
         RECAST_TIME = 18.0f;
         ACTION_TIME = 0.0f;
         int elem = 0;

@@ -18,7 +18,7 @@ public class GroundFrost : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 30, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 30, 30, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -40,7 +40,7 @@ public class GroundFrost : SkillBase {
             argActor.AddCondition(ActorCondition.KIND.GROUND_FROST, 2.0f, 0.0f);
             argActor.TakeDamage(60.0f);
         });
-        col.SetFanCollider(actor.transform.position, 15.0f, actor.transform.forward, 30.0f);
+        col.SetFanCollider(actor.transform.position, 30.0f, actor.transform.forward, 30.0f);
     }
 
     protected override void Action(Actor actor)

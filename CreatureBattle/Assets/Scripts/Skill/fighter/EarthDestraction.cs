@@ -20,7 +20,7 @@ public class EarthDestraction : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 10.0f, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 20.0f, new Color(1, 0.5f, 0, 1));
     }
 
     protected override void Casting(Actor actor)
@@ -42,7 +42,7 @@ public class EarthDestraction : SkillBase {
             argActor.AddCondition(ActorCondition.KIND.EARTH_DESTRACTION, 10.0f, 0.0f);
             argActor.TakeDamage(75.0f);
         });
-        col.SetSphereCollider(actor.transform.position, 10.0f);
+        col.SetSphereCollider(actor.transform.position, 20.0f);
     }
 
     protected override void Action(Actor actor)
