@@ -17,11 +17,15 @@ public class Actor : MonoBehaviour {
     [SerializeField]
     Image _hpBar;
     [SerializeField]
+    Image _castingBar;
+    [SerializeField]
     Transform _reactTrans;
+    [SerializeField]
+    ScriptableAllSkills _scriptableAllSkills;
 
     private void Awake()
     {
-        _skillController = new SkillController();
+        _skillController = new SkillController(_scriptableAllSkills);
         _condition = gameObject.AddComponent<ActorCondition>();
         _navMesh = GetComponent<NavMeshAgent>();
         _myPhotonView = GetComponent<PhotonView>();
@@ -57,6 +61,7 @@ public class Actor : MonoBehaviour {
         _condition.Execute(this);
         _skillController.Execute(this);
         MoveMent();
+        SetCastingBarFillRate();
     }
 
     public void SetMoveDirection(Vector3 dir)
@@ -208,5 +213,24 @@ public class Actor : MonoBehaviour {
     {
         float rate = _status.GetHP() / _status.GetMaxHP();
         _hpBar.fillAmount = rate;
+    }
+
+    void SetCastingBarFillRate()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            SkillBase skill = _skillController.GetSkill(i);
+
+            if (skill == null) continue;
+            if (skill.NowCasting())
+            {
+                float rate = 1.0f - (skill.GetTimer() / skill.GetCastTime());
+                _castingBar.fillAmount = rate;
+                _castingBar.gameObject.SetActive(true);
+                return;
+            }
+        }
+
+        _castingBar.gameObject.SetActive(false);
     }
 }

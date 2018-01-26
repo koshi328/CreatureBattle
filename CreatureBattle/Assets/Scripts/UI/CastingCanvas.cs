@@ -21,4 +21,14 @@ public class CastingCanvas : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void SetSkillName(string skillName)
+    {
+        _skillName.text = skillName;
+    }
+
+    public void SetFillAmount(float amount)
+    {
+        _castedImage.fillAmount = amount;
+    }
 }

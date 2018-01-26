@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class SkillController {
 
+    ScriptableAllSkills _scriptableAllSkills;
     SkillBase[] _haveSkills;
-    string[] _skillNames;
     int _currentElem;
+    string[] _skillNames;
 
 
-    public SkillController()
+    public SkillController(ScriptableAllSkills scriptableAllSkill)
     {
-        _haveSkills = new SkillBase[4];
-        _skillNames = new string[4];
+        _scriptableAllSkills = scriptableAllSkill;
+        _haveSkills = new SkillBase[3];
         _currentElem = -1;
+        _skillNames = new string[3];
     }
 
     public void Initialize(int[] elements)
@@ -21,7 +23,7 @@ public class SkillController {
         for (int i = 0; i < _haveSkills.Length; i++)
         {
             _haveSkills[i] = SkillGenerator.GetSkill((SKILL_ID)elements[i]);
-            _skillNames[i] = 
+            _skillNames[i] = _scriptableAllSkills.data[elements[i]].skillName;
         }
     }
 

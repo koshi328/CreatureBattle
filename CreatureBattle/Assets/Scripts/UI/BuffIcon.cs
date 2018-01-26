@@ -22,8 +22,8 @@ public class BuffIcon : MonoBehaviour {
         {
             gameObject.SetActive(true);
         }
-        _stackText.text = _subject.GetStack().ToString();
-        _timeText.text = Mathf.Floor(_subject.GetTime()).ToString();
+        _stackText.text = "x" + _subject.GetStack().ToString();
+        _timeText.text = Mathf.Floor(_subject.GetTime()).ToString() + "s";
     }
 
     public void SetCondition(Condition condition)

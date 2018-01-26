@@ -16,16 +16,15 @@ public class ActorController : MonoBehaviour {
         _commandCanvas = GameObject.Find("CommandCanvas").GetComponent<CommandCanvas>();
         _statusCanavas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
         _castingCanavas = GameObject.Find("CastingCanvas").GetComponent<CastingCanvas>();
-        _commandCanvas.SetCommand(0, () => { _myActor.SkillExecute(0); });
-        _commandCanvas.SetCommand(1, () => { _myActor.SkillExecute(1); });
-        _commandCanvas.SetCommand(2, () => { _myActor.SkillExecute(2); });
-        _commandCanvas.SetCommand(3, () => { _myActor.SkillExecute(3); });
+        _commandCanvas.SetCommand(0, () => { _myActor.SkillExecute(0); _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(0)); });
+        _commandCanvas.SetCommand(1, () => { _myActor.SkillExecute(1); _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(1)); });
+        _commandCanvas.SetCommand(2, () => { _myActor.SkillExecute(2); _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(2)); });
 
         GameObject.Find("BuffList").GetComponent<BuffIconController>().SetCondition(_myActor.GetCondition());
         _battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         // スキルの設定
-        int[] skills_id = new int[4];
-        for (int i = 0; i < 4; i++)
+        int[] skills_id = new int[3];
+        for (int i = 0; i < 3; i++)
         {
             object value;
             PhotonNetwork.player.CustomProperties.TryGetValue("skill" + (i + 1).ToString(), out value);
@@ -33,7 +32,7 @@ public class ActorController : MonoBehaviour {
             skills_id[i] = (int)value;
         }
         _myActor.SetSkills(skills_id);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             _commandCanvas.SetImage(i,skills_id[i]);
         }
@@ -42,6 +41,8 @@ public class ActorController : MonoBehaviour {
 	void Update () {
         _statusCanavas.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
+        // 死んだとき
+        DeathProcess();
         if (!_battleManager.IsBattling()) return;
         if (_myActor.GetStatus().GetHP() <= 0) return;
         // 移動
@@ -55,27 +56,33 @@ public class ActorController : MonoBehaviour {
         //if(Input.GetKeyDown(KeyCode.Alpha1))
         if(Input.GetButtonDown("Skill1"))
         {
-                _myActor.SkillExecute(0);
+            _myActor.SkillExecute(0);
+            _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(0));
         }
         //if (Input.GetKeyDown(KeyCode.Alpha2))
         if(Input.GetButtonDown("Skill2"))
         {
-                _myActor.SkillExecute(1);
+            _myActor.SkillExecute(1);
+            _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(1));
         }
         //if (Input.GetKeyDown(KeyCode.Alpha3))
-        if(Input.GetButtonDown("Skill3"))
+        if (Input.GetButtonDown("Skill3"))
         {
             _myActor.SkillExecute(2);
+            _castingCanavas.SetSkillName(_myActor.GetSkillController().GetSkillName(2));
         }
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        if(Input.GetButtonDown("Skill4"))
-        {
-            _myActor.SkillExecute(3);
-        }
-            for (int i = 0; i < 4; i++)
+        bool visibleCasting = false;
+        for (int i = 0; i < 3; i++)
         {
             SkillBase skill = _myActor.GetSkillController().GetSkill(i);
             if (skill == null) continue;
+
+            if (skill.NowCasting())
+            {
+                float castedAmount = 1.0f - (skill.GetTimer() / skill.GetCastTime());
+                _castingCanavas.SetFillAmount(castedAmount);
+                visibleCasting = true;
+            }
             if (!skill.NowReCasting())
             {
                 _commandCanvas.SetFillAmount(i, 1.0f);
@@ -84,9 +91,7 @@ public class ActorController : MonoBehaviour {
             float amount = 1.0f - skill.GetTimer() / skill.GetReCastTime();
             _commandCanvas.SetFillAmount(i, amount);
         }
-
-        // 死んだとき
-        DeathProcess();
+        _castingCanavas.gameObject.SetActive(visibleCasting);
     }
 
     void DeathProcess()
