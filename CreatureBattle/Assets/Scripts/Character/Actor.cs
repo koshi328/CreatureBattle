@@ -37,6 +37,12 @@ public class Actor : MonoBehaviour {
         _myPhotonView.RPC("SetStatus", PhotonTargets.AllViaServer, PhotonNetwork.playerName, actorID);
     }
 
+    private void Start()
+    {
+        Debug.Log(PhotonNetwork.playerName);
+        GameObject.Find("BattleManager").GetComponent<BattleManager>().SetPlayer(this);
+    }
+
     public void Update()
     {
         // 死んだとき
@@ -49,7 +55,6 @@ public class Actor : MonoBehaviour {
         _condition.Execute(this);
         _skillController.Execute(this);
         MoveMent();
-        SetHpBarFillRate();
     }
 
     public void SetMoveDirection(Vector3 dir)
@@ -110,6 +115,7 @@ public class Actor : MonoBehaviour {
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
         _myAnimator.SetTrigger("React");
         EffectManager.Instance.CreateEffect(0, transform.position);
+        SetHpBarFillRate();
     }
 
     public void ReceiveRecovery(float recovery)
@@ -121,6 +127,7 @@ public class Actor : MonoBehaviour {
     {
         float r = _status.ReceiveRecovery(recovery);
         _damageRenderer.Render(transform.position, (int)r, Color.green);
+        SetHpBarFillRate();
     }
     public void AddCondition(ActorCondition.KIND kind, float time, float rate, bool isTimeUpdate = true)
     {

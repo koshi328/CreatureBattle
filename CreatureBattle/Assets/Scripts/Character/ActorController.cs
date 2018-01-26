@@ -7,6 +7,7 @@ public class ActorController : MonoBehaviour {
     CommandCanvas _commandCanvas;
     StatusCanvas _statusCanavs;
     Transform _cameraTrans;
+    BattleManager _battleManager;
 	void Start () {
         _myActor = GetComponent<Actor>();
         _cameraTrans = Camera.main.transform;
@@ -34,11 +35,14 @@ public class ActorController : MonoBehaviour {
         {
             _commandCanvas.SetImage(i,skills_id[i]);
         }
-	}
+
+        _battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+    }
 	
 	void Update () {
         _statusCanavs.SetHPGauge(_myActor.GetStatus().GetHP(), _myActor.GetStatus().GetMaxHP());
         if (!_myActor.GetPhotonView().isMine) return;
+        if (!_battleManager.IsBattling()) return;
         if (_myActor.GetStatus().GetHP() <= 0) return;
         // 移動
         float x = Input.GetAxis("LeftHorizontal");
