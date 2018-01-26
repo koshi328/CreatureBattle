@@ -101,10 +101,10 @@ public class ActorCondition : MonoBehaviour {
         _conditions[(int)KIND.METEO_IMPACT].SetTime(0.0f);
         _conditions[(int)KIND.STAN_BLESS].SetTime(0.0f);
         _conditions[(int)KIND.EXPLOSION].SetTime(0.0f);
+        _conditions[(int)KIND.ANGRY_SHOUT].SetTime(0.0f);
 
         //_conditions[(int)KIND.AGGRESSIVE_SHOUT].SetTime(0.0f);
         //_conditions[(int)KIND.STAND_GUARD].SetTime(0.0f);
-        //_conditions[(int)KIND.ANGRY_SHOUT].SetTime(0.0f);
         //_conditions[(int)KIND.INITIALIZE_WAVE].SetTime(0.0f);
         //_conditions[(int)KIND.DOUBLE_EDGE].SetTime(0.0f);
         //_conditions[(int)KIND.LIMIT_BREAK].SetTime(0.0f);

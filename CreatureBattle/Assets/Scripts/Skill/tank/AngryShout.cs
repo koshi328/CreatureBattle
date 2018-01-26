@@ -32,7 +32,13 @@ public class AngryShout : SkillBase
         actor.GetAnimator().SetTrigger("Cry");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
-        actor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 20.0f, 35.0f);
+        if (!actor.GetPhotonView().isMine) return;
+        SkillCollider col = ColliderManager.Instance.GetCollider();
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 1.0f, (argActor) =>
+        {
+            argActor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 4.0f, 25.0f);
+        });
+        col.SetSphereCollider(actor.transform.position, 10.0f);
     }
 
     protected override void Action(Actor actor)

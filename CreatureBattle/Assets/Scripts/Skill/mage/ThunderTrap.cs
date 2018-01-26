@@ -25,7 +25,7 @@ public class ThunderTrap : SkillBase {
     {
         actor.GetAnimator().SetTrigger("Trap");
         if (!actor.GetPhotonView().isMine) return;
-        GameObject obj = PhotonNetwork.Instantiate("ThunderTrap", actor.transform.position, Quaternion.identity, 0);
+        GameObject obj = PhotonNetwork.Instantiate("ThunderTrap", actor.transform.position, Quaternion.Euler(new Vector3(160, 0, 0)), 0);
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 9999.0f, 9999.0f, (argActor) =>
         {

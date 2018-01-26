@@ -16,6 +16,8 @@ public class Actor : MonoBehaviour {
     DamageRenderer _damageRenderer;
     [SerializeField]
     Image _hpBar;
+    [SerializeField]
+    Transform _reactTrans;
 
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class Actor : MonoBehaviour {
         _damageRenderer = GameObject.Find("DamageRenderer").GetComponent<DamageRenderer>();
         _moveDirection = Vector3.zero;
         // ステータスの設定
-        _status.Initialize(_condition, 1, 1, 1);
+        _status.Initialize(_condition, 1, 1, 1, 1);
         if (!_myPhotonView.isMine) return;
         object value;
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
@@ -113,9 +115,10 @@ public class Actor : MonoBehaviour {
         float d = _status.TakeDamage(damage);
         _damageRenderer.Render(transform.position, (int)d, Color.red);
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
-        _myAnimator.SetTrigger("React");
-        EffectManager.Instance.CreateEffect(0, transform.position);
+        EffectManager.Instance.CreateEffect(0, _reactTrans.position);
         SetHpBarFillRate();
+        if (_skillController.NowAction()) return;
+        _myAnimator.SetTrigger("React");
     }
 
     public void ReceiveRecovery(float recovery)
@@ -163,7 +166,8 @@ public class Actor : MonoBehaviour {
             _condition,
             actorData.data[actorID].attackDamage,
             actorData.data[actorID].attackInterval,
-            actorData.data[actorID].hp);
+            actorData.data[actorID].hp,
+            actorData.data[actorID].maxSpeed);
 
         if (!_myPhotonView.isMine) return;
         // カメラの位置の設定
