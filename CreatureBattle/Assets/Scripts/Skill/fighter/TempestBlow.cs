@@ -37,10 +37,10 @@ public class TempestBlow : SkillBase {
         actor.GetAnimator().SetTrigger("Slash2");
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.2f, 0.2f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.2f, 0.2f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
-            argActor.TakeDamage(8.0f);
+            defActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
+            defActor.TakeDamage(8.0f);
         });
         col.SetFanCollider(actor.transform.position, 15.0f, actor.transform.forward, 45.0f);
 

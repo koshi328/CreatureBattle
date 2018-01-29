@@ -36,9 +36,9 @@ public class RageImpact : SkillBase {
         GameObject.Destroy(_rangeObj);
         if (!actor.GetPhotonView().isMine)return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 10.0f, 10.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 10.0f, 10.0f, (defActor, atkActor) =>
         {
-            argActor.TakeDamage(35.0f);
+            defActor.TakeDamage(35.0f);
         });
         col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(4, 1, 15));
     }

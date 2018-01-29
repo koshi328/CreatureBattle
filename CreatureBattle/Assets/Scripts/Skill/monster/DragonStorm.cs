@@ -42,10 +42,10 @@ public class DragonStorm : SkillBase {
         GameObject.Destroy(_rangeObj);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 0.1f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 0.1f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
-            argActor.TakeDamage(141.0f);
+            defActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
+            defActor.TakeDamage(141.0f);
         });
         col.SetSphereCollider(actor.transform.position, 30.0f);
     }

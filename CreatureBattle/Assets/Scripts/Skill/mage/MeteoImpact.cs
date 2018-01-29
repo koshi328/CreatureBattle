@@ -35,10 +35,10 @@ public class MeteoImpact : SkillBase {
         GameObject.Destroy(_rangeObj.gameObject);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.1f, 0.1f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.1f, 0.1f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
-            argActor.TakeDamage(54.0f);
+            defActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
+            defActor.TakeDamage(54.0f);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 8.0f);
     }

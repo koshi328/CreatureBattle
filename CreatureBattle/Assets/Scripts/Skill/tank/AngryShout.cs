@@ -34,9 +34,9 @@ public class AngryShout : SkillBase
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 1.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 1.0f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 4.0f, 25.0f);
+            defActor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 4.0f, 25.0f);
         });
         col.SetSphereCollider(actor.transform.position, 10.0f);
     }

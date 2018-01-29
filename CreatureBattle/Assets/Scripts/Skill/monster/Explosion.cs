@@ -33,10 +33,10 @@ public class Explosion : SkillBase {
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            argActor.TakeDamage(60.0f);
-            argActor.AddCondition(ActorCondition.KIND.EXPLOSION, 11.0f, 0.0f);
+            defActor.TakeDamage(60.0f);
+            defActor.AddCondition(ActorCondition.KIND.EXPLOSION, 11.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 30, 30.0f);
     }

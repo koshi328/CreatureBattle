@@ -40,9 +40,9 @@ public class ChaseFlame : SkillBase {
         }
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor,SkillCollider.HitTarget.Monster, 1.0f, 2.0f, (argActor) =>
+        col.Initialize(actor,SkillCollider.HitTarget.Monster, 1.0f, 2.0f, (defActor, atkActor) =>
         {
-            argActor.TakeDamage(5.0f + (_stack * 1.0f));
+            defActor.TakeDamage(5.0f + (_stack * 1.0f));
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(4, 1, 15));
         _stack++;

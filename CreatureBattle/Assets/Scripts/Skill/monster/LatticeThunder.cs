@@ -60,10 +60,10 @@ public class LatticeThunder : SkillBase {
         for (int i = 0; i < pos_memory.Length; i++)
         {
             SkillCollider col = ColliderManager.Instance.GetCollider();
-            col.Initialize(actor, SkillCollider.HitTarget.Player, 0.2f, 99.0f, (argActor) =>
+            col.Initialize(actor, SkillCollider.HitTarget.Player, 0.2f, 99.0f, (defActor, atkActor) =>
             {
-                argActor.TakeDamage(374.0f);
-                argActor.AddCondition(ActorCondition.KIND.SILENCE, 3.0f, 0.0f);
+                defActor.TakeDamage(374.0f);
+                defActor.AddCondition(ActorCondition.KIND.SILENCE, 3.0f, 0.0f);
             });
             Vector3 pos = actor.transform.forward * pos_memory[i].y * one_range_size;
             pos += actor.transform.right * pos_memory[i].x * one_range_size;

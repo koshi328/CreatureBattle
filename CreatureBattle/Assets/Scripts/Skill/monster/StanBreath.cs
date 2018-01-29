@@ -35,10 +35,10 @@ public class StanBreath : SkillBase {
         GameObject.Destroy(_rangeObj);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 0.0f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.STAN_BLESS, 8.0f, 0.0f);
-            argActor.AddCondition(ActorCondition.KIND.STAN, 8.0f, 0.0f);
+            defActor.AddCondition(ActorCondition.KIND.STAN_BLESS, 8.0f, 0.0f);
+            defActor.AddCondition(ActorCondition.KIND.STAN, 8.0f, 0.0f);
         });
         col.SetFanCollider(actor.transform.position + actor.transform.forward, 40.0f, actor.transform.forward, 60.0f);
     }

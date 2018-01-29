@@ -35,10 +35,10 @@ public class GroundFrost : SkillBase {
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 3.0f, 1.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 3.0f, 1.0f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.GROUND_FROST, 2.0f, 0.0f);
-            argActor.TakeDamage(60.0f);
+            defActor.AddCondition(ActorCondition.KIND.GROUND_FROST, 2.0f, 0.0f);
+            defActor.TakeDamage(60.0f);
         });
         col.SetFanCollider(actor.transform.position, 30.0f, actor.transform.forward, 30.0f);
     }

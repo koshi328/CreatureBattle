@@ -45,13 +45,12 @@ public class Actor : MonoBehaviour {
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
         int actorID = (int)value;
         _myPhotonView.RPC("SetStatus", PhotonTargets.AllViaServer, PhotonNetwork.playerName, actorID);
-        SetSilence(false);
     }
 
     private void Start()
     {
-        Debug.Log(PhotonNetwork.playerName);
         GameObject.Find("BattleManager").GetComponent<BattleManager>().SetPlayer(this);
+        SetSilence(false);
     }
 
     public void Update()

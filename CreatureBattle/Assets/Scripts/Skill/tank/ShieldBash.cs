@@ -32,9 +32,9 @@ public class ShieldBash : SkillBase {
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f, false);
+            defActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f, false);
         });
         col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 90.0f);
     }

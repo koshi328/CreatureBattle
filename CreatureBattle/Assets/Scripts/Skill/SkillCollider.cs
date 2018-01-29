@@ -11,7 +11,7 @@ public class SkillCollider : MonoBehaviour {
     }
 
 
-    public delegate void OnHitDelegate(Actor actor);
+    public delegate void OnHitDelegate(Actor actor, Actor atkActor);
     OnHitDelegate _hitDelegate = null;
     OnHitDelegate _genericDelegate = null;
     Actor _owner;
@@ -107,8 +107,8 @@ public class SkillCollider : MonoBehaviour {
         {
             return;
         }
-        OnDelegate(hitActor);
-        OnGenericDelegate(hitActor);
+        OnDelegate(hitActor, _owner);
+        OnGenericDelegate(hitActor, _owner);
         _hitActors.Add(new HitActor(hitActor));
         if(_oneHit)
         {
@@ -138,8 +138,8 @@ public class SkillCollider : MonoBehaviour {
             return;
         }
         if (!inFan) return;
-        OnDelegate(hitActor);
-        OnGenericDelegate(hitActor);
+        OnDelegate(hitActor, _owner);
+        OnGenericDelegate(hitActor, _owner);
         _hitActors.Add(new HitActor(hitActor));
         if (_oneHit)
         {
@@ -167,19 +167,19 @@ public class SkillCollider : MonoBehaviour {
             _hitActors[i].time += Time.deltaTime;
             if (_hitActors[i].time < _hitInterval) continue;
             _hitActors[i].time = 0.0f;
-            OnDelegate(_hitActors[i].actor);
+            OnDelegate(_hitActors[i].actor, _owner);
         }
     }
 
-    private void OnDelegate(Actor actor)
+    private void OnDelegate(Actor actor, Actor atkActor)
     {
         if (_hitDelegate == null) return;
-        _hitDelegate(actor);
+        _hitDelegate(actor, atkActor);
     }
-    private void OnGenericDelegate(Actor actor)
+    private void OnGenericDelegate(Actor actor, Actor atkActor)
     {
         if (_genericDelegate == null) return;
-        _genericDelegate(actor);
+        _genericDelegate(actor, atkActor);
     }
 
     public void Finalized()
@@ -207,14 +207,14 @@ public class SkillCollider : MonoBehaviour {
     {
         if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() != 0)
         {
-            OnGenericDelegate(hitActor);
+            OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, -0.1f, 0.0f);
             Finalized();
             return true;
         }
         if (hitActor.GetCondition().GetCondition(ActorCondition.KIND.ABNORMAL_COUNTER).GetStack() != 0)
         {
-            OnGenericDelegate(hitActor);
+            OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
             _owner.TakeDamage(170);
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);

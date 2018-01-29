@@ -35,9 +35,9 @@ public class AggressiveShout : SkillBase
 
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            argActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 12.0f, 25.0f);
+            defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 12.0f, 25.0f);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
     }

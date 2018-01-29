@@ -48,11 +48,11 @@ public class DoubleEdgeRage : SkillBase {
         if (!actor.GetPhotonView().isMine) return;
         actor.AddCondition(ActorCondition.KIND.DOUBLE_EDGE, 0.0f, 0.0f);
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.0f, (defActor, atkActor) =>
         {
-            float damage = argActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
-            argActor.TakeDamage(60 + damage);
-            argActor.TakeDamage(60 + damage);
+            float damage = atkActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
+            defActor.TakeDamage(60 + damage);
+            defActor.TakeDamage(60 + damage);
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.rotation, new Vector3(8, 1, 25));
     }

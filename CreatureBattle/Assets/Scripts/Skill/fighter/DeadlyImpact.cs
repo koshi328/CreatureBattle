@@ -34,10 +34,10 @@ public class DeadlyImpact : SkillBase {
 
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 99.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 99.0f, (defActor, atkActor) =>
         {
-            float damage = 50.0f + (50.0f * (argActor.GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() * 0.01f));
-            argActor.TakeDamage(damage);
+            float damage = 50.0f + (50.0f * (atkActor.GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() * 0.01f));
+            defActor.TakeDamage(damage);
         });
         col.SetFanCollider(actor.transform.position, 12.0f, actor.transform.forward, 45.0f);
     }
