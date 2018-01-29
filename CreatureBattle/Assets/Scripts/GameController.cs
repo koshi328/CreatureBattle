@@ -10,6 +10,10 @@ public class GameController : MonoBehaviour {
     YesNoWindow _decideWindow;
     [SerializeField]
     ScriptableActor actorData;
+    [SerializeField]
+    Transform PlayerStartPos;
+    [SerializeField]
+    Transform MonsterStartPos;
 
     void Start () {
         PhotonNetwork.isMessageQueueRunning = true;
@@ -50,11 +54,18 @@ public class GameController : MonoBehaviour {
             PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
             _player = PhotonNetwork.Instantiate(actorData.data[(int)value].path, pos, rot, 0);
             _player.AddComponent<ActorController>();
+            _player.transform.position = (PhotonNetwork.playerName == "monster") ? MonsterStartPos.position : PlayerStartPos.position;
             _cameraScript.SetTarget(_player.transform);
+
         }
     }
     public GameObject GetPlayer()
     {
         return _player;
+    }
+
+    private void OnDestroy()
+    {
+        ColliderManager.Instance.AllColliderDispose();
     }
 }

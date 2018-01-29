@@ -24,11 +24,12 @@ public class MeteoImpactCondition : Condition
 
     protected override void Entry(Actor actor)
     {
+        _effect.transform.localScale = actor.GetCenterTrans().localScale;
         _effect.Play();
     }
     protected override void Execute(Actor actor)
     {
-        _effect.transform.position = actor.transform.position;
+        _effect.transform.position = actor.GetCenterTrans().position;
         if (!actor.GetPhotonView().isMine) return;
         time += Time.deltaTime;
         if (time >= 1.0f)
@@ -40,5 +41,6 @@ public class MeteoImpactCondition : Condition
     protected override void Exit(Actor actor)
     {
         _effect.Stop();
+        base.Exit(actor);
     }
 }

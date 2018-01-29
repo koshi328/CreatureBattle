@@ -257,20 +257,6 @@ public class SelectController : MonoBehaviour
             _connector[elem] = connector;
         }
     }
-
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(0, 0, 100, 100), PhotonNetwork.playerName);
-        for (int i = 0; i < 4; i++)
-        {
-            if(_connector[i] == null)
-            {
-                continue;
-            }
-            GUI.Label(new Rect(100 * (i + 1), 0, 100, 100), _connector[i]._playerName);
-        }
-    }
-
     void OnMasterClientSwitched()
     {
         PhotonNetwork.LeaveRoom();

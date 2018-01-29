@@ -24,6 +24,8 @@ public class Actor : MonoBehaviour {
     Transform _footTrans;
     [SerializeField]
     ScriptableAllSkills _scriptableAllSkills;
+    [SerializeField]
+    GameObject _silenceIcon;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class Actor : MonoBehaviour {
         PhotonNetwork.player.CustomProperties.TryGetValue("ActorID", out value);
         int actorID = (int)value;
         _myPhotonView.RPC("SetStatus", PhotonTargets.AllViaServer, PhotonNetwork.playerName, actorID);
+        SetSilence(false);
     }
 
     private void Start()
@@ -58,6 +61,7 @@ public class Actor : MonoBehaviour {
         {
             _skillController.CancelSkill(this);
             _myAnimator.SetBool("Death", true);
+            _myAnimator.SetFloat("Run", 0.0f);
             return;
         }
         _condition.Execute(this);
@@ -119,6 +123,7 @@ public class Actor : MonoBehaviour {
     [PunRPC]
     void RPCTakeDamage(float damage)
     {
+        if (_status.GetHP() <= 0) return;
         float d = _status.TakeDamage(damage);
         _damageRenderer.Render(transform.position, (int)d, Color.red);
         SetHpBarFillRate();
@@ -135,6 +140,7 @@ public class Actor : MonoBehaviour {
     [PunRPC]
     public void RPCReceiveRecovery(float recovery)
     {
+        if (_status.GetHP() <= 0) return;
         float r = _status.ReceiveRecovery(recovery);
         _damageRenderer.Render(transform.position, (int)r, Color.green);
         SetHpBarFillRate();
@@ -243,5 +249,9 @@ public class Actor : MonoBehaviour {
     public Transform GetFootTrans()
     {
         return _footTrans;
+    }
+    public void SetSilence(bool isOn)
+    {
+        _silenceIcon.SetActive(isOn);
     }
 }

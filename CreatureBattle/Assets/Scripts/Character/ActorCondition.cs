@@ -47,7 +47,7 @@ public class ActorCondition : MonoBehaviour {
         // ファイター
         _conditions[(int)KIND.TEMPEST_BLOW]      = new TempestBlowCondition(99, 10);
         _conditions[(int)KIND.EARTH_DESTRACTION] = new EarthDestractionCondition(1, 10);
-        _conditions[(int)KIND.DEADLY_IMPACT]     = new DeadlyImpactCondition(99, 3);
+        _conditions[(int)KIND.DEADLY_IMPACT]     = new DeadlyImpactCondition(999, 3);
         // タンク
         _conditions[(int)KIND.AGGRESSIVE_SHOUT]  = new AggressiveShoutCondition(1, 60);
         _conditions[(int)KIND.STAND_GUARD]       = new StandGuardCondition(1, 60);
@@ -81,11 +81,6 @@ public class ActorCondition : MonoBehaviour {
         }
 
         EffectUpdate(actor);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            actor.AddCondition(KIND.AGGRESSIVE_SHOUT, 10.0f, 0.0f);
-        }
     }
 
     public bool DontMove()
@@ -247,5 +242,16 @@ public class SilenceCondition : Condition
     public SilenceCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
+    }
+    protected override void Entry(Actor actor)
+    {
+        actor.SetSilence(true);
+        base.Entry(actor);
+    }
+
+    protected override void Exit(Actor actor)
+    {
+        actor.SetSilence(false);
+        base.Exit(actor);
     }
 }

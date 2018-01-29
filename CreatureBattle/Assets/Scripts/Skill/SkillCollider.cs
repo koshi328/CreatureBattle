@@ -182,13 +182,14 @@ public class SkillCollider : MonoBehaviour {
         _genericDelegate(actor);
     }
 
-    private void Finalized()
+    public void Finalized()
     {
         _hitActors.Clear();
         _hitDelegate = null;
         _genericDelegate = null;
         _hitInterval = 0.0f;
-        gameObject.SetActive(false);
+        if(gameObject.activeSelf == true)
+            gameObject.SetActive(false);
     }
 
     bool InFanCollider(Transform trans, Vector3 target)
@@ -215,13 +216,14 @@ public class SkillCollider : MonoBehaviour {
         {
             OnGenericDelegate(hitActor);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
-            _owner.TakeDamage(225);
-            _owner.AddCondition(ActorCondition.KIND.STAN, 5.0f, 0.0f, false);
+            _owner.TakeDamage(170);
+            _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
             return true;
         }
         return false;
     }
+
 }
 class HitActor
 {

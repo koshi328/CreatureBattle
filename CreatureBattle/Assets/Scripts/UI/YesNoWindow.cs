@@ -20,6 +20,7 @@ public class YesNoWindow : MonoBehaviour {
     
     public void SetMessage(string message)
     {
+        if (_messageText == null) return;
         _messageText.text = message;
     }
 

@@ -23,6 +23,10 @@ public class BattleManager : MonoBehaviour
     Actor[] _humans = new Actor[3];
     [SerializeField]
     Actor _monster;
+    [SerializeField]
+    Text _countDownText;
+    [SerializeField]
+    GameObject _startWall;
     bool _mineIsHuman;
     bool _started;
 
@@ -159,6 +163,10 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        // Debug
+        if (PhotonNetwork.room.PlayerCount == 1)
+            StartCoroutine(CountDown());
+
         if (!_started)
         {
             for (int i = 0; i < 3; i++)
@@ -169,8 +177,21 @@ public class BattleManager : MonoBehaviour
 
             if (!_monster)
                 return;
-
-            _started = true;
+            StartCoroutine(CountDown());
         }
+    }
+
+    IEnumerator CountDown()
+    {
+        for (int i = 3; i >= 1; i--)
+        {
+            _countDownText.text = i.ToString();
+            yield return new WaitForSeconds(1.0f);
+        }
+        _countDownText.text = "Start!";
+        yield return new WaitForSeconds(0.4f);
+        _countDownText.text = "";
+        _started = true;
+        _startWall.SetActive(false);
     }
 }

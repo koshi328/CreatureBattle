@@ -56,4 +56,11 @@ public class ColliderManager : MonoBehaviour {
         Debug.Log("当たり判定が足りなくなりました");
         return null;
     }
+    public void AllColliderDispose()
+    {
+        for (int i = 0; i < _colliderNum; i++)
+        {
+            _colliders[i].Finalized();
+        }
+    }
 }

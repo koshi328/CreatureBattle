@@ -7,9 +7,9 @@ public class DoubleEdgeRage : SkillBase {
     ParticleSystem _effect;
     public DoubleEdgeRage()
     {
-        CAST_TIME = 0.0f;
+        CAST_TIME = 1.2f;
         RECAST_TIME = 10.0f;
-        ACTION_TIME = 1.0f;
+        ACTION_TIME = 0.5f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
         _effect.transform.localScale = new Vector3(5.0f, 1.0f, 1.0f);
@@ -19,6 +19,8 @@ public class DoubleEdgeRage : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(8, 25, 1), new Color(1, 0.5f, 0, 1));
+        actor.GetAnimator().SetTrigger("SwapR");
+
     }
 
     protected override void Casting(Actor actor)
@@ -28,8 +30,10 @@ public class DoubleEdgeRage : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        actor.GetAnimator().SetTrigger("SwapR");
-
+        Vector3 pos = actor.transform.position + actor.transform.forward * 15.0f;
+        _effect.transform.position = pos;
+        _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
+        _effect.Play();
     }
 
     protected override void Action(Actor actor)
@@ -39,15 +43,12 @@ public class DoubleEdgeRage : SkillBase {
 
     protected override void EndAction(Actor actor)
     {
-        Vector3 pos = actor.transform.position + actor.transform.forward * 15.0f;
-        _effect.transform.position = pos;
-        _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
-        _effect.Play();
+
         GameObject.Destroy(_rangeObj);
         if (!actor.GetPhotonView().isMine) return;
-        actor.AddCondition(ActorCondition.KIND.DOUBLE_EDGE, 1.0f, 0.0f);
+        actor.AddCondition(ActorCondition.KIND.DOUBLE_EDGE, 0.0f, 0.0f);
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (argActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.0f, (argActor) =>
         {
             float damage = argActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
             argActor.TakeDamage(60 + damage);

@@ -7,7 +7,7 @@ public class MeteoImpact : SkillBase {
     ParticleSystem _effect;
     public MeteoImpact()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 1.0f;
         RECAST_TIME = 12.0f;
         ACTION_TIME = 1.5f;
 

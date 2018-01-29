@@ -69,20 +69,33 @@ public class LimitBreakCondition : Condition
     protected override void Execute(Actor actor)
     {
         _time = 1.0f;
-        actor.GetCondition().ReciveDamageRate *= 0.25f;
+        actor.GetCondition().ReciveDamageRate *= 0.75f;
         actor.GetCondition().GiveDamageRate *= 1.55f;
     }
 }
 public class StudiiProtectCondition : Condition
 {
     float time = 0.0f;
+    Material material;
     public StudiiProtectCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
     }
+    protected override void Entry(Actor actor)
+    {
+        material = actor.transform.Find("cadnav").GetComponent<Renderer>().material;
+        material.SetColor("_EmissionColor", new Color(0, 0.0f, 0.0f, 1.0f));
+        base.Entry(actor);
+    }
     protected override void Execute(Actor actor)
     {
+        material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), new Color(0.2f, 0.8f, 1.3f, 1.0f), 0.1f));
         _time = 1.0f;
+    }
+    protected override void Exit(Actor actor)
+    {
+        material.SetColor("_EmissionColor", new Color(0, 0.0f, 0.0f, 1.0f));
+        base.Exit(actor);
     }
 }
 

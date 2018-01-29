@@ -3,6 +3,7 @@
 	{
 		_MainTex("MainTex",2D) = "white"{}
 		_ProjectionTex("ProjectionTex",2D) = "white"{}
+		_NormalMap("NormalMap",2D) = "white"{}
 	}
 	SubShader
 	{
@@ -28,6 +29,7 @@
 
 	sampler2D _MainTex;
 	sampler2D _ProjectionTex;
+	sampler2D _NormalMap;
 	float4x4 _ProjVP;
 
 		v2f vert(appdata_base v)
@@ -52,7 +54,8 @@
 			}
 			float4 color = tex2D(_MainTex,i.uv);
 			float3 lightDir = float3(0, 1, 0);
-			float light = dot(i.normal, lightDir) * 0.5 + 0.5;
+			float3 normal = tex2D(_NormalMap, i.uv);
+			float light = dot(normal, lightDir) * 0.5 + 0.5;
 			color *= light * atten;
 			color += proj;
 		return color;

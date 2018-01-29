@@ -8,7 +8,7 @@ public class ThunderTrap : SkillBase {
     {
         CAST_TIME = 0.0f;
         RECAST_TIME = 10.0f;
-        ACTION_TIME = 2.0f;
+        ACTION_TIME = 1.5f;
     }
 
     protected override void EntryCast(Actor actor)

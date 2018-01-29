@@ -15,7 +15,7 @@ MonoBehaviour:
   - path: Characters/Monster
     sprite: {fileID: 21300000, guid: 7c3b09edcad1f8b49864e11e6f9d823d, type: 3}
     hp: 4200
-    maxSpeed: 9
+    maxSpeed: 6
     attackDamage: 10
     attackInterval: 1
     actorType: 1

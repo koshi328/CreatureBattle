@@ -23,6 +23,11 @@ public class BuffIcon : MonoBehaviour {
             gameObject.SetActive(true);
         }
         _stackText.text = "x" + _subject.GetStack().ToString();
+        if(_subject.GetTime() <= 0)
+        {
+            _timeText.text = "";
+            return;
+        }
         _timeText.text = Mathf.Floor(_subject.GetTime()).ToString() + "s";
     }
 

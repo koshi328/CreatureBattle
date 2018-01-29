@@ -8,7 +8,7 @@ public class GroundFrost : SkillBase {
     ParticleSystem _effect;
     public GroundFrost()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 0.5f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 3.0f;
         GameObject prefab = Resources.Load("Effect/ItoEffects/frost") as GameObject;
