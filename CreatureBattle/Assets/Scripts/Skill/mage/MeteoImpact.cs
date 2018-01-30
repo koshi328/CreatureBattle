@@ -18,7 +18,7 @@ public class MeteoImpact : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 16.0f, 8.0f, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 16.0f, 16.0f, _myColor);
 
         _effect.transform.position = actor.transform.position + actor.transform.forward * 16.0f;
         _effect.Play();
@@ -40,7 +40,7 @@ public class MeteoImpact : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
             defActor.TakeDamage(54.0f);
         });
-        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 8.0f);
+        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 16.0f);
     }
 
     protected override void Action(Actor actor)

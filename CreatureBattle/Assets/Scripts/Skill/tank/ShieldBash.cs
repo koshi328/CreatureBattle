@@ -34,6 +34,7 @@ public class ShieldBash : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (defActor, atkActor) =>
         {
+            defActor.TakeDamage(30);
             defActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f, false);
         });
         col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 90.0f);

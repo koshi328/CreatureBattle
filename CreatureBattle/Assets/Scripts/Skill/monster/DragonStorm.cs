@@ -17,7 +17,7 @@ public class DragonStorm : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 30.0f, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 30.0f, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -42,7 +42,7 @@ public class DragonStorm : SkillBase {
         GameObject.Destroy(_rangeObj);
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 0.1f, (defActor, atkActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.9f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
             defActor.TakeDamage(141.0f);

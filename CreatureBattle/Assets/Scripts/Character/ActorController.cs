@@ -43,7 +43,7 @@ public class ActorController : MonoBehaviour {
         if (!_myActor.GetPhotonView().isMine) return;
         // 死んだとき
         DeathProcess();
-        if (!_battleManager.IsBattling()) return;
+        _battleManager.IsBattling();
         if (_myActor.GetStatus().GetHP() <= 0) return;
         // 移動
         float x = Input.GetAxis("LeftHorizontal");

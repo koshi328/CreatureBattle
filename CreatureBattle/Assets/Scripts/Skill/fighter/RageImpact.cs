@@ -12,13 +12,13 @@ public class RageImpact : SkillBase {
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
-        _effect.transform.localScale = new Vector3(3.0f, 1.0f, 1.0f);
+        _effect.transform.localScale = new Vector3(6.0f, 1.0f, 1.0f);
         _effect.Stop();
     }
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(8, 25, 1), _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -29,7 +29,7 @@ public class RageImpact : SkillBase {
     protected override void EndCast(Actor actor)
     {
         actor.GetAnimator().SetTrigger("NormalAttack");
-        Vector3 pos = actor.transform.position + actor.transform.forward * 9.0f;
+        Vector3 pos = actor.transform.position + actor.transform.forward * 12.5f;
         _effect.transform.position = pos;
         _effect.transform.eulerAngles = new Vector3(0, actor.transform.eulerAngles.y + 90, 0);
         _effect.Play();
@@ -40,7 +40,7 @@ public class RageImpact : SkillBase {
         {
             defActor.TakeDamage(35.0f);
         });
-        col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(4, 1, 15));
+        col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(8, 1, 25));
     }
 
     protected override void Action(Actor actor)

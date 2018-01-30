@@ -20,7 +20,7 @@ public class TempestBlow : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         time = 0.0f;
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 45, new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 45, _myColor);
     }
 
     protected override void Casting(Actor actor)

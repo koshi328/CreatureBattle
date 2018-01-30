@@ -19,7 +19,7 @@ public class AggressiveShout : SkillBase
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 20.0f, new Color(0, 0.2f, 1.0f, 1));
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 20.0f, _myColor);
     }
 
     protected override void Casting(Actor actor)

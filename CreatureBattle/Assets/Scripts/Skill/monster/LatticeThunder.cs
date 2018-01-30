@@ -38,7 +38,7 @@ public class LatticeThunder : SkillBase {
         {
             Vector3 pos = actor.transform.forward * pos_memory[i].y * one_range_size;
             pos += actor.transform.right * pos_memory[i].x * one_range_size;
-            _rangeObj[i] = EffectManager.Instance.QuadRange(actor.transform.position + pos, actor.transform.eulerAngles.y, new Vector3(one_range_size, one_range_size, one_range_size), new Color(1.0f, 0.2f, 0.0f, 1));
+            _rangeObj[i] = EffectManager.Instance.QuadRange(actor.transform.position + pos, actor.transform.eulerAngles.y, new Vector3(one_range_size, one_range_size, one_range_size), _myColor);
         }
     }
 

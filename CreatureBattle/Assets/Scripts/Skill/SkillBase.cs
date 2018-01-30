@@ -20,6 +20,10 @@ public class SkillBase {
 
     ParticleSystem _effect;
 
+    static protected Color RivalColor = new Color(1, 0.5f, 0, 1);
+    static protected Color SelfColor = new Color(0, 0.2f, 1.0f, 1);
+    protected Color _myColor;
+
     public SkillBase()
     {
         GameObject prefab = Resources.Load("Effect/ItoEffects/Shock") as GameObject;
@@ -45,10 +49,18 @@ public class SkillBase {
     }
     public void Select(Actor actor)
     {
+        if(actor.tag == "Monster")
+        {
+            _myColor = (PhotonNetwork.playerName == "monster") ? SelfColor : RivalColor;
+        }
+        else if(actor.tag == "Human")
+        {
+            _myColor = (PhotonNetwork.playerName == "monster") ? RivalColor : SelfColor;
+        }
         _timer = CAST_TIME;
         _state = STATE.CASTING;
-        EntryCast(actor);
         _effect.Play();
+        EntryCast(actor);
     }
     public bool NowCasting()
     {

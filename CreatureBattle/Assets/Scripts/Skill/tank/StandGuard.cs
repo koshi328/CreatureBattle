@@ -14,7 +14,7 @@ public class StandGuard : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y + 180, 40, 45, new Color(0, 0.2f, 1.0f, 1));
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y + 180, 40, 45, _myColor);
     }
 
     protected override void Casting(Actor actor)

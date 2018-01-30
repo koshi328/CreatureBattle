@@ -22,7 +22,7 @@ public class ChaseFlame : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), new Color(1, 0.5f, 0, 1));
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(4, 15, 1), _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -42,7 +42,7 @@ public class ChaseFlame : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor,SkillCollider.HitTarget.Monster, 1.0f, 2.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(5.0f + (_stack * 1.0f));
+            defActor.TakeDamage(5.0f + (_stack * 3.0f));
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(4, 1, 15));
         _stack++;
