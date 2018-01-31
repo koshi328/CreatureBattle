@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class MeteoImpact : SkillBase {
     GameObject _rangeObj;
@@ -22,6 +23,7 @@ public class MeteoImpact : SkillBase {
 
         _effect.transform.position = actor.transform.position + actor.transform.forward * 16.0f;
         _effect.Play();
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)
@@ -41,6 +43,7 @@ public class MeteoImpact : SkillBase {
             defActor.TakeDamage(90.0f);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 12.0f);
+		SoundManager.PlaySFX("se_017");
     }
 
     protected override void Action(Actor actor)

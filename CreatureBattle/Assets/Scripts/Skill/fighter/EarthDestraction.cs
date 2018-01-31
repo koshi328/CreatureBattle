@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DigitalRuby.SoundManagerNamespace;
+using antilunchbox;
 
 public class EarthDestraction : SkillBase {
 
@@ -21,6 +21,7 @@ public class EarthDestraction : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 20.0f, _myColor);
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)
@@ -43,6 +44,7 @@ public class EarthDestraction : SkillBase {
             defActor.TakeDamage(150.0f);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
+		SoundManager.PlaySFX("se_000");
     }
 
     protected override void Action(Actor actor)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class AggressiveShout : SkillBase
 {
@@ -40,6 +41,7 @@ public class AggressiveShout : SkillBase
             defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 8.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
+		SoundManager.PlaySFX("se_001");
     }
 
     protected override void Action(Actor actor)

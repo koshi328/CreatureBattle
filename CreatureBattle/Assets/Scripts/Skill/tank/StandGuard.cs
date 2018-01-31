@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class StandGuard : SkillBase {
 
@@ -33,6 +34,7 @@ public class StandGuard : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.STAND_GUARD, 10.0f, 0.0f);
         });
         col.SetFanCollider(actor.transform.position, 28.0f, actor.transform.forward * -1, 45.0f);
+		SoundManager.PlaySFX("se_007");
     }
 
     protected override void Action(Actor actor)

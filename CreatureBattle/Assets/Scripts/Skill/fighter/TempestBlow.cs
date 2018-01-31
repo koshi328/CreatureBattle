@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class TempestBlow : SkillBase {
 
@@ -43,7 +44,7 @@ public class TempestBlow : SkillBase {
             defActor.TakeDamage(16.0f);
         });
         col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 45.0f);
-
+		SoundManager.PlaySFX("se_028");
     }
 
     protected override void Action(Actor actor)

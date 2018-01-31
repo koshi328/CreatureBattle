@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class InitializeWave : SkillBase {
     ParticleSystem _effect;
@@ -32,6 +33,8 @@ public class InitializeWave : SkillBase {
         if (!actor.GetPhotonView().isMine) return;
         actor.AddCondition(ActorCondition.KIND.INITIALIZE_WAVE, 10.0f, 0.0f);
         actor.GetCondition().ClearDebuff();
+		SoundManager.PlaySFX("se_006");
+		SoundManager.PlaySFX("se_007");
     }
 
     protected override void Action(Actor actor)

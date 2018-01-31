@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class DeadlyImpact : SkillBase {
 
@@ -40,6 +41,7 @@ public class DeadlyImpact : SkillBase {
             defActor.TakeDamage(damage);
         });
         col.SetFanCollider(actor.transform.position, 14.0f, actor.transform.forward, 45.0f);
+		SoundManager.PlaySFX("se_041");
     }
 
     protected override void Action(Actor actor)

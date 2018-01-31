@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class AngryShout : SkillBase
 {
@@ -34,6 +35,7 @@ public class AngryShout : SkillBase
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         actor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 7.0f, 0.0f);
+		SoundManager.PlaySFX("se_001");
     }
 
     protected override void Action(Actor actor)

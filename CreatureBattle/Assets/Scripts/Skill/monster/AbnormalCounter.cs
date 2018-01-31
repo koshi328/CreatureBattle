@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class AbnormalCounter : SkillBase {
     GameObject _rangeObj;
@@ -15,6 +16,7 @@ public class AbnormalCounter : SkillBase {
     {
         _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 34.0f, _myColor);
         actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, CAST_TIME, 0.0f);
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class ThunderTrap : SkillBase {
     
@@ -34,6 +35,7 @@ public class ThunderTrap : SkillBase {
         }, true);
         col.SetSphereCollider(actor.transform.position, 4.0f);
         obj.GetComponent<HitDestroyObject>().SetParentCollider(col);
+		SoundManager.PlaySFX("se_011");
     }
 
     protected override void Action(Actor actor)

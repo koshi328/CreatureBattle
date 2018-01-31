@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class GroundFrost : SkillBase {
 
@@ -19,6 +20,7 @@ public class GroundFrost : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 24, 30, _myColor);
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)
@@ -41,6 +43,7 @@ public class GroundFrost : SkillBase {
             defActor.TakeDamage(100.0f);
         });
         col.SetFanCollider(actor.transform.position, 24.0f, actor.transform.forward, 30.0f);
+		SoundManager.PlaySFX("se_016");
     }
 
     protected override void Action(Actor actor)

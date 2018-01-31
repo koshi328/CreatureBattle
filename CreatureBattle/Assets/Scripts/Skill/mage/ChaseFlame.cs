@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class ChaseFlame : SkillBase {
     GameObject _rangeObj;
@@ -23,6 +24,7 @@ public class ChaseFlame : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.eulerAngles.y, new Vector3(12, 15, 1), _myColor);
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)
@@ -46,6 +48,7 @@ public class ChaseFlame : SkillBase {
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(12, 1, 15));
         _stack++;
+		SoundManager.PlaySFX("se_017");
     }
 
     protected override void Action(Actor actor)

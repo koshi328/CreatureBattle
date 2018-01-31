@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class ShieldBash : SkillBase {
 
@@ -38,6 +39,7 @@ public class ShieldBash : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.STAN, 1.0f, 0.0f, false);
         });
         col.SetFanCollider(actor.transform.position, 7.0f, actor.transform.forward, 90.0f);
+		SoundManager.PlaySFX("se_040");
     }
 
     protected override void Action(Actor actor)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class SkillCollider : MonoBehaviour {
 
@@ -219,6 +220,7 @@ public class SkillCollider : MonoBehaviour {
             _owner.TakeDamage(200);
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
+			SoundManager.PlaySFX("se_003");
             return true;
         }
         return false;

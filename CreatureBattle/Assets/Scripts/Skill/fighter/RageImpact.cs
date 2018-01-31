@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class RageImpact : SkillBase {
     GameObject _rangeObj;
@@ -19,6 +20,7 @@ public class RageImpact : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(12, 25, 1), _myColor);
+		SoundManager.PlaySFX("se_002");
     }
 
     protected override void Casting(Actor actor)
@@ -41,6 +43,7 @@ public class RageImpact : SkillBase {
             defActor.TakeDamage(70.0f);
         });
         col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(12, 1, 25));
+		SoundManager.PlaySFX("se_047");
     }
 
     protected override void Action(Actor actor)

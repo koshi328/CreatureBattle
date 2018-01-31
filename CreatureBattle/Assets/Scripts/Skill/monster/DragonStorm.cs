@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class DragonStorm : SkillBase {
     GameObject _rangeObj;
@@ -30,6 +31,7 @@ public class DragonStorm : SkillBase {
         actor.GetAnimator().SetTrigger("Scream");
         _effect.transform.position = actor.transform.position;
         _effect.Play();
+		SoundManager.PlaySFX("se_000");
     }
 
     protected override void Action(Actor actor)

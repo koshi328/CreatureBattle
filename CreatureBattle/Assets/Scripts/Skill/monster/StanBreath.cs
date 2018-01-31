@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class StanBreath : SkillBase {
 
@@ -41,6 +42,7 @@ public class StanBreath : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.STAN, 5.0f, 0.0f);
         });
         col.SetFanCollider(actor.transform.position + actor.transform.forward, 17.0f, actor.transform.forward, 60.0f);
+		SoundManager.PlaySFX("se_004");
     }
 
     protected override void Action(Actor actor)

@@ -1,0 +1,442 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1933182533169454}
+  m_IsPrefabParent: 1
+--- !u!1 &1933182533169454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4914188466772882}
+  - component: {fileID: 114218958226680672}
+  - component: {fileID: 82256297557134704}
+  - component: {fileID: 82384761427499512}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4914188466772882
+Transform:
+  m_ObjectHideFlags: 10
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933182533169454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82256297557134704
+AudioSource:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933182533169454}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!82 &82384761427499512
+AudioSource:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933182533169454}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &114218958226680672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933182533169454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617da7e6dc6c82f43988a70b1b7fd69e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpOn: 0
+  showInfo: 1
+  showDev: 1
+  showList: 1
+  showAdd: 1
+  showSFX: 1
+  showSFXDetails: 00000000000000000000000000000000000000000000000000000000000000000000000000
+  groupAddIndex: 0
+  autoPrepoolAmount: 0
+  autoBaseVolume: 1
+  autoVolumeVariation: 0
+  autoPitchVariation: 0
+  showAsGrouped: 0
+  soundConnections:
+  - level: Lobby
+    isCustomLevel: 0
+    soundsToPlay:
+    - {fileID: 8300000, guid: 9657fc2099585274e9faac74dfda22a0, type: 3}
+    baseVolumes:
+    - 1
+    playMethod: 0
+    minDelay: 0
+    maxDelay: 0
+    delay: 0
+  - level: Select
+    isCustomLevel: 0
+    soundsToPlay:
+    - {fileID: 8300000, guid: 9657fc2099585274e9faac74dfda22a0, type: 3}
+    baseVolumes:
+    - 1
+    playMethod: 0
+    minDelay: 0
+    maxDelay: 0
+    delay: 0
+  - level: Game
+    isCustomLevel: 0
+    soundsToPlay:
+    - {fileID: 8300000, guid: 3ddff5439e393db49b520a46e3c5057a, type: 3}
+    baseVolumes:
+    - 1
+    playMethod: 0
+    minDelay: 0
+    maxDelay: 0
+    delay: 0
+  audios:
+  - {fileID: 82256297557134704}
+  - {fileID: 82384761427499512}
+  currentLevel: 
+  currentSoundConnection:
+    level: 
+    isCustomLevel: 0
+    soundsToPlay: []
+    baseVolumes: []
+    playMethod: 0
+    minDelay: 0
+    maxDelay: 0
+    delay: 0
+  crossDuration: 1
+  showDebug: 1
+  offTheBGM: 0
+  isPaused: 0
+  movingOnFromSong: 0
+  ignoreLevelLoad: 0
+  resourcesPath: Sounds/SFX
+  storedSFXs:
+  - {fileID: 8300000, guid: c40c800d04aa2c2468f9e069bcb921f6, type: 3}
+  - {fileID: 8300000, guid: e5d05f5a41ec82842a688ae8dbb94da8, type: 3}
+  - {fileID: 8300000, guid: 315de9d8e1076ad4b98fdd823ea4a297, type: 3}
+  - {fileID: 8300000, guid: d83b19115a57b8e49ac069c3119a63ad, type: 3}
+  - {fileID: 8300000, guid: d087309b73285f14191be10c85a91965, type: 3}
+  - {fileID: 8300000, guid: 89a2df67bcdcdf248b38a1477b754a9a, type: 3}
+  - {fileID: 8300000, guid: bd3d3768093802a4aa2af3f47d45a1cb, type: 3}
+  - {fileID: 8300000, guid: e35fb6731c74282488545f4534bf46c8, type: 3}
+  - {fileID: 8300000, guid: 4599330ef5732784a967665ef1ab9ade, type: 3}
+  - {fileID: 8300000, guid: abe49af489996044a924752658bab6ff, type: 3}
+  - {fileID: 8300000, guid: b6b4d4dfb5ed239459668ece84f34a2d, type: 3}
+  - {fileID: 8300000, guid: 9b61c8ff6c041e4469b098bfc768342f, type: 3}
+  - {fileID: 8300000, guid: ed50bdd77d0257d42a4d024845e563a6, type: 3}
+  - {fileID: 8300000, guid: df09d003ffc31be4f88bf6b786c2f05f, type: 3}
+  - {fileID: 8300000, guid: 309e21d4877750c42bc76495f033e656, type: 3}
+  - {fileID: 8300000, guid: 109de335a552224449b88bc1c37015cf, type: 3}
+  - {fileID: 8300000, guid: 23dd9a072da37cb4d99cf62930f0e13f, type: 3}
+  - {fileID: 8300000, guid: 2cb9ed1b8c16c164499057faece57914, type: 3}
+  - {fileID: 8300000, guid: 5bcbbb5d9ee4f0d47bc77515370a2ae5, type: 3}
+  - {fileID: 8300000, guid: 7c97cec8c181aa24599dcffe0e873514, type: 3}
+  - {fileID: 8300000, guid: 2eccccd7856dde54c98d3b94bcfdad1c, type: 3}
+  - {fileID: 8300000, guid: 7fb0684d69be4ba448c6c253c3ff02cb, type: 3}
+  - {fileID: 8300000, guid: c4efc7985177ddd4a8a914974131fb28, type: 3}
+  - {fileID: 8300000, guid: 935b7d1b663b14e4ea9a91bd7d76fd60, type: 3}
+  - {fileID: 8300000, guid: abbac9b2b549aca4d951b639aaa34961, type: 3}
+  - {fileID: 8300000, guid: 25314b0d70e4d9b439a49d34fe387aa8, type: 3}
+  - {fileID: 8300000, guid: 7c3d156ba177df24495f09fefe8f328d, type: 3}
+  - {fileID: 8300000, guid: 44156c72ee0eb304b9566b3e481debb1, type: 3}
+  - {fileID: 8300000, guid: 60e0a4edb69a5b040b16cc80dfeb5b22, type: 3}
+  - {fileID: 8300000, guid: 39df9eb7f793ad94f80c6dcedc4cfd4d, type: 3}
+  - {fileID: 8300000, guid: 68b617317ea564a48862c3b5e594e6fa, type: 3}
+  - {fileID: 8300000, guid: d415e02013e81bd40932d58966940928, type: 3}
+  - {fileID: 8300000, guid: d1374ad9056f0254c8e84fba2a68d40e, type: 3}
+  - {fileID: 8300000, guid: 62a398988f090a54dbfec249848bc3fe, type: 3}
+  - {fileID: 8300000, guid: 7a2c96649cdc22440bc578c6f6f93b9a, type: 3}
+  - {fileID: 8300000, guid: e6dd29a8cdf010c4999a6f1a07ed2859, type: 3}
+  - {fileID: 8300000, guid: f27a0963fbd1fc24da6ed102622fdf39, type: 3}
+  unOwnedSFXObjects: []
+  sfxGroups: []
+  clipToGroupKeys: []
+  clipToGroupValues: []
+  offTheSFX: 0
+  capAmount: 3
+  sfxPrePoolAmounts: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  sfxBaseVolumes:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  sfxVolumeVariations:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  sfxPitchVariations:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  SFXObjectLifetime: 10
+  currentPockets:
+  - Default
+  defaultSFXSpatialBlend: 0

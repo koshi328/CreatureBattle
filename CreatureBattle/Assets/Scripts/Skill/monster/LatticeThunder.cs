@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class LatticeThunder : SkillBase {
 
@@ -69,6 +70,7 @@ public class LatticeThunder : SkillBase {
             pos += actor.transform.right * pos_memory[i].x * one_range_size;
             col.SetQubeCollider(actor.transform.position + pos, actor.transform.rotation, new Vector3(one_range_size, one_range_size, one_range_size));
         }
+		SoundManager.PlaySFX("se_008");
     }
 
     protected override void Action(Actor actor)
