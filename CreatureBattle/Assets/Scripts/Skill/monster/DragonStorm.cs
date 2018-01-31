@@ -7,7 +7,7 @@ public class DragonStorm : SkillBase {
     ParticleSystem _effect;
     public DragonStorm()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 1.7f;
         RECAST_TIME = 7.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/DragonStorm") as GameObject;
@@ -17,7 +17,7 @@ public class DragonStorm : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 30.0f, _myColor);
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 34.0f, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -47,7 +47,7 @@ public class DragonStorm : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
             defActor.TakeDamage(141.0f);
         });
-        col.SetSphereCollider(actor.transform.position, 30.0f);
+        col.SetSphereCollider(actor.transform.position, 34.0f);
     }
 
     protected override void Cancel(Actor actor)

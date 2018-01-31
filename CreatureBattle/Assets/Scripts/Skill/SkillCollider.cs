@@ -216,7 +216,7 @@ public class SkillCollider : MonoBehaviour {
         {
             OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
-            _owner.TakeDamage(170);
+            _owner.TakeDamage(200);
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
             return true;

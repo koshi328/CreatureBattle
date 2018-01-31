@@ -8,7 +8,7 @@ public class StanBreath : SkillBase {
     ParticleSystem _effect;
     public StanBreath()
     {
-        CAST_TIME = 1.5f;
+        CAST_TIME = 1.7f;
         RECAST_TIME = 30.0f;
         ACTION_TIME = 2.0f;
         GameObject prefab = Resources.Load("Effect/ItoEffects/monsterStanBless") as GameObject;
@@ -18,7 +18,7 @@ public class StanBreath : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward, actor.transform.eulerAngles.y, 40, 60, _myColor);
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position + actor.transform.forward, actor.transform.eulerAngles.y, 17, 60, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -40,7 +40,7 @@ public class StanBreath : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.STAN_BLESS, 5.0f, 0.0f);
             defActor.AddCondition(ActorCondition.KIND.STAN, 5.0f, 0.0f);
         });
-        col.SetFanCollider(actor.transform.position + actor.transform.forward, 40.0f, actor.transform.forward, 60.0f);
+        col.SetFanCollider(actor.transform.position + actor.transform.forward, 17.0f, actor.transform.forward, 60.0f);
     }
 
     protected override void Action(Actor actor)

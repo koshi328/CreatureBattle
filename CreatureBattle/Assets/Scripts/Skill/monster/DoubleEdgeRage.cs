@@ -7,7 +7,7 @@ public class DoubleEdgeRage : SkillBase {
     ParticleSystem _effect;
     public DoubleEdgeRage()
     {
-        CAST_TIME = 0.6f;
+        CAST_TIME = 1.2f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 0.5f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
@@ -18,7 +18,7 @@ public class DoubleEdgeRage : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(6, 25, 1), _myColor);
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(14, 25, 1), _myColor);
         actor.GetAnimator().SetTrigger("SwapR");
 
     }
@@ -50,11 +50,11 @@ public class DoubleEdgeRage : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.0f, (defActor, atkActor) =>
         {
-            float damage = atkActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 5;
-            defActor.TakeDamage(60 + damage);
-            defActor.TakeDamage(60 + damage);
+            float damage = atkActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
+            defActor.TakeDamage(40 + damage);
+            defActor.TakeDamage(40 + damage);
         });
-        col.SetQubeCollider(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.rotation, new Vector3(6, 1, 25));
+        col.SetQubeCollider(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.rotation, new Vector3(14, 1, 25));
     }
 
     protected override void Cancel(Actor actor)

@@ -13,7 +13,7 @@ public class StanBlessCondition : Condition
         if (time >= 1.0f)
         {
             time = 0.0f;
-            actor.TakeDamage(8);
+            actor.TakeDamage(120);
         }
     }
 }
@@ -45,7 +45,7 @@ public class ExplosionCondition : Condition
         if (time >= 1.0f)
         {
             time = 0.0f;
-            actor.TakeDamage(11);
+            actor.TakeDamage(10);
         }
     }
 }
@@ -83,7 +83,7 @@ public class StudiiProtectCondition : Condition
     }
     protected override void Entry(Actor actor)
     {
-        material = actor.transform.Find("cadnav").GetComponent<Renderer>().material;
+        material = actor.GetEffectMaterial();
         material.SetColor("_EmissionColor", new Color(0, 0.0f, 0.0f, 1.0f));
         base.Entry(actor);
     }

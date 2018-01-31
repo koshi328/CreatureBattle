@@ -8,7 +8,7 @@ public class GroundFrost : SkillBase {
     ParticleSystem _effect;
     public GroundFrost()
     {
-        CAST_TIME = 0.5f;
+        CAST_TIME = 2.2f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/ItoEffects/frost") as GameObject;
@@ -18,7 +18,7 @@ public class GroundFrost : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 40, 30, _myColor);
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 24, 30, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -35,12 +35,12 @@ public class GroundFrost : SkillBase {
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
         SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 1.0f, (defActor, atkActor) =>
+        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 99.0f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.GROUND_FROST, 2.0f, 0.0f);
-            defActor.TakeDamage(60.0f);
+            defActor.TakeDamage(100.0f);
         });
-        col.SetFanCollider(actor.transform.position, 40.0f, actor.transform.forward, 30.0f);
+        col.SetFanCollider(actor.transform.position, 24.0f, actor.transform.forward, 30.0f);
     }
 
     protected override void Action(Actor actor)

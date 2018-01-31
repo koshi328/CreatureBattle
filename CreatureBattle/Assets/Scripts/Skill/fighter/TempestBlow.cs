@@ -20,7 +20,7 @@ public class TempestBlow : SkillBase {
     protected override void EntryCast(Actor actor)
     {
         time = 0.0f;
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 15, 45, _myColor);
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y, 10, 45, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -40,9 +40,9 @@ public class TempestBlow : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.2f, 0.2f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
-            defActor.TakeDamage(8.0f);
+            defActor.TakeDamage(16.0f);
         });
-        col.SetFanCollider(actor.transform.position, 15.0f, actor.transform.forward, 45.0f);
+        col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 45.0f);
 
     }
 

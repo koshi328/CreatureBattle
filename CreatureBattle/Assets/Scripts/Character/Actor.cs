@@ -26,6 +26,8 @@ public class Actor : MonoBehaviour {
     ScriptableAllSkills _scriptableAllSkills;
     [SerializeField]
     GameObject _silenceIcon;
+    [SerializeField]
+    Material _effectMaterial;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class Actor : MonoBehaviour {
     private void Start()
     {
         GameObject.Find("BattleManager").GetComponent<BattleManager>().SetPlayer(this);
+        _effectMaterial.SetColor("_EmissionColor", new Color(0, 0.0f, 0.0f, 1.0f));
         SetSilence(false);
     }
 
@@ -117,7 +120,7 @@ public class Actor : MonoBehaviour {
 
     public void TakeDamage(float damage)
     {
-        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, damage);
+        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, damage + Random.Range(-5, 5));
     }
     [PunRPC]
     void RPCTakeDamage(float damage)
@@ -252,5 +255,9 @@ public class Actor : MonoBehaviour {
     public void SetSilence(bool isOn)
     {
         _silenceIcon.SetActive(isOn);
+    }
+    public Material GetEffectMaterial()
+    {
+        return _effectMaterial;
     }
 }

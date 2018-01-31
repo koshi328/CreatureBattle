@@ -63,6 +63,10 @@ public class BattleManager : MonoBehaviour
             default:
                 break;
         }
+        if (_result == RESULT.NONE) return;
+        if (_started) return;
+        _started = false;
+        StartCoroutine(EndToLobby());
     }
 
     /// <summary>
@@ -193,5 +197,12 @@ public class BattleManager : MonoBehaviour
         _countDownText.text = "";
         _started = true;
         _startWall.SetActive(false);
+    }
+
+    IEnumerator EndToLobby()
+    {
+        yield return new WaitForSeconds(5.0f);
+        PhotonNetwork.LeaveRoom();
+        SceneController.Instance.LoadScene("Lobby", 2.0f, true);
     }
 }

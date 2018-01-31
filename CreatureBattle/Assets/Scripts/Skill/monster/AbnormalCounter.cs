@@ -13,7 +13,7 @@ public class AbnormalCounter : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 30.0f, _myColor);
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 34.0f, _myColor);
         actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, CAST_TIME, 0.0f);
     }
 

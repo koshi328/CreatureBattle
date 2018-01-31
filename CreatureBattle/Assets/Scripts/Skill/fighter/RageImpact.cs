@@ -7,7 +7,7 @@ public class RageImpact : SkillBase {
     ParticleSystem _effect;
     public RageImpact()
     {
-        CAST_TIME = 1.0f;
+        CAST_TIME = 1.2f;
         RECAST_TIME = 7.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_claw") as GameObject;
@@ -18,7 +18,7 @@ public class RageImpact : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(8, 25, 1), _myColor);
+        _rangeObj = EffectManager.Instance.QuadRange(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.eulerAngles.y, new Vector3(12, 25, 1), _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -38,9 +38,9 @@ public class RageImpact : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 10.0f, 10.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(35.0f);
+            defActor.TakeDamage(70.0f);
         });
-        col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(8, 1, 25));
+        col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(12, 1, 25));
     }
 
     protected override void Action(Actor actor)

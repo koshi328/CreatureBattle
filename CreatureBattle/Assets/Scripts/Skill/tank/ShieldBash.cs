@@ -7,8 +7,8 @@ public class ShieldBash : SkillBase {
     ParticleSystem _effect;
     public ShieldBash()
     {
-        CAST_TIME = 0.0f;
-        RECAST_TIME = 12.0f;
+        CAST_TIME = 1.2f;
+        RECAST_TIME = 10.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_slash1") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
@@ -34,10 +34,10 @@ public class ShieldBash : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(30);
-            defActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f, false);
+            defActor.TakeDamage(90);
+            defActor.AddCondition(ActorCondition.KIND.STAN, 1.0f, 0.0f, false);
         });
-        col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 90.0f);
+        col.SetFanCollider(actor.transform.position, 7.0f, actor.transform.forward, 90.0f);
     }
 
     protected override void Action(Actor actor)

@@ -21,7 +21,7 @@ public class SkillBase {
     ParticleSystem _effect;
 
     static protected Color RivalColor = new Color(1, 0.5f, 0, 1);
-    static protected Color SelfColor = new Color(0, 0.2f, 1.0f, 1);
+    static protected Color SelfColor = new Color(0, 0.5f, 1.0f, 1);
     protected Color _myColor;
 
     public SkillBase()
@@ -61,6 +61,7 @@ public class SkillBase {
         _state = STATE.CASTING;
         _effect.Play();
         EntryCast(actor);
+        SetWeaponColorTest(actor, new Color(10, 0, 0, 1));
     }
     public bool NowCasting()
     {
@@ -106,6 +107,7 @@ public class SkillBase {
                     _timer = RECAST_TIME;
                     _state = STATE.RECASTING;
                     EndAction(actor);
+                    SetWeaponColorTest(actor, new Color(0, 0, 0, 1));
                 }
                 break;
             case STATE.RECASTING:
@@ -120,6 +122,7 @@ public class SkillBase {
         Cancel(actor);
         actor.GetAnimator().SetTrigger("React");
         _effect.Stop();
+        SetWeaponColorTest(actor, new Color(0, 0, 0, 1));
     }
     // virtual ---------------------
     // キャスト開始
@@ -165,5 +168,11 @@ public class SkillBase {
             _timer = CAST_TIME;
             _state = STATE.WAIT;
         }
+    }
+
+    private void SetWeaponColorTest(Actor actor, Color color)
+    {
+        if (actor.tag == "Monster") return;
+        actor.GetEffectMaterial().SetColor("_EmissionColor", color);
     }
 }

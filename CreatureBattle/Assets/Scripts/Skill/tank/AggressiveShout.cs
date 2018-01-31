@@ -8,8 +8,8 @@ public class AggressiveShout : SkillBase
     ParticleSystem _effect;
     public AggressiveShout()
     {
-        CAST_TIME = 0.0f;
-        RECAST_TIME = 24.0f;
+        CAST_TIME = 2.0f;
+        RECAST_TIME = 20.0f;
         ACTION_TIME = 1.0f;
 
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/AgressiveShout") as GameObject;
@@ -37,7 +37,7 @@ public class AggressiveShout : SkillBase
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 12.0f, 25.0f);
+            defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 8.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
     }

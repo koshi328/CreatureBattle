@@ -7,12 +7,12 @@ public class LatticeThunder : SkillBase {
     GameObject[] _rangeObj = new GameObject[5];
     static Vector2[] pos_memory = new Vector2[5];
     ParticleSystem[] _effect = new ParticleSystem[5];
-    float one_range_size = 15.0f;
+    float one_range_size = 14.0f;
     public LatticeThunder()
     {
-        CAST_TIME = 1.8f;
+        CAST_TIME = 1.2f;
         RECAST_TIME = 18.0f;
-        ACTION_TIME = 0.0f;
+        ACTION_TIME = 0.2f;
         int elem = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -62,7 +62,7 @@ public class LatticeThunder : SkillBase {
             SkillCollider col = ColliderManager.Instance.GetCollider();
             col.Initialize(actor, SkillCollider.HitTarget.Player, 0.2f, 99.0f, (defActor, atkActor) =>
             {
-                defActor.TakeDamage(374.0f);
+                defActor.TakeDamage(360.0f);
                 defActor.AddCondition(ActorCondition.KIND.SILENCE, 3.0f, 0.0f);
             });
             Vector3 pos = actor.transform.forward * pos_memory[i].y * one_range_size;

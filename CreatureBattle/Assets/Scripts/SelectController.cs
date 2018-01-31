@@ -128,7 +128,8 @@ public class SelectController : MonoBehaviour
             {
                 PhotonNetwork.isMessageQueueRunning = false;
                 SceneController.Instance.LoadScene("Game", 2.0f, true);
-                PhotonNetwork.room.IsVisible = false;
+                PhotonNetwork.room.IsOpen = false;
+                _decideFilter.SetActive(false);
             }
         }
 
@@ -207,6 +208,13 @@ public class SelectController : MonoBehaviour
         _decideFilter.SetActive(true);
     }
 
+    public void Cancel()
+    {
+        skillWindow.SkillReset();
+        _connector[_myElem].Done(false);
+        _decideFilter.SetActive(false);
+    }
+
     public void SetSkill(int elem, int id)
     {
         if (id < 0)
@@ -261,5 +269,16 @@ public class SelectController : MonoBehaviour
     {
         PhotonNetwork.LeaveRoom();
         SceneController.Instance.LoadScene("Lobby", 2.0f, true);
+    }
+    public int GetDoneCount()
+    {
+        int n = 0;
+        for (int i = 0; i < _connector.Length; i++)
+        {
+            if (_connector == null) continue;
+            if (_connector[i].isDone() == false) continue;
+            n++;
+        }
+        return n;
     }
 }

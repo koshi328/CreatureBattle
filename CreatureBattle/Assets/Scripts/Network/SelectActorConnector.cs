@@ -6,6 +6,7 @@ public class SelectActorConnector : MonoBehaviour
 {
 
     PhotonView _myPhotonView;
+    SelectController selectCon;
     bool _done;
     
 
@@ -22,7 +23,8 @@ public class SelectActorConnector : MonoBehaviour
     {
         _element = elem;
         _playerName = playerName;
-        GameObject.Find("SelectController").GetComponent<SelectController>().SetConnector(elem, this);
+        selectCon = GameObject.Find("SelectController").GetComponent<SelectController>();
+        selectCon.SetConnector(elem, this);
     }
     public void Initialize(int elem, string playerName)
     {
@@ -32,6 +34,7 @@ public class SelectActorConnector : MonoBehaviour
     [PunRPC]
     void RPCDone(bool isDone)
     {
+        if (selectCon.GetDoneCount() == 4) return;
         _done = isDone;
     }
     public void Done(bool isDone)

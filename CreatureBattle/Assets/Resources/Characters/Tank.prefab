@@ -2658,6 +2658,7 @@ MonoBehaviour:
   _scriptableAllSkills: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea,
     type: 2}
   _silenceIcon: {fileID: 1677079568134870}
+  _effectMaterial: {fileID: 2100000, guid: 00c4158851d545f46af053e6cd323071, type: 2}
 --- !u!114 &114986518512937582
 MonoBehaviour:
   m_ObjectHideFlags: 1

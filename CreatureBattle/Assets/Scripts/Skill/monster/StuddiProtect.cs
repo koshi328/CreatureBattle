@@ -16,7 +16,7 @@ public class StuddiProtect : SkillBase {
         if (actor.GetCondition().GetCondition(ActorCondition.KIND.STUDII_PROTECT).GetStack() == 0)
         {
             _time += Time.deltaTime;
-            if (_time >= 10.0f)
+            if (_time >= 20.0f)
             {
                 _time = 0.0f;
                 actor.AddCondition(ActorCondition.KIND.STUDII_PROTECT, 1.0f, 0.0f);

@@ -8,7 +8,7 @@ public class Explosion : SkillBase {
     ParticleSystem _effect;
     public Explosion()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 2.2f;
         RECAST_TIME = 6.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/Explosion") as GameObject;
@@ -18,7 +18,7 @@ public class Explosion : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 15, 30.0f, _myColor);
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position + actor.transform.forward * 15, 28.0f, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -36,9 +36,9 @@ public class Explosion : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (defActor, atkActor) =>
         {
             defActor.TakeDamage(60.0f);
-            defActor.AddCondition(ActorCondition.KIND.EXPLOSION, 11.0f, 0.0f);
+            defActor.AddCondition(ActorCondition.KIND.EXPLOSION, 6.0f, 0.0f);
         });
-        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 15, 30.0f);
+        col.SetSphereCollider(actor.transform.position + actor.transform.forward * 15, 28.0f);
     }
 
     protected override void Action(Actor actor)

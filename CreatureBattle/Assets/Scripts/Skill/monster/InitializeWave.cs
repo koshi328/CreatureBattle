@@ -6,9 +6,9 @@ public class InitializeWave : SkillBase {
     ParticleSystem _effect;
     public InitializeWave()
     {
-        CAST_TIME = 0.5f;
-        RECAST_TIME = 30.0f;
-        ACTION_TIME = 2.0f;
+        CAST_TIME = 1.0f;
+        RECAST_TIME = 20.0f;
+        ACTION_TIME = 1.0f;
 
         GameObject prefab = Resources.Load("Effect/ItoEffects/InitializeWave") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
@@ -17,7 +17,7 @@ public class InitializeWave : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-
+        actor.GetAnimator().SetTrigger("Scream");
     }
 
     protected override void Casting(Actor actor)
@@ -27,7 +27,6 @@ public class InitializeWave : SkillBase {
 
     protected override void EndCast(Actor actor)
     {
-        actor.GetAnimator().SetTrigger("Scream");
         _effect.transform.position = actor.transform.position + Vector3.up * 4;
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;

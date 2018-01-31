@@ -9,8 +9,8 @@ public class AngryShout : SkillBase
     
     public AngryShout()
     {
-        CAST_TIME = 0.0f;
-        RECAST_TIME = 10.0f;
+        CAST_TIME = 1.0f;
+        RECAST_TIME = 20.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_erekiDoom") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
@@ -33,12 +33,7 @@ public class AngryShout : SkillBase
         _effect.transform.position = actor.transform.position;
         _effect.Play();
         if (!actor.GetPhotonView().isMine) return;
-        SkillCollider col = ColliderManager.Instance.GetCollider();
-        col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 1.0f, (defActor, atkActor) =>
-        {
-            defActor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 4.0f, 25.0f);
-        });
-        col.SetSphereCollider(actor.transform.position, 10.0f);
+        actor.AddCondition(ActorCondition.KIND.ANGRY_SHOUT, 7.0f, 0.0f);
     }
 
     protected override void Action(Actor actor)

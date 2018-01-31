@@ -125,7 +125,7 @@ public class ActorCondition : MonoBehaviour {
     {
         if (GiveDamageRate > 1.0f)
         {
-            _giveDamageUp.transform.position = actor.GetCenterTrans().position;
+            _giveDamageUp.transform.position = actor.GetCenterTrans().position + new Vector3(0, actor.GetCenterTrans().localScale.y, 0);
             _giveDamageUp.transform.localScale = actor.GetCenterTrans().localScale;
             if (!_giveDamageUp.isPlaying)
                 _giveDamageUp.Play();

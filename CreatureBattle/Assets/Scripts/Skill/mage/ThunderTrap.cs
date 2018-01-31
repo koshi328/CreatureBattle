@@ -6,7 +6,7 @@ public class ThunderTrap : SkillBase {
     
     public ThunderTrap()
     {
-        CAST_TIME = 0.0f;
+        CAST_TIME = 1.2f;
         RECAST_TIME = 10.0f;
         ACTION_TIME = 1.5f;
     }
@@ -30,7 +30,7 @@ public class ThunderTrap : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 9999.0f, 9999.0f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.STAN, 2.0f, 0.0f);
-            defActor.TakeDamage(38.0f);
+            defActor.TakeDamage(60.0f);
         }, true);
         col.SetSphereCollider(actor.transform.position, 4.0f);
         obj.GetComponent<HitDestroyObject>().SetParentCollider(col);
