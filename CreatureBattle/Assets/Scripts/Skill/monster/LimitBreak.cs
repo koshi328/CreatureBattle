@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using antilunchbox;
 
 public class LimitBreak : SkillBase
 {
@@ -19,6 +20,7 @@ public class LimitBreak : SkillBase
         {
             if (actor.GetCondition().GetCondition(ActorCondition.KIND.LIMIT_BREAK).GetStack() != 0) return;
             actor.AddCondition(ActorCondition.KIND.LIMIT_BREAK, 1.0f, 0.0f);
+		    SoundManager.PlaySFX("se_002");
         }
         else
         {

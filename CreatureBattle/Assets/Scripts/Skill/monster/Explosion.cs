@@ -40,6 +40,7 @@ public class Explosion : SkillBase {
             defActor.AddCondition(ActorCondition.KIND.EXPLOSION, 6.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 15, 28.0f);
+		SoundManager.PlaySFX("se_017");
     }
 
     protected override void Action(Actor actor)

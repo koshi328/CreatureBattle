@@ -42,6 +42,7 @@ public class LobbyController : MonoBehaviour {
             _humanButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
             _monsterButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
         });
+        _humanButton.Select();
     }
 
     void OnReceivedRoomListUpdate()

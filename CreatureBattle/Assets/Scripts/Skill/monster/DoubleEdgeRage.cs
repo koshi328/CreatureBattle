@@ -56,6 +56,7 @@ public class DoubleEdgeRage : SkillBase {
             defActor.TakeDamage(40 + damage);
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.rotation, new Vector3(14, 1, 25));
+		SoundManager.PlaySFX("se_047");
     }
 
     protected override void Cancel(Actor actor)
