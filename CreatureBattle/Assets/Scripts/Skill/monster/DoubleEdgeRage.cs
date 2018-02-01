@@ -52,8 +52,8 @@ public class DoubleEdgeRage : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.0f, (defActor, atkActor) =>
         {
             float damage = atkActor.GetCondition(ActorCondition.KIND.DOUBLE_EDGE).GetStack() * 10;
-            defActor.TakeDamage(40 + damage);
-            defActor.TakeDamage(40 + damage);
+            defActor.TakeDamage(40 + damage, atkActor);
+            defActor.TakeDamage(40 + damage, atkActor);
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 12.5f, actor.transform.rotation, new Vector3(14, 1, 25));
 		SoundManager.PlaySFX("se_047");

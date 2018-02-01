@@ -40,7 +40,7 @@ public class GroundFrost : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.0f, 99.0f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.GROUND_FROST, 2.0f, 0.0f);
-            defActor.TakeDamage(100.0f);
+            defActor.TakeDamage(100.0f, atkActor);
         });
         col.SetFanCollider(actor.transform.position, 48.0f, actor.transform.forward, 30.0f);
 		SoundManager.PlaySFX("se_016");

@@ -38,7 +38,7 @@ public class DeadlyImpact : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.6f, 99.0f, (defActor, atkActor) =>
         {
             float damage = 50.0f + (50.0f * (atkActor.GetCondition(ActorCondition.KIND.DEADLY_IMPACT).GetStack() * 0.05f));
-            defActor.TakeDamage(damage);
+            defActor.TakeDamage(damage, atkActor);
         });
         col.SetFanCollider(actor.transform.position, 14.0f, actor.transform.forward, 45.0f);
 		SoundManager.PlaySFX("se_041");

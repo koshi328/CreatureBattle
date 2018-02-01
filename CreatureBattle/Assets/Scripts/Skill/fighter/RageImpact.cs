@@ -40,7 +40,7 @@ public class RageImpact : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 10.0f, 10.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(70.0f);
+            defActor.TakeDamage(70.0f, atkActor);
         });
         col.SetQubeCollider(pos, actor.transform.rotation, new Vector3(12, 1, 25));
 		SoundManager.PlaySFX("se_047");

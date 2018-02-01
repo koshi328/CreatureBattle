@@ -36,7 +36,7 @@ public class Explosion : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 0.5f, 99.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(60.0f);
+            defActor.TakeDamage(60.0f, atkActor);
             defActor.AddCondition(ActorCondition.KIND.EXPLOSION, 6.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 15, 28.0f);

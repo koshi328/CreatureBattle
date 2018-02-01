@@ -44,7 +44,7 @@ public class ChaseFlame : SkillBase {
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor,SkillCollider.HitTarget.Monster, 0.5f, 2.0f, (defActor, atkActor) =>
         {
-            defActor.TakeDamage(5.0f + (_stack * 6.0f));
+            defActor.TakeDamage(5.0f + (_stack * 6.0f), atkActor);
         });
         col.SetQubeCollider(actor.transform.position + actor.transform.forward * 7.5f, actor.transform.rotation, new Vector3(5, 1, 18));
         _stack++;

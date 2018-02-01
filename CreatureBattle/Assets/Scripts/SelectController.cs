@@ -281,4 +281,10 @@ public class SelectController : MonoBehaviour
         }
         return n;
     }
+
+    public void BackLobby()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneController.Instance.LoadScene("Lobby", 2.0f, true);
+    }
 }

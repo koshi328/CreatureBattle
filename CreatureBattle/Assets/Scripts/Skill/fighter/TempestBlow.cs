@@ -41,7 +41,7 @@ public class TempestBlow : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 1.2f, 0.2f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.TEMPEST_BLOW, 10.0f, 0.0f);
-            defActor.TakeDamage(16.0f);
+            defActor.TakeDamage(16.0f, atkActor);
         });
         col.SetFanCollider(actor.transform.position, 10.0f, actor.transform.forward, 45.0f);
 		SoundManager.PlaySFX("se_028");

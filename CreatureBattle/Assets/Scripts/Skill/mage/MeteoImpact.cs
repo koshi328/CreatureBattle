@@ -40,7 +40,7 @@ public class MeteoImpact : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.1f, 99.0f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.METEO_IMPACT, 5.0f, 0.0f);
-            defActor.TakeDamage(90.0f);
+            defActor.TakeDamage(90.0f, atkActor);
         });
         col.SetSphereCollider(actor.transform.position + actor.transform.forward * 16.0f, 12.0f);
 		SoundManager.PlaySFX("se_017");

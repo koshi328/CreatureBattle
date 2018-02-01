@@ -61,7 +61,10 @@ public class SkillBase {
         _state = STATE.CASTING;
         _effect.Play();
         EntryCast(actor);
-
+        if (actor.tag == "Monster")
+            SetWeaponColorTest(actor, new Color(0.2f, 0.0f, 0.1f, 1));
+        else
+            SetWeaponColorTest(actor, new Color(10, 0, 0, 1));
     }
     public bool NowCasting()
     {
@@ -91,10 +94,7 @@ public class SkillBase {
                 _effect.startSize = actor.GetFootTrans().localScale.x;
                 Casting(actor);
                 _timer -= Time.deltaTime;
-                if (actor.tag == "Monster")
-                    SetWeaponColorTest(actor, new Color(0, 0.0f, 0.5f, 1) * (1 - _timer / CAST_TIME));
-                else
-                    SetWeaponColorTest(actor, new Color(10, 0, 0, 1) * (1 - _timer / CAST_TIME));
+
                 if (_timer <= 0.0f)
                 {
                     _timer = ACTION_TIME;

@@ -131,9 +131,15 @@ public class Actor : MonoBehaviour {
         _skillController.Initialize(elements);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Actor atkActor = null)
     {
-        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, damage + Random.Range(-5, 5));
+        float d = (int)damage;
+        if (atkActor != null)
+        {
+            d *= atkActor._condition.GiveDamageRate;
+        }
+        d += Random.Range(-5, 5);
+        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, d);
     }
     [PunRPC]
     void RPCTakeDamage(float damage)

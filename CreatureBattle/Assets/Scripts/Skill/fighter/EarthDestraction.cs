@@ -41,7 +41,7 @@ public class EarthDestraction : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 0.1f, 0.1f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.EARTH_DESTRACTION, 3.0f, 0.0f);
-            defActor.TakeDamage(150.0f);
+            defActor.TakeDamage(150.0f, atkActor);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
 		SoundManager.PlaySFX("se_000");

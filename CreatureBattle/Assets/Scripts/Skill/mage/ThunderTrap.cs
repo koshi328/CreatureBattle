@@ -31,7 +31,7 @@ public class ThunderTrap : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Monster, 9999.0f, 9999.0f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f);
-            defActor.TakeDamage(60.0f);
+            defActor.TakeDamage(60.0f, atkActor);
         }, true);
         col.SetSphereCollider(actor.transform.position, 4.0f);
         obj.GetComponent<HitDestroyObject>().SetParentCollider(col);
