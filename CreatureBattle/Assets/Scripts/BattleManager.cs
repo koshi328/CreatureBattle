@@ -64,7 +64,6 @@ public class BattleManager : MonoBehaviour
                 break;
         }
         if (_result == RESULT.NONE) return;
-        if (_started) return;
         _started = false;
         StartCoroutine(EndToLobby());
     }
@@ -77,7 +76,7 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if (_humans[i] == null) return true;
+            if (_humans[i] == null) continue;
 
             if (0.0f < _humans[i].GetStatus().GetHP())
             {
@@ -94,7 +93,7 @@ public class BattleManager : MonoBehaviour
     /// <returns></returns>
     public bool MonsterIsAlive()
     {
-        if (_monster == null) return true;
+        if (_monster == null) return false;
 
         if (0.0f < _monster.GetStatus().GetHP())
         {
@@ -201,7 +200,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator EndToLobby()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
         PhotonNetwork.LeaveRoom();
         SceneController.Instance.LoadScene("Lobby", 2.0f, true);
     }

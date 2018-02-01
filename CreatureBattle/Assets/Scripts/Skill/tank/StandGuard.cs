@@ -8,14 +8,14 @@ public class StandGuard : SkillBase {
     GameObject _rangeObj;
     public StandGuard()
     {
-        CAST_TIME = 1.0f;
+        CAST_TIME = 0.0f;
         RECAST_TIME = 30.0f;
         ACTION_TIME = 2.0f;
     }
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y + 180, 28, 45, _myColor);
+        _rangeObj = EffectManager.Instance.FanRange(actor.transform.position, actor.transform.eulerAngles.y + 180, 48, 60, _myColor);
     }
 
     protected override void Casting(Actor actor)
@@ -33,7 +33,7 @@ public class StandGuard : SkillBase {
         {
             defActor.AddCondition(ActorCondition.KIND.STAND_GUARD, 10.0f, 0.0f);
         });
-        col.SetFanCollider(actor.transform.position, 28.0f, actor.transform.forward * -1, 45.0f);
+        col.SetFanCollider(actor.transform.position, 48, actor.transform.forward * -1, 60.0f);
 		SoundManager.PlaySFX("se_007");
     }
 

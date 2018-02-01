@@ -33,5 +33,6 @@ public class AngryShoutCondition : Condition
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().ReciveDamageRate *= 0.7f;
+        actor.GetCondition().SpeedDownRate *= 1.3f;
     }
 }

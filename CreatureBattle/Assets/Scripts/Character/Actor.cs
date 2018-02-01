@@ -27,6 +27,9 @@ public class Actor : MonoBehaviour {
     [SerializeField]
     GameObject _silenceIcon;
     [SerializeField]
+    SkinnedMeshRenderer _effectSkinnedMesh;
+    [SerializeField]
+    MeshRenderer _effectMesh;
     Material _effectMaterial;
 
     private void Awake()
@@ -52,6 +55,16 @@ public class Actor : MonoBehaviour {
     private void Start()
     {
         GameObject.Find("BattleManager").GetComponent<BattleManager>().SetPlayer(this);
+        if (_effectSkinnedMesh != null)
+        {
+            _effectMaterial = new Material(_effectSkinnedMesh.material);
+            _effectSkinnedMesh.material = _effectMaterial;
+        }
+        if (_effectMesh != null)
+        {
+            _effectMaterial = new Material(_effectMesh.material);
+            _effectMesh.material = _effectMaterial;
+        }
         _effectMaterial.SetColor("_EmissionColor", new Color(0, 0.0f, 0.0f, 1.0f));
         SetSilence(false);
     }
@@ -127,7 +140,12 @@ public class Actor : MonoBehaviour {
     {
         if (_status.GetHP() <= 0) return;
         float d = _status.TakeDamage(damage);
-        _damageRenderer.Render(transform.position, (int)d, Color.red);
+        Color textColor = Color.white;
+        if(PhotonNetwork.playerName == "monster")
+            textColor = (this.tag == "Monster") ? Color.red : Color.yellow;
+        else
+            textColor = (this.tag == "Monster") ? Color.yellow : Color.red;
+        _damageRenderer.Render(transform.position, (int)d, textColor);
         SetHpBarFillRate();
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
         EffectManager.Instance.CreateEffect(0, _reactTrans.position);

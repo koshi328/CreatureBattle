@@ -22,6 +22,8 @@ public class SkillCollider : MonoBehaviour {
     List<HitActor> _hitActors = new List<HitActor>();
     float _hitInterval;
     bool _oneHit;
+
+    bool _activeSelf;
     
     // 例外処理
     float _angle;
@@ -36,6 +38,7 @@ public class SkillCollider : MonoBehaviour {
             playerMask = LayerMask.NameToLayer("PlayerAttack");
         if (monsterMask == -1)
             monsterMask = LayerMask.NameToLayer("MonsterAttack");
+        _activeSelf = false;
     }
 
     // 初期生成時
@@ -189,8 +192,11 @@ public class SkillCollider : MonoBehaviour {
         _hitDelegate = null;
         _genericDelegate = null;
         _hitInterval = 0.0f;
-        if(gameObject.activeSelf == true)
+        if(_activeSelf == true)
+        {
             gameObject.SetActive(false);
+            _activeSelf = gameObject.activeSelf;
+        }
     }
 
     bool InFanCollider(Transform trans, Vector3 target)
@@ -217,7 +223,7 @@ public class SkillCollider : MonoBehaviour {
         {
             OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
-            _owner.TakeDamage(200);
+            _owner.TakeDamage(100);
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
 			SoundManager.PlaySFX("se_003");

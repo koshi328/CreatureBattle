@@ -275,7 +275,7 @@ public class SelectController : MonoBehaviour
         int n = 0;
         for (int i = 0; i < _connector.Length; i++)
         {
-            if (_connector == null) continue;
+            if (_connector[i] == null) continue;
             if (_connector[i].isDone() == false) continue;
             n++;
         }

@@ -17,6 +17,6 @@ public class HpBar : MonoBehaviour {
     }
 
     void LateUpdate(){
-        test.text = _actor.GetStatus().GetHP().ToString();
+        test.text = ((int)_actor.GetStatus().GetHP()).ToString();
     }
 }

@@ -47,7 +47,7 @@ public class DragonStorm : SkillBase {
         col.Initialize(actor, SkillCollider.HitTarget.Player, 0.1f, 99.9f, (defActor, atkActor) =>
         {
             defActor.AddCondition(ActorCondition.KIND.SILENCE, 5.0f, 0.0f);
-            defActor.TakeDamage(141.0f);
+            defActor.TakeDamage(210.0f);
         });
         col.SetSphereCollider(actor.transform.position, 34.0f);
     }

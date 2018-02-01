@@ -14,7 +14,7 @@ public class AbnormalCounter : SkillBase {
 
     protected override void EntryCast(Actor actor)
     {
-        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 34.0f, _myColor);
+        _rangeObj = EffectManager.Instance.SphereRange(actor.transform.position, 34.0f, new Color(0, 1, 0.2f, 1));
         actor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, CAST_TIME, 0.0f);
 		SoundManager.PlaySFX("se_002");
     }

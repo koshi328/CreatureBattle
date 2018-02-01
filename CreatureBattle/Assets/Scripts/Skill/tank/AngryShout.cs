@@ -10,7 +10,7 @@ public class AngryShout : SkillBase
     
     public AngryShout()
     {
-        CAST_TIME = 1.0f;
+        CAST_TIME = 0.0f;
         RECAST_TIME = 20.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_erekiDoom") as GameObject;
