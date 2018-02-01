@@ -9,7 +9,7 @@ public class AggressiveShout : SkillBase
     ParticleSystem _effect;
     public AggressiveShout()
     {
-        CAST_TIME = 2.0f;
+        CAST_TIME = 0.0f;
         RECAST_TIME = 20.0f;
         ACTION_TIME = 1.0f;
 

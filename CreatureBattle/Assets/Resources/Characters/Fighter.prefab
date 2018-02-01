@@ -2789,7 +2789,8 @@ MonoBehaviour:
   _scriptableAllSkills: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea,
     type: 2}
   _silenceIcon: {fileID: 1943470840694122}
-  _effectMaterial: {fileID: 2100000, guid: d75d9e7c97f44ad4e896d091ad12d23a, type: 2}
+  _effectSkinnedMesh: {fileID: 0}
+  _effectMesh: {fileID: 23302484983347816}
 --- !u!114 &114703367719082974
 MonoBehaviour:
   m_ObjectHideFlags: 1

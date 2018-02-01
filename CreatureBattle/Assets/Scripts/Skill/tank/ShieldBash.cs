@@ -8,8 +8,8 @@ public class ShieldBash : SkillBase {
     ParticleSystem _effect;
     public ShieldBash()
     {
-        CAST_TIME = 1.2f;
-        RECAST_TIME = 10.0f;
+        CAST_TIME = 0.0f;
+        RECAST_TIME = 8.0f;
         ACTION_TIME = 1.0f;
         GameObject prefab = Resources.Load("Effect/KY_effects/AMFX02/P_AMFX02_slash1") as GameObject;
         _effect = GameObject.Instantiate(prefab).GetComponent<ParticleSystem>();
