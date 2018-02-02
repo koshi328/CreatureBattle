@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using antilunchbox;
 
 public class CreateRoomMenu : MonoBehaviour {
     [SerializeField]
@@ -26,16 +27,19 @@ public class CreateRoomMenu : MonoBehaviour {
     {
         if (Input.GetButtonDown("Skill1"))
         {
+            SoundManager.PlaySFX("se_051");
             _monsterCheckBox.isOn = !_monsterCheckBox.isOn;
         }
 
         if(Input.GetButtonDown("Submit"))
         {
+            SoundManager.PlaySFX("se_050");
             CreateRoom();
         }
 
-        if(Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
+            SoundManager.PlaySFX("se_051");
             gameObject.SetActive(false);
             _createRoomButton.Select();
         }
@@ -66,7 +70,7 @@ public class CreateRoomMenu : MonoBehaviour {
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
         option.MaxPlayers = (byte)4;
         option.IsOpen = true;
-        option.IsVisible = true;
+        option.IsVisible = false;
         table.Add("player1", 0);
         table.Add("player2", 0);
         table.Add("player3", 0);

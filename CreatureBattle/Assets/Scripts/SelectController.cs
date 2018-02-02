@@ -43,6 +43,7 @@ public class SelectController : MonoBehaviour
     void Start()
     {
         PhotonNetwork.isMessageQueueRunning = true;
+        PhotonNetwork.room.IsVisible = true;
         selectActorID = 0;
         for (int i = 0; i < selectSkillID.Length; i++)
         {
@@ -95,7 +96,7 @@ public class SelectController : MonoBehaviour
         SelectActorConnector temp = PhotonNetwork.Instantiate("SelectActorConnector", Vector3.zero, Quaternion.identity, 0).GetComponent<SelectActorConnector>();
         temp.Initialize(_myElem, PhotonNetwork.playerName);
 
-        _roomNameText.text = "ルーム名:" + PhotonNetwork.room.Name;
+        _roomNameText.text = "ルーム番号:" + PhotonNetwork.room.Name;
     }
 
     private void Update()

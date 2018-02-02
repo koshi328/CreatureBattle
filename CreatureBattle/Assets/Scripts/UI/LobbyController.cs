@@ -51,7 +51,8 @@ public class LobbyController : MonoBehaviour {
             {
                 object existMonster = null;
                 rooms[j].CustomProperties.TryGetValue("monster", out existMonster);
-                if(rooms[j].MaxPlayers <= rooms[j].playerCount)
+                if (i == (int)ROOMLIST_TAG.MONSTER && (bool)existMonster == true) continue;
+                if(rooms[j].MaxPlayers <= rooms[j].PlayerCount)
                 {
                     continue;
                 }

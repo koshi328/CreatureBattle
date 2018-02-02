@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using antilunchbox;
 
 public class YesNoWindow : MonoBehaviour {
 
@@ -61,10 +62,12 @@ public class YesNoWindow : MonoBehaviour {
 
     public void ClickedYes()
     {
+        SoundManager.PlaySFX("se_050");
     }
 
     public void ClickedNo()
     {
+        SoundManager.PlaySFX("se_051");
         gameObject.SetActive(false);
         _createRoomButton.Select();
     }
