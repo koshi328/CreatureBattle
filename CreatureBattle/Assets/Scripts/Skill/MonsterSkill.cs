@@ -23,6 +23,11 @@ public class InitializeWaveCondition : Condition
         : base(maxStack, maxTime)
     {
     }
+    protected override void Entry(Actor actor)
+    {
+        ChatController.Instance.AddMessage("イニシャライズウェーブ!防御力＆移動速度up");
+        base.Entry(actor);
+    }
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().ClearDebuff();
@@ -65,6 +70,11 @@ public class LimitBreakCondition : Condition
     public LimitBreakCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
+    }
+    protected override void Entry(Actor actor)
+    {
+        ChatController.Instance.AddMessage("リミットブレイク発動!攻撃力＆防御力up");
+        base.Entry(actor);
     }
     protected override void Execute(Actor actor)
     {

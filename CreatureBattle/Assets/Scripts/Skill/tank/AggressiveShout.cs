@@ -38,7 +38,7 @@ public class AggressiveShout : SkillBase
         SkillCollider col = ColliderManager.Instance.GetCollider();
         col.Initialize(actor, SkillCollider.HitTarget.Player, 2.0f, 2.0f, (defActor, atkActor) =>
         {
-            defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 8.0f, 0.0f);
+            defActor.AddCondition(ActorCondition.KIND.AGGRESSIVE_SHOUT, 10.0f, 0.0f);
         });
         col.SetSphereCollider(actor.transform.position, 20.0f);
 		SoundManager.PlaySFX("se_001");

@@ -4,6 +4,11 @@
         : base(maxStack, maxTime)
     {
     }
+    protected override void Entry(Actor actor)
+    {
+        ChatController.Instance.AddMessage("テンペストブロウ!防御力down");
+        base.Entry(actor);
+    }
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().ReciveDamageRate *= (1 + _stack * 0.02f);
@@ -14,6 +19,11 @@ public class EarthDestractionCondition : Condition
     public EarthDestractionCondition(int maxStack, float maxTime)
         : base(maxStack, maxTime)
     {
+    }
+    protected override void Entry(Actor actor)
+    {
+        ChatController.Instance.AddMessage("アースデストラクション!移動速度down");
+        base.Entry(actor);
     }
     protected override void Execute(Actor actor)
     {

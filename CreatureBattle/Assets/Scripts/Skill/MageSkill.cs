@@ -5,6 +5,11 @@ public class GroundFrostCondition : Condition
         : base(maxStack, maxTime)
     {
     }
+    protected override void Entry(Actor actor)
+    {
+        ChatController.Instance.AddMessage("グラウンドフロスト!移動速度down");
+        base.Entry(actor);
+    }
     protected override void Execute(Actor actor)
     {
         actor.GetCondition().SpeedDownRate *= 0.5f;

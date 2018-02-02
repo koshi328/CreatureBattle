@@ -102,16 +102,16 @@ public class ActorCondition : MonoBehaviour {
 
     public void ClearDebuff()
     {
-        _conditions[(int)KIND.STAN].SetTime(0.0f);
-        _conditions[(int)KIND.SILENCE].SetTime(0.0f);
-        _conditions[(int)KIND.TEMPEST_BLOW].SetTime(0.0f);
-        _conditions[(int)KIND.EARTH_DESTRACTION].SetTime(0.0f);
-        _conditions[(int)KIND.DEADLY_IMPACT].SetTime(0.0f);
-        _conditions[(int)KIND.GROUND_FROST].SetTime(0.0f);
-        _conditions[(int)KIND.METEO_IMPACT].SetTime(0.0f);
-        _conditions[(int)KIND.STAN_BLESS].SetTime(0.0f);
-        _conditions[(int)KIND.EXPLOSION].SetTime(0.0f);
-        _conditions[(int)KIND.ANGRY_SHOUT].SetTime(0.0f);
+        _conditions[(int)KIND.STAN].Clear();
+        _conditions[(int)KIND.SILENCE].Clear();
+        _conditions[(int)KIND.TEMPEST_BLOW].Clear();
+        _conditions[(int)KIND.EARTH_DESTRACTION].Clear();
+        _conditions[(int)KIND.DEADLY_IMPACT].Clear();
+        _conditions[(int)KIND.GROUND_FROST].Clear();
+        _conditions[(int)KIND.METEO_IMPACT].Clear();
+        _conditions[(int)KIND.STAN_BLESS].Clear();
+        _conditions[(int)KIND.EXPLOSION].Clear();
+        _conditions[(int)KIND.ANGRY_SHOUT].Clear();
 
         //_conditions[(int)KIND.AGGRESSIVE_SHOUT].SetTime(0.0f);
         //_conditions[(int)KIND.STAND_GUARD].SetTime(0.0f);
@@ -221,6 +221,11 @@ public class Condition
         }
         _time -= Time.deltaTime;
         Execute(actor);
+    }
+    public void Clear()
+    {
+        _stack = 0;
+        _time = 0.0f;
     }
 }
 
