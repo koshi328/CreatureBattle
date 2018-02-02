@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -25,6 +26,12 @@ public class SelectController : MonoBehaviour
     ScriptableActor actorData;
     [SerializeField]
     ScriptableAllSkills skillsData;
+
+    [SerializeField]
+    Button _decideButton;
+
+    [SerializeField]
+    Text _roomNameText;
 
 
     int selectActorID;
@@ -87,6 +94,8 @@ public class SelectController : MonoBehaviour
         else if (name == "monster") _myElem = 3;
         SelectActorConnector temp = PhotonNetwork.Instantiate("SelectActorConnector", Vector3.zero, Quaternion.identity, 0).GetComponent<SelectActorConnector>();
         temp.Initialize(_myElem, PhotonNetwork.playerName);
+
+        _roomNameText.text = "ルーム名:" + PhotonNetwork.room.Name;
     }
 
     private void Update()
@@ -97,6 +106,13 @@ public class SelectController : MonoBehaviour
             PhotonNetwork.isMessageQueueRunning = false;
             SceneController.Instance.LoadScene("Game", 2.0f, true);
             PhotonNetwork.room.IsVisible = false;
+        }
+        if (_decideFilter.GetActive())
+        {
+            if (Input.GetButtonDown("Cancel"))
+            {
+                Cancel();
+            }
         }
         if (SceneController.Instance.NowFade()) return;
         string name = PhotonNetwork.playerName;
@@ -133,6 +149,7 @@ public class SelectController : MonoBehaviour
             }
         }
 
+
     }
 
     void SetPlayerData(int actorID)
@@ -165,6 +182,10 @@ public class SelectController : MonoBehaviour
                 skillWindow.ChangeActor(actorData, selectActorID);
             });
             button.GetComponent<Button>().image.sprite = actorData.data[i].sprite;
+            if(i == 0)
+            {
+                button.GetComponent<Button>().Select();
+            }
         }
     }
 
@@ -206,6 +227,7 @@ public class SelectController : MonoBehaviour
         PhotonNetwork.SetPlayerCustomProperties(playerTable);
         _connector[_myElem].Done(true);
         _decideFilter.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void Cancel()
@@ -213,6 +235,7 @@ public class SelectController : MonoBehaviour
         skillWindow.SkillReset();
         _connector[_myElem].Done(false);
         _decideFilter.SetActive(false);
+        _decideButton.Select();
     }
 
     public void SetSkill(int elem, int id)

@@ -60,7 +60,7 @@ public class SkillSelectWindow : MonoBehaviour {
 
         for (int i = 0; i < skillNum; i++)
         {
-            buttonList[i].enabled = true;
+            buttonList[i].GetComponent<SkillSelectButton>()._selected = false;
             buttonList[i].GetComponent<SkillSelectButton>().OnButtonEnable();
         }
     }

@@ -11,13 +11,30 @@ public class YesNoWindow : MonoBehaviour {
     Button _noButton;
     [SerializeField]
     Text _messageText;
+    [SerializeField]
+    Button _createRoomButton;
 
     public string roomName;
     // Use this for initialization
     void Start () {
         NoButtonAddEvent(()=> { this.gameObject.SetActive(false); });
     }
-    
+
+    private void Update()
+    {
+        _yesButton.Select();
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            ClickedYes();
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            ClickedNo();
+        }
+    }
+
     public void SetMessage(string message)
     {
         if (_messageText == null) return;
@@ -40,5 +57,15 @@ public class YesNoWindow : MonoBehaviour {
             _noButton.onClick.RemoveAllListeners();
         }
         _noButton.onClick.AddListener(action);
+    }
+
+    public void ClickedYes()
+    {
+    }
+
+    public void ClickedNo()
+    {
+        gameObject.SetActive(false);
+        _createRoomButton.Select();
     }
 }

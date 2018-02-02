@@ -366,6 +366,7 @@ RectTransform:
   - {fileID: 192212029}
   - {fileID: 2006932219}
   - {fileID: 812857007}
+  - {fileID: 1544016127}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -925,7 +926,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1152,7 +1153,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1763736428}
+      - m_Target: {fileID: 0}
         m_MethodName: Cancel
         m_Mode: 1
         m_Arguments:
@@ -1254,7 +1255,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2278,12 +2279,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 985742297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938fc4b66584d7948baa5ca9671694bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f6dc4d798effa549b87b7eb1238b056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectCon: {fileID: 1763736428}
   skillsData: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea, type: 2}
-  buttonPrefab: {fileID: 1057043543385644, guid: 112d6c5935e01af4e9237fc9d71ed82b,
+  buttonPrefab: {fileID: 1057043543385644, guid: 0e6f250671bdb6a4699441747cd82edc,
     type: 2}
   skillInfomationText: {fileID: 820304561}
 --- !u!114 &985742300
@@ -2946,6 +2947,95 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!1 &1544016126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1544016127}
+  - component: {fileID: 1544016129}
+  - component: {fileID: 1544016128}
+  - component: {fileID: 1544016130}
+  m_Layer: 5
+  m_Name: RoomName
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1544016127
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1544016126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 85204729}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -845, y: 791}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1544016128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1544016126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 0d6a2f07ed94d4e40bd229e63c54d278, type: 3}
+    m_FontSize: 139
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 139
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "\u30EB\u30FC\u30E0\u540D"
+--- !u!222 &1544016129
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1544016126}
+--- !u!114 &1544016130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1544016126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1564293346
 GameObject:
   m_ObjectHideFlags: 0
@@ -3409,7 +3499,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1763736427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62332e0cc5cd55c48805e316ea81bc1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ab07502552e3194392a2e79d7d71434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillWindow: {fileID: 985742299}
@@ -3428,11 +3518,13 @@ MonoBehaviour:
   - {fileID: 1834706322}
   - {fileID: 1427747350}
   _characterSelectList: {fileID: 217401766}
-  _characterButtonPrefab: {fileID: 1587602621306522, guid: 5761c2b18b4678246a733f7d6c7df77e,
+  _characterButtonPrefab: {fileID: 1587602621306522, guid: 151e688e7a5da2b4fa7ed89976961fb2,
     type: 2}
   _decideFilter: {fileID: 812857004}
   actorData: {fileID: 0}
   skillsData: {fileID: 11400000, guid: 89dd50a7222176641b7195eb52a748ea, type: 2}
+  _decideButton: {fileID: 530567965}
+  _roomNameText: {fileID: 1544016128}
 --- !u!4 &1763736429
 Transform:
   m_ObjectHideFlags: 0
@@ -3900,6 +3992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _messageQueue: {fileID: 937967776}
+  _bar: {fileID: 0}
 --- !u!1 &2006932218
 GameObject:
   m_ObjectHideFlags: 0
@@ -3957,7 +4050,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

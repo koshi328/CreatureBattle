@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class CreateRoomMenu : MonoBehaviour {
     [SerializeField]
-    InputField _roomNameInput;
-    [SerializeField]
     Button _decideButton;
     [SerializeField]
     Button _cancelButton;
     [SerializeField]
     Toggle _monsterCheckBox;
+    [SerializeField]
+    Button _createRoomButton;
 
     string _message;
     float _fade;
@@ -22,10 +22,29 @@ public class CreateRoomMenu : MonoBehaviour {
         _cancelButton.onClick.AddListener(() => { gameObject.SetActive(false); });
 	}
 
+    void Update()
+    {
+        if (Input.GetButtonDown("Skill1"))
+        {
+            _monsterCheckBox.isOn = !_monsterCheckBox.isOn;
+        }
+
+        if(Input.GetButtonDown("Submit"))
+        {
+            CreateRoom();
+        }
+
+        if(Input.GetButtonDown("Cancel"))
+        {
+            gameObject.SetActive(false);
+            _createRoomButton.Select();
+        }
+    }
+
     void CreateRoom()
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
-        string roomName = _roomNameInput.text;
+        string roomName = (rooms.Length + 1).ToString();
         if (roomName == "")
         {
             _message = "部屋の名前を決めてください";

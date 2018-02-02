@@ -12,11 +12,13 @@ public class SkillSelectButton : MonoBehaviour {
     SkillSelectWindow ssWindow;
     Button _myButton;
     Image _myImage;
+    public bool _selected { get; set; }
 
     private void Start()
     {
         _myButton = GetComponent<Button>();
         _myImage = GetComponent<Image>();
+        _selected = false;
     }
     public void SetInfomation(Text textObj, string str,int id,SkillSelectWindow ssWin)
     {
@@ -41,13 +43,20 @@ public class SkillSelectButton : MonoBehaviour {
     public void OnClickButton()
     {
         if (_id == -1) return;
+        if (_selected) return;
         if (!ssWindow.SetSkill(_id)) return;
-        _myButton.enabled = false;
         _myImage.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+        _selected = true;
     }
 
     public void OnButtonEnable()
     {
         _myImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public void Select()
+    {
+        if (!textObj) return;
+        textObj.text = infomation;
     }
 }
