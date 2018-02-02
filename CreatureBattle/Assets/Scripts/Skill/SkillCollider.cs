@@ -72,6 +72,7 @@ public class SkillCollider : MonoBehaviour {
         {
             gameObject.layer = playerMask;
         }
+        _activeSelf = true;
     }
     // 形の定義
     public void SetSphereCollider(Vector3 pos, float radius)
@@ -195,7 +196,7 @@ public class SkillCollider : MonoBehaviour {
         if(_activeSelf == true)
         {
             gameObject.SetActive(false);
-            _activeSelf = gameObject.activeSelf;
+            _activeSelf = false;
         }
     }
 
@@ -223,7 +224,7 @@ public class SkillCollider : MonoBehaviour {
         {
             OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
-            _owner.TakeDamage(100);
+            _owner.TakeDamage(100, null,"カウンター!");
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
 			SoundManager.PlaySFX("se_003");

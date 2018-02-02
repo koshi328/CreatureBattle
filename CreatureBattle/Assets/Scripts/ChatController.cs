@@ -7,6 +7,8 @@ public class ChatController : MonoBehaviour {
 
     [SerializeField]
     Text _messageQueue;
+    [SerializeField]
+    Scrollbar _bar;
 
     public static ChatController Instance;
 
@@ -22,5 +24,6 @@ public class ChatController : MonoBehaviour {
     public void AddMessage(string message)
     {
         _messageQueue.text += message + "\n";
+        _bar.value = 0;
     }
 }

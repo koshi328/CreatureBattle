@@ -131,7 +131,7 @@ public class Actor : MonoBehaviour {
         _skillController.Initialize(elements);
     }
 
-    public void TakeDamage(float damage, Actor atkActor = null)
+    public void TakeDamage(float damage, Actor atkActor = null, string message = "")
     {
         float d = (int)damage;
         if (atkActor != null)
@@ -139,19 +139,27 @@ public class Actor : MonoBehaviour {
             d *= atkActor._condition.GiveDamageRate;
         }
         d += Random.Range(-5, 5);
-        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, d);
+        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, d, message);
     }
     [PunRPC]
-    void RPCTakeDamage(float damage)
+    void RPCTakeDamage(float damage, string message)
     {
         if (_status.GetHP() <= 0) return;
         float d = _status.TakeDamage(damage);
         Color textColor = Color.white;
-        if(PhotonNetwork.playerName == "monster")
+        string texColor = "<color=#ffffff>";
+        if (PhotonNetwork.playerName == "monster")
+        {
             textColor = (this.tag == "Monster") ? Color.red : Color.yellow;
+            texColor = (this.tag == "Monster") ? "<color=#ff0000>" : "<color=#ffff00>";
+        }
         else
+        {
             textColor = (this.tag == "Monster") ? Color.yellow : Color.red;
+            texColor = (this.tag == "Monster") ? "<color=#ffff00>" : "<color=#ff0000>";
+        }
         _damageRenderer.Render(transform.position, (int)d, textColor);
+        ChatController.Instance.AddMessage(texColor + message + gameObject.name + "は" + (int)d + "のダメージ</color>");
         SetHpBarFillRate();
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
         EffectManager.Instance.CreateEffect(0, _reactTrans.position);
@@ -194,6 +202,7 @@ public class Actor : MonoBehaviour {
     [PunRPC]
     void SetStatus(string playerName, int actorID)
     {
+        gameObject.name = playerName;
         // ステータスの設定
         ScriptableActor actorData;
         if (playerName == "monster")
