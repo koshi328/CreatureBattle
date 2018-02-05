@@ -52,6 +52,7 @@ public class CreateRoomMenu : MonoBehaviour {
     void CreateRoom()
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
+        string roomName = (rooms.Length + 1).ToString();
         if(_roomNumber < rooms.Length)
         {
             _roomNumber = rooms.Length;
