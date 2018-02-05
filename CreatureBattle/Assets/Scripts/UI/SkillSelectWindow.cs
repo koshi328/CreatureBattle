@@ -72,4 +72,9 @@ public class SkillSelectWindow : MonoBehaviour {
         currentSelectNum++;
         return true;
     }
+
+    public Text InfomationText()
+    {
+        return skillInfomationText;
+    }
 }
