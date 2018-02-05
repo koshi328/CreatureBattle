@@ -49,6 +49,7 @@ public class CreateRoomMenu : MonoBehaviour {
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
         string roomName = (rooms.Length + 1).ToString();
+        roomName = "afrstyggd";
         if (roomName == "")
         {
             _message = "部屋の名前を決めてください";
