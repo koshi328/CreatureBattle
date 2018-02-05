@@ -57,7 +57,6 @@ public class CreateRoomMenu : MonoBehaviour {
         {
             _roomNumber = rooms.Length;
         }
-        string roomName = (_roomNumber + 1).ToString();
         for (int i = 0; i < rooms.Length; i++)
         {
             if (rooms[i].Name == roomName)
