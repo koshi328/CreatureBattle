@@ -25,8 +25,9 @@ public class InitializeWaveCondition : Condition
     }
     protected override void Entry(Actor actor)
     {
-        ChatController.Instance.AddMessage("イニシャライズウェーブ!防御力＆移動速度up");
         base.Entry(actor);
+        if (!actor.GetPhotonView().isMine) return;
+        ChatController.Instance.AddMessage("イニシャライズウェーブ!防御力＆移動速度up");
     }
     protected override void Execute(Actor actor)
     {
@@ -73,8 +74,9 @@ public class LimitBreakCondition : Condition
     }
     protected override void Entry(Actor actor)
     {
-        ChatController.Instance.AddMessage("リミットブレイク発動!攻撃力＆防御力up");
         base.Entry(actor);
+        if (!actor.GetPhotonView().isMine) return;
+        ChatController.Instance.AddMessage("リミットブレイク発動!攻撃力＆防御力up");
     }
     protected override void Execute(Actor actor)
     {

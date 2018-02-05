@@ -110,7 +110,10 @@ public class LobbyController : MonoBehaviour {
     void OnJoinedLobby()
     {
     }
-
+    void OnPhotonJoinRoomFailed(object[] codeAndMsg)
+    {
+        _createRoomButton.Select();
+    }
     public void SetActiveCreateRoomWindow(bool flag)
     {
         _roomMenuWindow.gameObject.SetActive(flag);

@@ -7,8 +7,9 @@ public class GroundFrostCondition : Condition
     }
     protected override void Entry(Actor actor)
     {
-        ChatController.Instance.AddMessage("グラウンドフロスト!移動速度down");
         base.Entry(actor);
+        if (!actor.GetPhotonView().isMine) return;
+        ChatController.Instance.AddMessage("グラウンドフロスト!移動速度down");
     }
     protected override void Execute(Actor actor)
     {
