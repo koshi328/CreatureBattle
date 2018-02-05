@@ -16,12 +16,16 @@ public class CreateRoomMenu : MonoBehaviour {
 
     string _message;
     float _fade;
+    int _roomNumber;
+
 	// Use this for initialization
 	void Start () {
         // ButtonEventの設定
         _decideButton.onClick.AddListener(CreateRoom);
         _cancelButton.onClick.AddListener(() => { gameObject.SetActive(false); });
-	}
+        _roomNumber = 0;
+
+    }
 
     void Update()
     {
@@ -48,7 +52,19 @@ public class CreateRoomMenu : MonoBehaviour {
     void CreateRoom()
     {
         RoomInfo[] rooms = PhotonNetwork.GetRoomList();
-        string roomName = (rooms.Length + 1).ToString();
+        if(_roomNumber < rooms.Length)
+        {
+            _roomNumber = rooms.Length;
+        }
+        string roomName = (_roomNumber + 1).ToString();
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            if (rooms[i].Name == roomName)
+            {
+                _roomNumber = int.Parse(rooms[i].Name);
+                roomName = (_roomNumber + 1).ToString();
+            }
+        }
         if (roomName == "")
         {
             _message = "部屋の名前を決めてください";
