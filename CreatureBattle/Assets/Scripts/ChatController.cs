@@ -23,7 +23,8 @@ public class ChatController : MonoBehaviour {
 
     public void AddMessage(string message)
     {
+        return;
         _messageQueue.text += message + "\n";
-        _bar.value = 0;
+        //_bar.value = 0;
     }
 }

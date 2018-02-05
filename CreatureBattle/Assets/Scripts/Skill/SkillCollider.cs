@@ -134,7 +134,8 @@ public class SkillCollider : MonoBehaviour {
         {
             if(!inFan)
             {
-                _hitActors.Remove(registeredActor);
+                //_hitActors.Remove(registeredActor);
+                registeredActor.hitToExit = true;
             }
             return;
         }
@@ -159,7 +160,8 @@ public class SkillCollider : MonoBehaviour {
             Actor actor = other.gameObject.GetComponent<Actor>();
             if (_hitActors[i].actor == actor)
             {
-                _hitActors.RemoveAt(i);
+                //_hitActors.RemoveAt(i);
+                _hitActors[i].hitToExit = true;
                 break;
             }
         }
@@ -171,6 +173,7 @@ public class SkillCollider : MonoBehaviour {
         {
             _hitActors[i].time += Time.deltaTime;
             if (_hitActors[i].time < _hitInterval) continue;
+            if (_hitActors[i].hitToExit == true) continue;
             _hitActors[i].time = 0.0f;
             OnDelegate(_hitActors[i].actor, _owner);
         }
@@ -224,7 +227,7 @@ public class SkillCollider : MonoBehaviour {
         {
             OnGenericDelegate(hitActor, _owner);
             hitActor.AddCondition(ActorCondition.KIND.ABNORMAL_COUNTER, -0.1f, 0.0f);
-            _owner.TakeDamage(100, null,"カウンター!");
+            _owner.TakeDamage(100, null);
             _owner.AddCondition(ActorCondition.KIND.STAN, 3.0f, 0.0f, false);
             Finalized();
 			SoundManager.PlaySFX("se_003");
@@ -238,9 +241,11 @@ class HitActor
 {
     public Actor actor;
     public float time;
+    public bool hitToExit;
     public HitActor(Actor argActor)
     {
         actor = argActor;
         time = 0.0f;
+        hitToExit = false;
     }
 }

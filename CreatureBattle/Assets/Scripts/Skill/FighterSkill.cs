@@ -7,8 +7,6 @@
     protected override void Entry(Actor actor)
     {
         base.Entry(actor);
-        if (!actor.GetPhotonView().isMine) return;
-        ChatController.Instance.AddMessage("テンペストブロウ!防御力down");
     }
     protected override void Execute(Actor actor)
     {
@@ -24,8 +22,6 @@ public class EarthDestractionCondition : Condition
     protected override void Entry(Actor actor)
     {
         base.Entry(actor);
-        if (!actor.GetPhotonView().isMine) return;
-        ChatController.Instance.AddMessage("アースデストラクション!移動速度down");
     }
     protected override void Execute(Actor actor)
     {

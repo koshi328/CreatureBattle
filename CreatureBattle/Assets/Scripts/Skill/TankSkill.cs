@@ -7,8 +7,6 @@
     protected override void Entry(Actor actor)
     {
         base.Entry(actor);
-        if (!actor.GetPhotonView().isMine) return;
-        ChatController.Instance.AddMessage("スタンドガード!防御力up");
     }
     protected override void Execute(Actor actor)
     {
@@ -24,8 +22,6 @@ public class AggressiveShoutCondition : Condition
     protected override void Entry(Actor actor)
     {
         base.Entry(actor);
-        if (!actor.GetPhotonView().isMine) return;
-        ChatController.Instance.AddMessage("アグレッシブシャウト!攻撃力up");
     }
     protected override void Execute(Actor actor)
     {
@@ -45,8 +41,6 @@ public class AngryShoutCondition : Condition
     protected override void Entry(Actor actor)
     {
         base.Entry(actor);
-        if (!actor.GetPhotonView().isMine) return;
-        ChatController.Instance.AddMessage("アングリーシャウト!防御力＆移動速度up");
     }
     protected override void Execute(Actor actor)
     {

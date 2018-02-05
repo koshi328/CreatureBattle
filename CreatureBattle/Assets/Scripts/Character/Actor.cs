@@ -131,7 +131,7 @@ public class Actor : MonoBehaviour {
         _skillController.Initialize(elements);
     }
 
-    public void TakeDamage(float damage, Actor atkActor = null, string message = "")
+    public void TakeDamage(float damage, Actor atkActor = null)
     {
         float d = (int)damage;
         if (atkActor != null)
@@ -139,27 +139,23 @@ public class Actor : MonoBehaviour {
             d *= atkActor._condition.GiveDamageRate;
         }
         d += Random.Range(-5, 5);
-        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, d, message);
+        _myPhotonView.RPC("RPCTakeDamage", PhotonTargets.AllViaServer, d);
     }
     [PunRPC]
-    void RPCTakeDamage(float damage, string message)
+    void RPCTakeDamage(float damage)
     {
         if (_status.GetHP() <= 0) return;
         float d = _status.TakeDamage(damage);
         Color textColor = Color.white;
-        string texColor = "<color=#ffffff>";
         if (PhotonNetwork.playerName == "monster")
         {
             textColor = (this.tag == "Monster") ? Color.red : Color.yellow;
-            texColor = (this.tag == "Monster") ? "<color=#ff0000>" : "<color=#ffff00>";
         }
         else
         {
             textColor = (this.tag == "Monster") ? Color.yellow : Color.red;
-            texColor = (this.tag == "Monster") ? "<color=#ffff00>" : "<color=#ff0000>";
         }
         _damageRenderer.Render(transform.position, (int)d, textColor);
-        ChatController.Instance.AddMessage(texColor + message + gameObject.name + "は" + (int)d + "のダメージ</color>");
         SetHpBarFillRate();
         if (_skillController.NowAction() || _skillController.NowCasting()) return;
         EffectManager.Instance.CreateEffect(0, _reactTrans.position);
