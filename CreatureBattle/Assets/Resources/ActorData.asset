@@ -22,6 +22,7 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 82ef8030a89408f4d814d01215ee28c9, type: 2}
     cameraOffset: {x: 0, y: 3, z: 0}
     cameraDistance: -8
+    info: "\u30D5\u30A1\u30A4\u30BF\u30FC \u8FD1\u63A5\u653B\u6483\u304C\u8C4A\u5BCC"
   - path: Characters/Mage
     sprite: {fileID: 21300000, guid: 9ce44e2cb31f06f4b85d12c15e2bbb9c, type: 3}
     hp: 1400
@@ -32,6 +33,7 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 4e54b0a300d75c947b0477231c3a042f, type: 2}
     cameraOffset: {x: 0, y: 3, z: 0}
     cameraDistance: -8
+    info: "\u30E1\u30A4\u30B8 \u591A\u5F69\u306A\u9060\u8DDD\u96E2\u653B\u6483 \u7F60\u653B\u6483\u3092\u6301\u3064"
   - path: Characters/Tank
     sprite: {fileID: 21300000, guid: 788e1f37e55e5c740aefdf6668a7d36c, type: 3}
     hp: 1400
@@ -42,3 +44,4 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 0235be1c8c16e28449ed2bc14b8e742c, type: 2}
     cameraOffset: {x: 0, y: 5, z: 0}
     cameraDistance: -8
+    info: "\u30BF\u30F3\u30AF \u30D0\u30D5\u3084\u30B9\u30BF\u30F3\u3092\u99C6\u4F7F\u3057\u3066\u5473\u65B9\u3092\u5B88\u308B"

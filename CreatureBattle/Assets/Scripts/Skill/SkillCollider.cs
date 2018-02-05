@@ -126,10 +126,6 @@ public class SkillCollider : MonoBehaviour {
         if (!_isFan) return;
         Actor hitActor = other.gameObject.GetComponent<Actor>();
         if (hitActor == null) return;
-        if (CounterSkillProcess(hitActor))
-        {
-            return;
-        }
         // すでに登録してある場合
         HitActor registeredActor = _hitActors.Find(x => x.actor == hitActor );
         // Fanの範囲外
@@ -143,6 +139,10 @@ public class SkillCollider : MonoBehaviour {
             return;
         }
         if (!inFan) return;
+        if (CounterSkillProcess(hitActor))
+        {
+            return;
+        }
         OnDelegate(hitActor, _owner);
         OnGenericDelegate(hitActor, _owner);
         _hitActors.Add(new HitActor(hitActor));

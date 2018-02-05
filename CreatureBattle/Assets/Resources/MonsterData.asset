@@ -22,3 +22,5 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: 3c6f7d442e44759429d9d2c411e7a0e8, type: 2}
     cameraOffset: {x: 0, y: 5, z: 0}
     cameraDistance: -13
+    info: "\u30E2\u30F3\u30B9\u30BF\u30FC \u9AD8\u3044\u30B9\u30C6\u30FC\u30BF\u30B9\u3068\u591A\u5F69\u306A\u30B9\u30AD\u30EB\u3092
+      \u6301\u3064\u3002"

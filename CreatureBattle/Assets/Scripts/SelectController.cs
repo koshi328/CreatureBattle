@@ -183,10 +183,12 @@ public class SelectController : MonoBehaviour
                 skillWindow.ChangeActor(actorData, selectActorID);
             });
             button.GetComponent<Button>().image.sprite = actorData.data[i].sprite;
-            if(i == 0)
+            button.GetComponent<CharacterSelectButton>().SetInfomation(skillWindow.InfomationText(), actorData.data[i].info);
+            if (i == 0)
             {
                 button.GetComponent<Button>().Select();
             }
+
         }
     }
 

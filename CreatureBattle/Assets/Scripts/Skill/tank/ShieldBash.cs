@@ -37,7 +37,7 @@ public class ShieldBash : SkillBase {
         {
             defActor.TakeDamage(90, atkActor);
             defActor.AddCondition(ActorCondition.KIND.STAN, 1.0f, 0.0f, false);
-        });
+        }, true);
         col.SetFanCollider(actor.transform.position, 7.0f, actor.transform.forward, 90.0f);
 		SoundManager.PlaySFX("se_040");
     }

@@ -23,6 +23,7 @@ public class ScriptableActor : ScriptableObject {
         public ScriptableSkill skillData;
         public Vector3 cameraOffset;      // 注目点のオフセット
         public float cameraDistance;    // カメラの距離
+        public string info;
     }
 
     public ActorData[] data;
